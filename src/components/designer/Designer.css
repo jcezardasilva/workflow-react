@@ -1,0 +1,129 @@
+@import 'drawflow/dist/drawflow.min.css';
+.drawflow {
+    height: 100vh;
+    text-align: initial;
+    background: #2b2c30;
+    background-size: 20px 20px;
+    background-image: radial-gradient(#494949 1px, transparent 1px);
+}
+
+.drawflow-node {
+    display: var(--dfNodeType);
+    background: var(--dfNodeBackgroundColor);
+    color: var(--dfNodeTextColor);
+    border: var(--dfNodeBorderSize) solid var(--dfNodeBorderColor);
+    padding-top: var(--dfNodePaddingTop);
+    padding-bottom: var(--dfNodePaddingBottom);
+    -webkit-box-shadow: var(--dfNodeBoxShadowHL) var(--dfNodeBoxShadowVL) var(--dfNodeBoxShadowBR) var(--dfNodeBoxShadowS) var(--dfNodeBoxShadowColor);
+    box-shadow: var(--dfNodeBoxShadowHL) var(--dfNodeBoxShadowVL) var(--dfNodeBoxShadowBR) var(--dfNodeBoxShadowS) var(--dfNodeBoxShadowColor);
+
+    .input {
+        left: var(--dfInputLeft);
+        background: var(--dfInputBackgroundColor);
+        border: var(--dfInputBorderSize) solid var(--dfInputBorderColor);
+        border-radius: var(--dfInputBorderRadius);
+        height: var(--dfInputHeight);
+        width: var(--dfInputWidth);
+    }
+}
+
+.rectangle {
+    border-radius: var(--dfNodeBorderRadius) !important;
+    min-height: var(--dfNodeMinHeight) !important;
+    width: auto !important;
+    min-width: var(--dfNodeMinWidth) !important;
+}
+
+.circle {
+    height: 100px !important;
+    width: 100px !important;
+    border-radius: 50% !important;
+}
+
+.diamond {
+    width: 100px !important;
+    height: 100px !important;
+    transform: rotate(-45deg) !important;
+
+    .drawflow_content_node {
+        transform: rotate(45deg) !important;
+    }
+
+    .input {
+        top: -62px !important;
+        left: 106px !important;
+    }
+
+    .output_1 {
+        top: 80px !important;
+    }
+
+    .output_2 {
+        top: -75px !important;
+        left: -125px !important;
+    }
+}
+
+.drawflow-node:hover {
+    cursor: grab;
+    background: var(--dfNodeHoverBackgroundColor);
+    color: var(--dfNodeHoverTextColor);
+    border: var(--dfNodeHoverBorderSize) solid var(--dfNodeHoverBorderColor);
+    border-radius: var(--dfNodeHoverBorderRadius);
+    -webkit-box-shadow: var(--dfNodeHoverBoxShadowHL) var(--dfNodeHoverBoxShadowVL) var(--dfNodeHoverBoxShadowBR) var(--dfNodeHoverBoxShadowS) var(--dfNodeHoverBoxShadowColor);
+    box-shadow: var(--dfNodeHoverBoxShadowHL) var(--dfNodeHoverBoxShadowVL) var(--dfNodeHoverBoxShadowBR) var(--dfNodeHoverBoxShadowS) var(--dfNodeHoverBoxShadowColor);
+}
+
+.drawflow-node:active {
+    cursor: grabbing;
+    background: var(--dfNodeHoverBackgroundColor);
+    color: var(--dfNodeHoverTextColor);
+    border: var(--dfNodeHoverBorderSize) solid var(--dfNodeHoverBorderColor);
+    border-radius: var(--dfNodeHoverBorderRadius);
+    -webkit-box-shadow: var(--dfNodeHoverBoxShadowHL) var(--dfNodeHoverBoxShadowVL) var(--dfNodeHoverBoxShadowBR) var(--dfNodeHoverBoxShadowS) var(--dfNodeHoverBoxShadowColor);
+    box-shadow: var(--dfNodeHoverBoxShadowHL) var(--dfNodeHoverBoxShadowVL) var(--dfNodeHoverBoxShadowBR) var(--dfNodeHoverBoxShadowS) var(--dfNodeHoverBoxShadowColor);
+}
+
+.drawflow-node.selected {
+    background: var(--dfNodeSelectedBackgroundColor);
+    color: var(--dfNodeSelectedTextColor);
+    border: var(--dfNodeSelectedBorderSize) solid var(--dfNodeSelectedBorderColor);
+    border-radius: var(--dfNodeSelectedBorderRadius);
+    -webkit-box-shadow: var(--dfNodeSelectedBoxShadowHL) var(--dfNodeSelectedBoxShadowVL) var(--dfNodeSelectedBoxShadowBR) var(--dfNodeSelectedBoxShadowS) var(--dfNodeSelectedBoxShadowColor);
+    box-shadow: var(--dfNodeSelectedBoxShadowHL) var(--dfNodeSelectedBoxShadowVL) var(--dfNodeSelectedBoxShadowBR) var(--dfNodeSelectedBoxShadowS) var(--dfNodeSelectedBoxShadowColor);
+}
+
+.drawflow-node .input:hover {
+    background: var(--dfInputHoverBackgroundColor);
+    border: var(--dfInputHoverBorderSize) solid var(--dfInputHoverBorderColor);
+    border-radius: var(--dfInputHoverBorderRadius);
+}
+
+.drawflow-node .outputs {
+    float: var(--dfNodeTypeFloat);
+}
+
+.drawflow-node .output {
+    right: var(--dfOutputRight);
+    background: var(--dfOutputBackgroundColor);
+    border: var(--dfOutputBorderSize) solid var(--dfOutputBorderColor);
+    border-radius: var(--dfOutputBorderRadius);
+    height: var(--dfOutputHeight);
+    width: var(--dfOutputWidth);
+}
+
+.drawflow-node .output:hover {
+    background: var(--dfOutputHoverBackgroundColor);
+    border: var(--dfOutputHoverBorderSize) solid var(--dfOutputHoverBorderColor);
+    border-radius: var(--dfOutputHoverBorderRadius);
+}
+
+.step-header {
+    display: flex;
+    padding: 0;
+    margin-top: -10px !important;
+}
+
+.step-title {
+    margin-top: -10px;
+}
