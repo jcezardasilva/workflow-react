@@ -1,11 +1,11 @@
-import './App.css';
+import './App.scss';
 import Designer from './components/designer/Designer';
-import NodeBox from './components/nodebox';
+import NodeBox from './components/ActionBox';
 
 function App() {  
   const nodes = [
     {title: 'node1', description: 'desc1', x: 10, y: 10},
-    {title: 'node2', description: 'desc2', x: 100, y: 100}];
+    {title: 'node2', description: 'desc2', x: 200, y: 200}];
   
   return (
     <>

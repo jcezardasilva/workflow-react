@@ -1,8 +1,8 @@
 import { useState, useEffect, useRef, ReactElement, Children } from 'react';
 import Drawflow from 'drawflow';
-import "./Designer.css";
+import "./Designer.scss";
 import ReactDOMServer from 'react-dom/server';
-import NodeBox from '../nodebox';
+import NodeBox from '../ActionBox';
 import React from 'react';
 
 const Designer = ({ children }: {children?: ReactElement<typeof NodeBox>[]}) => {
@@ -10,14 +10,10 @@ const Designer = ({ children }: {children?: ReactElement<typeof NodeBox>[]}) => 
   const drawflowRef = useRef<HTMLDivElement | null>(null);
   
   useEffect(() => {
-    const drawflowElement = document.getElementById('drawflow');
-    if (drawflowElement) {
-      if (drawflowElement instanceof HTMLDivElement) {
-        drawflowRef.current = drawflowElement;
-        setEditor(new Drawflow(drawflowRef.current));
-      }
+    if (drawflowRef) {
+        setEditor(new Drawflow(drawflowRef.current as HTMLDivElement));
     }
-  }, []);
+  }, [drawflowRef]);
 
   useEffect(() => {
     if (drawflowRef.current && editor) {
@@ -32,7 +28,7 @@ const Designer = ({ children }: {children?: ReactElement<typeof NodeBox>[]}) => 
             1,
             child.props.x,
             child.props.y,
-            child.type.name,
+            child.type.name.toLowerCase(),
             { name: '' },
             nodeHtml,
             false
@@ -44,7 +40,7 @@ const Designer = ({ children }: {children?: ReactElement<typeof NodeBox>[]}) => 
   
   return (
     <>
-      <div id="drawflow" className="drawflow" ref={drawflowRef}></div>
+      <div ref={drawflowRef}></div>
     </>
   )
 };
