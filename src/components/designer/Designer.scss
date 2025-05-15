@@ -1,4 +1,4 @@
-@import 'drawflow/dist/drawflow.min.css';
+@use 'drawflow/dist/drawflow.min.css';
 
 :root {
     --dfNodeType: flex;
@@ -203,3 +203,43 @@
     }
 }
 
+.show-actions {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 9999;
+    color: #606060;
+    background-color: #2b2c30;
+    font-size: 40px;
+    cursor: pointer;
+
+    :hover {
+        color: #505050;        
+    }
+}
+.actions-card {
+    position: absolute;
+    top: 80px;
+    left: 20px;
+    z-index: 999;
+    min-width: 300px;
+    background-color: #303030;
+}
+.bar-zoom {
+    z-index: 999;
+    color: #606060;
+    font-size: 30px;
+    position: absolute;
+    bottom: 20px;
+    right: 50px;
+
+    svg:hover {
+        color: #505050;        
+    }
+}
+
+.offcanvas {
+    z-index: 9999;
+    background-color: #303030;
+    color: #bbb;
+}
