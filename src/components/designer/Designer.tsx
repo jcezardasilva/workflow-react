@@ -5,11 +5,10 @@ import ReactDOMServer from 'react-dom/server';
 import ActionBox from '../action-box/ActionBox';
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faMagnifyingGlassPlus, faMagnifyingGlassMinus, faMagnifyingGlass, faCirclePlus, faCircleMinus } from '@fortawesome/free-solid-svg-icons'
+import { faMagnifyingGlassPlus, faMagnifyingGlassMinus, faMagnifyingGlass, faCirclePlus, faCircleMinus, faCode, faDatabase, faCogs, IconDefinition } from '@fortawesome/free-solid-svg-icons'
 import Card from '../card/Card';
 import { ActionModel } from '../../models/ActionModel';
 import OffCanvas from '../offcanvas/OffCanvas';
-import { v4 as uuidv4 } from 'uuid';
 import { defaultActions } from '../../data/toolbox';
 
 const Designer = ({ children }: {children?: ReactElement<typeof ActionBox>[]}) => {
@@ -18,7 +17,7 @@ const Designer = ({ children }: {children?: ReactElement<typeof ActionBox>[]}) =
   const [isActionsVisible, setIsActionsVisible] = useState(false);
   const [isPropertiesVisible, setIsPropertiesVisible] = useState(false);
   const [selectedAction, setSelectedAction] = useState<DrawflowNode|undefined>(undefined);
-  const [actions, setActions] = useState<ActionModel[]>(defaultActions);
+  const [actions] = useState<ActionModel[]>(defaultActions);
   
   useEffect(() => {
     if (drawflowRef) {
@@ -108,6 +107,15 @@ const Designer = ({ children }: {children?: ReactElement<typeof ActionBox>[]}) =
   }
   const toggleProperties = () => setIsPropertiesVisible(!isPropertiesVisible);
 
+  const getIcon = (iconName: string) => {
+    const icons: Record<string, IconDefinition> = {
+      faCode,
+      faDatabase,
+      faCogs,
+    };
+    return icons[iconName] || faCode;
+  };
+
   return (
     <>
       <div ref={drawflowRef} onDrop={onDrop} onDragOver={(e)=> e.preventDefault()}>
@@ -134,6 +142,8 @@ const Designer = ({ children }: {children?: ReactElement<typeof ActionBox>[]}) =
                     aria-expanded={index === 0 ? "true" : "false"}
                     aria-controls={`collapse-${index}`}
                   >
+                    {actionsInCategory[0].icon.library == "font-awesome" && <FontAwesomeIcon icon={getIcon(actionsInCategory[0].icon.name)} className="me-2" />}
+                    {actionsInCategory[0].icon.library == "custom" && <img src={actionsInCategory[0].icon.source} alt="icon" className="me-2" />}
                     {category}
                   </button>
                 </h2>
