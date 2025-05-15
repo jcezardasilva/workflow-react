@@ -10,6 +10,7 @@ import Card from '../card/Card';
 import { ActionModel } from '../../models/ActionModel';
 import OffCanvas from '../offcanvas/OffCanvas';
 import { v4 as uuidv4 } from 'uuid';
+import { defaultActions } from '../../data/toolbox';
 
 const Designer = ({ children }: {children?: ReactElement<typeof ActionBox>[]}) => {
   const [editor, setEditor] = useState<Drawflow|null>(null);
@@ -17,6 +18,7 @@ const Designer = ({ children }: {children?: ReactElement<typeof ActionBox>[]}) =
   const [isActionsVisible, setIsActionsVisible] = useState(false);
   const [isPropertiesVisible, setIsPropertiesVisible] = useState(false);
   const [selectedAction, setSelectedAction] = useState<DrawflowNode|undefined>(undefined);
+  const [actions, setActions] = useState<ActionModel[]>(defaultActions);
   
   useEffect(() => {
     if (drawflowRef) {
@@ -47,17 +49,6 @@ const Designer = ({ children }: {children?: ReactElement<typeof ActionBox>[]}) =
     }
   }, [editor,children]);
   
-  const actions:ActionModel[] = [
-    {id: "1", title: 'Action 1', description: 'Description 1'},
-    {id: "2", title: 'Action 2', description: 'Description 2'},
-    {id: "3", title: 'Action 3', description: 'Description 3'},
-    {id: "4", title: 'Action 4', description: 'Description 4'},
-    {id: "5", title: 'Action 5', description: 'Description 5'},
-    {id: "6", title: 'Action 6', description: 'Description 6'},
-    {id: "7", title: 'Action 7', description: 'Description 7'},
-    {id: "8", title: 'Action 8', description: 'Description 8'},
-    {id: "9", title: 'Action 9', description: 'Description 9'}
-  ];
   const addActionToEditor = ({id,clientX,clientY,title,description}:{id:string, clientX:number, clientY: number,title:string,description:string}) => {
     if(!editor) return;
 
@@ -124,23 +115,55 @@ const Designer = ({ children }: {children?: ReactElement<typeof ActionBox>[]}) =
         {isActionsVisible && <FontAwesomeIcon className="show-actions" icon={faCircleMinus} onClick={()=>setIsActionsVisible(false)}/>}
         {isActionsVisible && 
         <Card className="actions-card">
-          <div className='d-flex flex-column'>
-            {actions.map((action) => { 
-              action.id = uuidv4();
-              return <button 
-              key={action.title} 
-              type="button" 
-              className="btn btn-outline-secondary btn-lg m-1 " 
-              draggable="true" 
-              data-bs-container="body" 
-              data-bs-toggle="popover" 
-              data-bs-placement="top" 
-              data-bs-content="Top popover" 
-              data-content={JSON.stringify(action)}
-              onDragStart={onDrag}>
-              {action.title}
-            </button>
-            })}
+          <div className="accordion" id="actionsAccordion">
+            {Object.entries(
+              actions.reduce((acc, action) => {
+                const category = action.category || "Uncategorized"; // Agrupa por categoria
+                if (!acc[category]) acc[category] = [];
+                acc[category].push(action);
+                return acc;
+              }, {} as Record<string, ActionModel[]>)
+            ).map(([category, actionsInCategory], index) => (
+              <div className="accordion-item" key={category}>
+                <h2 className="accordion-header" id={`heading-${index}`}>
+                  <button
+                    className={`accordion-button ${index === 0 ? '' : 'collapsed'}`}
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target={`#collapse-${index}`}
+                    aria-expanded={index === 0 ? "true" : "false"}
+                    aria-controls={`collapse-${index}`}
+                  >
+                    {category}
+                  </button>
+                </h2>
+                <div
+                  id={`collapse-${index}`}
+                  className={`accordion-collapse collapse ${index === 0 ? 'show' : ''}`}
+                  aria-labelledby={`heading-${index}`}
+                  data-bs-parent="#actionsAccordion"
+                >
+                  <div className="accordion-body">
+                    {actionsInCategory.map((action) => (
+                      <button
+                        key={action.title}
+                        type="button"
+                        className="btn btn-outline-secondary btn-lg m-1"
+                        draggable="true"
+                        data-bs-container="body"
+                        data-bs-toggle="popover"
+                        data-bs-placement="top"
+                        data-bs-content="Top popover"
+                        data-content={JSON.stringify(action)}
+                        onDragStart={onDrag}
+                      >
+                        {action.title}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </Card>
         }

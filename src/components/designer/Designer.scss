@@ -131,7 +131,7 @@
         border: var(--dfNodeHoverBorderSize) solid var(--dfNodeHoverBorderColor);
         border-radius: var(--dfNodeHoverBorderRadius);
         -webkit-box-shadow: var(--dfNodeHoverBoxShadowHL) var(--dfNodeHoverBoxShadowVL) var(--dfNodeHoverBoxShadowBR) var(--dfNodeHoverBoxShadowS) var(--dfNodeHoverBoxShadowColor);
-        box-shadow: var(--dfNodeHoverBoxShadowHL) var(--dfNodeHoverBoxShadowVL) var(--dfNodeHoverBoxShadowBR) var(--dfNodeHoverBoxShadowS) var(--dfNodeHoverBoxShadowColor);
+        box-shadow: var(--dfNodeHoverBoxShadowHL) var (--dfNodeHoverBoxShadowVL) var(--dfNodeHoverBoxShadowBR) var(--dfNodeHoverBoxShadowS) var(--dfNodeHoverBoxShadowColor);
     }
 
     .drawflow-node:active {
@@ -140,7 +140,7 @@
         color: var(--dfNodeHoverTextColor);
         border: var(--dfNodeHoverBorderSize) solid var(--dfNodeHoverBorderColor);
         border-radius: var(--dfNodeHoverBorderRadius);
-        -webkit-box-shadow: var(--dfNodeHoverBoxShadowHL) var(--dfNodeHoverBoxShadowVL) var(--dfNodeHoverBoxShadowBR) var(--dfNodeHoverBoxShadowS) var(--dfNodeHoverBoxShadowColor);
+        -webkit-box-shadow: var(--dfNodeHoverBoxShadowHL) var(--dfNodeHoverBoxShadowVL) var(--dfNodeHoverBoxShadowBR) var (--dfNodeHoverBoxShadowS) var(--dfNodeHoverBoxShadowColor);
         box-shadow: var(--dfNodeHoverBoxShadowHL) var(--dfNodeHoverBoxShadowVL) var(--dfNodeHoverBoxShadowBR) var(--dfNodeHoverBoxShadowS) var(--dfNodeHoverBoxShadowColor);
     }
 
@@ -242,4 +242,68 @@
     z-index: 9999;
     background-color: #303030;
     color: #bbb;
+}
+
+/* Ajuste para tema escuro nos accordions */
+.accordion {
+  background-color: #2b2c30; /* Fundo escuro */
+  color: #bbb; /* Texto claro */
+  border: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.accordion-item {
+  background-color: #303030; /* Fundo escuro para itens */
+  border: none;
+  margin-bottom: 0.5rem;
+  border: none !important; /* Remove qualquer borda */
+}
+
+.accordion-header {
+  background-color: #404040; /* Fundo mais escuro para cabeçalhos */
+  color: #fff; /* Texto branco */
+  border-radius: 4px;
+}
+
+.accordion-button {
+  background-color: #404040; /* Fundo escuro para botões */
+  color: #fff; /* Texto branco */
+  font-weight: bold;
+  border: none;
+  border-radius: 4px;
+  border-bottom: none !important; /* Remove borda inferior ao expandir */
+  border: none !important; /* Remove todas as bordas */
+  box-shadow: none !important; /* Remove sombras que possam parecer bordas */
+}
+
+.accordion-button:not(.collapsed) {
+  background-color: #505050; /* Fundo mais claro quando expandido */
+  color: #fff;
+  border: none !important; /* Remove bordas ao expandir */
+  box-shadow: none !important; /* Remove sombras ao expandir */
+}
+
+.accordion-body {
+  background-color: #2b2c30; /* Fundo escuro para o corpo */
+  color: #bbb; /* Texto claro */
+  padding: 1rem;
+  border-radius: 4px;
+}
+
+/* Ajuste para tema escuro nos botões de actions */
+.accordion-body .btn {
+  background-color: #505050; /* Fundo escuro para botões */
+  color: #fff; /* Texto branco */
+  border: 1px solid #606060; /* Borda sutil */
+  transition: transform 0.2s ease-in-out, background-color 0.2s ease-in-out;
+}
+
+.accordion-body .btn:hover {
+  background-color: #606060; /* Fundo mais claro ao passar o mouse */
+  transform: scale(1.05);
+}
+
+.accordion-body .btn:active {
+  background-color: #707070; /* Fundo mais claro ao clicar */
+  transform: scale(0.95);
 }
