@@ -9,6 +9,7 @@ import { faMagnifyingGlassPlus, faMagnifyingGlassMinus, faMagnifyingGlass, faCir
 import ToolboxCard from './ToolboxCard';
 import { ActionModel } from '../../models/ActionModel';
 import OffCanvas from '../offcanvas/OffCanvas';
+import NodeDrawer from '../nodes/NodeDrawer';
 import nodes from '../../data/nodes.json';
 
 const Designer = ({ children }: {children?: ReactElement<typeof ActionBox>[]}) => {
@@ -17,6 +18,9 @@ const Designer = ({ children }: {children?: ReactElement<typeof ActionBox>[]}) =
   const [isActionsVisible, setIsActionsVisible] = useState(false);
   const [isPropertiesVisible, setIsPropertiesVisible] = useState(false);
   const [selectedAction, setSelectedAction] = useState<DrawflowNode|undefined>(undefined);
+  const [selectedNodeFields, setSelectedNodeFields] = useState<{input:any[],output:any[]}>({input:[],output:[]});
+  const [selectedNodeData, setSelectedNodeData] = useState<any>({});
+  const [selectedNodeTitle, setSelectedNodeTitle] = useState<string>("");
   const [actions] = useState<any[]>(nodes);
   
   useEffect(() => {
@@ -83,8 +87,14 @@ const Designer = ({ children }: {children?: ReactElement<typeof ActionBox>[]}) =
             return editorNodes![key].data.id === dataId;
           });
           if(dataId && match){
-            setSelectedAction((editorNodes!)[match]);
-            setIsPropertiesVisible(!isPropertiesVisible);
+            const node = (editorNodes!)[match];
+            setSelectedAction(node);
+            // Buscar campos e dados do node em nodes.json
+            const nodeDef = nodes.find((n:any) => n.id === dataId);
+            setSelectedNodeFields(nodeDef?.fields || {input:[],output:[]});
+            setSelectedNodeData(node.data || {});
+            setSelectedNodeTitle(nodeDef?.name || "Node");
+            setIsPropertiesVisible(true);
           }
         });
       }
@@ -115,7 +125,20 @@ const Designer = ({ children }: {children?: ReactElement<typeof ActionBox>[]}) =
         {!isActionsVisible && <FontAwesomeIcon className="show-actions" icon={faCirclePlus} onClick={()=>setIsActionsVisible(true)}/>}
         {isActionsVisible && <FontAwesomeIcon className="show-actions" icon={faCircleMinus} onClick={()=>setIsActionsVisible(false)}/>}
         <ToolboxCard actions={actions} isActionsVisible={isActionsVisible} onDrag={onDrag} />
-        {isPropertiesVisible && <OffCanvas onClose={toggleProperties} data={selectedAction}></OffCanvas>}
+        {isPropertiesVisible && (
+          <OffCanvas onClose={toggleProperties} data={selectedAction}>
+            <NodeDrawer
+              open={isPropertiesVisible}
+              onClose={toggleProperties}
+              title={selectedNodeTitle}
+              fields={selectedNodeFields}
+              dataNode={selectedNodeData}
+              store={{}}
+              direction="rtl"
+              onUpdateData={()=>{}}
+            />
+          </OffCanvas>
+        )}
 
         <div className="bar-zoom d-flex justify-content-between">
             <FontAwesomeIcon icon={faMagnifyingGlassMinus} onClick={()=>editor?.zoom_out()} className="m-2" style={{cursor:'pointer'}}/>
