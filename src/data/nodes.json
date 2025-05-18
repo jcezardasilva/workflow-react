@@ -1,0 +1,957 @@
+[
+    {
+      "id": "92c73bdb-18ef-4a04-825c-be1607d1b441",
+      "name": "ConditionalNode",
+      "frontendComponent": "BaseNode",
+      "backendComponent": "ConditionalNodeBackend",
+      "collectionId": "ControlStructures",
+      "icon": {
+        "source": "fontawesome",
+        "name": "fa-solid fa-layer-group"
+      },
+      "data": "{\"fields\":[],\"content\":\"content\"}",
+      
+      "fields": {
+        "input": [
+          {
+            "name": "condition",
+            "label": "Condição",
+            "type": "string",
+            "description": "Expressão a ser avaliada para decidir o fluxo."
+          }
+        ],
+        "output": [
+          {
+            "name": "trueOutput",
+            "label": "Saída Verdadeira",
+            "type": "string",
+            "description": "Saída se a condição for verdadeira."
+          },
+          {
+            "name": "falseOutput",
+            "label": "Saída Falsa",
+            "type": "string",
+            "description": "Saída se a condição for falsa."
+          }
+        ]
+      },
+      "inputCount": 1,
+      "outputCount": 2,
+      "description": "Este nó avalia uma condição com saídas diferentes para cada condição."
+    },
+    {
+      "id": "0d78dace-6b7d-4226-947e-4de5508c919e",
+      "name": "ForEachNode",
+      "frontendComponent": "BaseNode",
+      "backendComponent": "ForEachNodeBackend",
+      "collectionId": "ControlStructures",
+      "icon": {
+        "source": "fontawesome",
+        "name": "fa-solid fa-layer-group"
+      },
+      "data": "{\"fields\":[],\"content\":\"content\"}",
+      
+      "fields": {
+        "input": [
+          {
+            "name": "collection",
+            "label": "Coleção",
+            "type": "string",
+            "description": "Coleção a ser iterada."
+          }
+        ],
+        "output": [
+          {
+            "name": "item",
+            "label": "Item Atual",
+            "type": "string",
+            "description": "Item atual da iteração."
+          }
+        ]
+      },
+      "inputCount": 1,
+      "outputCount": 1,
+      "description": "Este nó itera sobre uma coleção e executa ações para cada item."
+    },
+    {
+      "id": "87638ef8-47d9-449d-8459-ddd34e591f09",
+      "name": "VariableExistsNode",
+      "frontendComponent": "BaseNode",
+      "backendComponent": "VariableExistsNodeBackend",
+      "collectionId": "ControlStructures",
+      "icon": {
+        "source": "fontawesome",
+        "name": "fa-solid fa-layer-group"
+      },
+      "data": "{\"fields\":[],\"content\":\"content\"}",
+      
+      "fields": {
+        "input": [
+          {
+            "name": "variableName",
+            "label": "Nome da Variável",
+            "type": "string",
+            "description": "Nome da variável a ser verificada."
+          }
+        ],
+        "output": [
+          {
+            "name": "exists",
+            "label": "Existe",
+            "type": "string",
+            "description": "Saída se a variável existir."
+          },
+          {
+            "name": "notExists",
+            "label": "Não Existe",
+            "type": "string",
+            "description": "Saída se a variável não existir."
+          }
+        ]
+      },
+      "inputCount": 1,
+      "outputCount": 2,
+      "description": "Este nó verifica se uma variável existe no contexto atual."
+    },
+    {
+      "id": "5b064d1e-ec29-4e18-afb1-3b64703f9a75",
+      "name": "VariableHasValue",
+      "frontendComponent": "BaseNode",
+      "backendComponent": "VariableHasValueBackend",
+      "collectionId": "ControlStructures",
+      "icon": {
+        "source": "fontawesome",
+        "name": "fa-solid fa-layer-group"
+      },
+      "data": "{\"fields\":[],\"content\":\"content\"}",
+      
+      "fields": {
+        "input": [
+          {
+            "name": "variableName",
+            "label": "Nome da Variável",
+            "type": "string"
+          },
+          {
+            "name": "expectedValue",
+            "label": "Valor Esperado",
+            "type": "string"
+          }
+        ],
+        "output": [
+          {
+            "name": "hasValue",
+            "label": "Possui Valor",
+            "type": "string"
+          },
+          {
+            "name": "noValue",
+            "label": "Não Possui Valor",
+            "type": "string"
+          }
+        ]
+      },
+      "inputCount": 1,
+      "outputCount": 2,
+      "description": "Este nó verifica se uma variável possui um valor específico."
+    },
+    {
+      "id": "24b1ca02-4e3c-44ff-8c42-a38d44e61fbf",
+      "name": "GetFlowNode",
+      "frontendComponent": "BaseNode",
+      "backendComponent": "GetFlowNodeBackend",
+      "collectionId": "Workflow",
+      "icon": {
+        "source": "fontawesome",
+        "name": "fa-solid fa-layer-group"
+      },
+      "data": "{\"fields\":[],\"content\":\"content\"}",
+      
+      "fields": {
+        "input": [
+          {
+            "name": "flowId",
+            "label": "ID do Fluxo",
+            "type": "string"
+          }
+        ],
+        "output": [
+          {
+            "name": "flowData",
+            "label": "Dados do Fluxo",
+            "type": "textarea"
+          }
+        ]
+      },
+      "inputCount": 1,
+      "outputCount": 1,
+      "description": "Este nó recupera informações sobre um fluxo existente."
+    },
+    {
+      "id": "2c8798f8-17b6-4163-80a5-bf83e4b1ea96",
+      "name": "ExecuteFlowNode",
+      "frontendComponent": "BaseNode",
+      "backendComponent": "ExecuteFlowNodeBackend",
+      "collectionId": "Workflow",
+      "icon": {
+        "source": "fontawesome",
+        "name": "fa-solid fa-layer-group"
+      },
+      "data": "{\"fields\":[],\"content\":\"content\"}",
+      
+      "fields": {
+        "input": [
+          {
+            "name": "flowId",
+            "label": "ID do Fluxo",
+            "type": "string"
+          }
+        ],
+        "output": [
+          {
+            "name": "result",
+            "label": "Resultado",
+            "type": "textarea"
+          }
+        ]
+      },
+      "inputCount": 1,
+      "outputCount": 1,
+      "description": "Este nó executa um fluxo específico."
+    },
+    {
+      "id": "ea454a4b-dd17-4570-8a7f-242e2b4c454c",
+      "name": "Base64Node",
+      "frontendComponent": "BaseNode",
+      "backendComponent": "Base64NodeBackend",
+      "collectionId": "Common",
+      "icon": {
+        "source": "fontawesome",
+        "name": "fa-solid fa-layer-group"
+      },
+      "data": "{\"fields\":[],\"content\":\"content\"}",
+      
+      "fields": {
+        "input": [
+          {
+            "name": "operation",
+            "label": "Operação",
+            "type": "select",
+            "values": ["encode", "decode"],
+            "description": "Escolha entre codificar ou decodificar."
+          },
+          {
+            "name": "inputData",
+            "label": "Dados de Entrada",
+            "type": "textarea",
+            "description": "Dados a serem processados em Base64."
+          }
+        ],
+        "output": [
+          {
+            "name": "outputData",
+            "label": "Dados de Saída",
+            "type": "textarea",
+            "description": "Resultado da operação Base64."
+          }
+        ]
+      },
+      "inputCount": 1,
+      "outputCount": 1,
+      "description": "Este nó codifica ou decodifica dados em Base64."
+    },
+    {
+      "id": "3fe93e6b-507a-4ef3-a1cc-5c55da5c0a7f",
+      "name": "DelayNode",
+      "frontendComponent": "BaseNode",
+      "backendComponent": "DelayNodeBackend",
+      "collectionId": "Common",
+      "icon": {
+        "source": "fontawesome",
+        "name": "fa-solid fa-layer-group"
+      },
+      "data": "{\"fields\":[],\"content\":\"content\"}",
+      
+      "fields": {
+        "input": [
+          {
+            "name": "delayMs",
+            "label": "Atraso (ms)",
+            "type": "number",
+            "min": 0,
+            "step": 100,
+            "description": "Tempo de atraso em milissegundos."
+          }
+        ],
+        "output": [
+          {
+            "name": "delayedData",
+            "label": "Dados Após Atraso",
+            "type": "string",
+            "description": "Dados após o atraso."
+          }
+        ]
+      },
+      "inputCount": 1,
+      "outputCount": 1,
+      "description": "Este nó adiciona um atraso na execução do fluxo."
+    },
+    {
+      "id": "37f82611-1838-4d71-907f-cfc6283ea33e",
+      "name": "JsonNode",
+      "frontendComponent": "BaseNode",
+      "backendComponent": "JsonNodeBackend",
+      "collectionId": "Common",
+      "icon": {
+        "source": "fontawesome",
+        "name": "fa-solid fa-layer-group"
+      },
+      "data": "{\"fields\":[],\"content\":\"content\"}",
+      
+      "fields": {
+        "input": [
+          {
+            "name": "jsonInput",
+            "label": "JSON de Entrada",
+            "type": "textarea",
+            "description": "Dados JSON a serem manipulados."
+          }
+        ],
+        "output": [
+          {
+            "name": "jsonOutput",
+            "label": "JSON de Saída",
+            "type": "textarea",
+            "description": "Resultado da manipulação JSON."
+          }
+        ]
+      },
+      "inputCount": 1,
+      "outputCount": 1,
+      "description": "Este nó manipula dados JSON."
+    },
+    {
+      "id": "8f925bae-e6c1-4069-a7c9-d5cf951f3789",
+      "name": "RemoveVariableNode",
+      "frontendComponent": "BaseNode",
+      "backendComponent": "RemoveVariableNodeBackend",
+      "collectionId": "Common",
+      "icon": {
+        "source": "fontawesome",
+        "name": "fa-solid fa-layer-group"
+      },
+      "data": "{\"fields\":[],\"content\":\"content\"}",
+      
+      "fields": {
+        "input": [
+          {
+            "name": "variableName",
+            "label": "Nome da Variável",
+            "type": "string",
+            "description": "Nome da variável a ser removida."
+          }
+        ],
+        "output": [
+          {
+            "name": "removed",
+            "label": "Removido",
+            "type": "string",
+            "description": "Confirmação de remoção."
+          }
+        ]
+      },
+      "inputCount": 1,
+      "outputCount": 1,
+      "description": "Este nó remove uma variável do contexto atual."
+    },
+    {
+      "id": "babfeb20-5c90-4e95-b49a-cb2ab21471b6",
+      "name": "ReplaceNode",
+      "frontendComponent": "BaseNode",
+      "backendComponent": "ReplaceNodeBackend",
+      "collectionId": "Common",
+      "icon": {
+        "source": "fontawesome",
+        "name": "fa-solid fa-layer-group"
+      },
+      "data": "{\"fields\":[],\"content\":\"content\"}",
+      
+      "fields": {
+        "input": [
+          {
+            "name": "text",
+            "label": "Texto",
+            "type": "textarea",
+            "description": "Texto onde será feita a substituição."
+          },
+          {
+            "name": "search",
+            "label": "Buscar",
+            "type": "string",
+            "description": "Valor a ser substituído."
+          },
+          {
+            "name": "replace",
+            "label": "Substituir por",
+            "type": "string",
+            "description": "Novo valor."
+          }
+        ],
+        "output": [
+          {
+            "name": "result",
+            "label": "Resultado",
+            "type": "textarea",
+            "description": "Texto após substituição."
+          }
+        ]
+      },
+      "inputCount": 1,
+      "outputCount": 1,
+      "description": "Este nó substitui valores em um texto ou variável."
+    },
+    {
+      "id": "52c9bec4-6f71-4425-ba77-c806f45031e2",
+      "name": "SetVariableNode",
+      "frontendComponent": "BaseNode",
+      "backendComponent": "SetVariableNodeBackend",
+      "collectionId": "Common",
+      "icon": {
+        "source": "fontawesome",
+        "name": "fa-solid fa-layer-group"
+      },
+      "data": "{\"fields\":[],\"content\":\"content\"}",
+      
+      "fields": {
+        "input": [
+          {
+            "name": "variableName",
+            "label": "Nome da Variável",
+            "type": "string",
+            "description": "Nome da variável a ser definida."
+          },
+          {
+            "name": "value",
+            "label": "Valor",
+            "type": "string",
+            "description": "Valor a ser atribuído."
+          }
+        ],
+        "output": [
+          {
+            "name": "set",
+            "label": "Definido",
+            "type": "string",
+            "description": "Confirmação de definição."
+          }
+        ]
+      },
+      "inputCount": 1,
+      "outputCount": 1,
+      "description": "Este nó define o valor de uma variável no contexto atual."
+    },
+    {
+      "id": "1a0c0258-4046-4d67-89e8-354014c30478",
+      "name": "StringConcatNode",
+      "frontendComponent": "BaseNode",
+      "backendComponent": "StringConcatNodeBackend",
+      "collectionId": "Common",
+      "icon": {
+        "source": "fontawesome",
+        "name": "fa-solid fa-layer-group"
+      },
+      "data": "{\"fields\":[],\"content\":\"content\"}",
+      
+      "fields": {
+        "input": [
+          {
+            "name": "strings",
+            "label": "Strings",
+            "type": "textarea",
+            "description": "Strings a serem concatenadas, separadas por vírgula."
+          }
+        ],
+        "output": [
+          {
+            "name": "result",
+            "label": "Resultado",
+            "type": "string",
+            "description": "String concatenada."
+          }
+        ]
+      },
+      "inputCount": 1,
+      "outputCount": 1,
+      "description": "Este nó concatena várias strings em uma única string."
+    },
+    {
+      "id": "29845746-1591-4188-a220-be208a7bf0c2",
+      "name": "StringNode",
+      "frontendComponent": "BaseNode",
+      "backendComponent": "StringNodeBackend",
+      "collectionId": "Common",
+      "icon": {
+        "source": "fontawesome",
+        "name": "fa-solid fa-layer-group"
+      },
+      "data": "{\"fields\":[],\"content\":\"content\"}",
+      
+      "fields": {
+        "input": [
+          {
+            "name": "value",
+            "label": "Valor",
+            "type": "string",
+            "description": "Valor da string."
+          }
+        ],
+        "output": [
+          {
+            "name": "string",
+            "label": "String",
+            "type": "string",
+            "description": "String criada."
+          }
+        ]
+      },
+      "inputCount": 1,
+      "outputCount": 1,
+      "description": "Este nó cria uma string com base em entradas específicas."
+    },
+    {
+      "id": "736d1f8c-1c48-43a9-990d-14dfc016ffa6",
+      "name": "StringSplitNode",
+      "frontendComponent": "BaseNode",
+      "backendComponent": "StringSplitNodeBackend",
+      "collectionId": "Common",
+      "icon": {
+        "source": "fontawesome",
+        "name": "fa-solid fa-layer-group"
+      },
+      "data": "{\"fields\":[],\"content\":\"content\"}",
+      
+      "fields": {
+        "input": [
+          {
+            "name": "string",
+            "label": "String",
+            "type": "string",
+            "description": "String a ser dividida."
+          },
+          {
+            "name": "delimiter",
+            "label": "Delimitador",
+            "type": "string",
+            "description": "Delimitador para divisão."
+          }
+        ],
+        "output": [
+          {
+            "name": "parts",
+            "label": "Partes",
+            "type": "textarea",
+            "description": "Partes resultantes da divisão."
+          }
+        ]
+      },
+      "inputCount": 1,
+      "outputCount": 1,
+      "description": "Este nó divide uma string em partes com base em um delimitador."
+    },
+    {
+      "id": "72dd1b6c-4a75-4ba8-a279-efc3be2d6dbf",
+      "name": "TokenizerNode",
+      "frontendComponent": "BaseNode",
+      "backendComponent": "TokenizerNodeBackend",
+      "collectionId": "Common",
+      "icon": {
+        "source": "fontawesome",
+        "name": "fa-solid fa-layer-group"
+      },
+      "data": "{\"fields\":[],\"content\":\"content\"}",
+      
+      "fields": {
+        "input": [
+          {
+            "name": "string",
+            "label": "String",
+            "type": "string",
+            "description": "String a ser tokenizada."
+          }
+        ],
+        "output": [
+          {
+            "name": "tokens",
+            "label": "Tokens",
+            "type": "textarea",
+            "description": "Tokens extraídos."
+          }
+        ]
+      },
+      "inputCount": 1,
+      "outputCount": 1,
+      "description": "Este nó tokeniza uma string em partes menores."
+    },
+    {
+      "id": "395225e8-cc2f-42b8-891d-370aa0b6145c",
+      "name": "AzureBlobStorageNode",
+      "frontendComponent": "BaseNode",
+      "backendComponent": "AzureBlobStorageNodeBackend",
+      "collectionId": "Azure",
+      "icon": {
+        "source": "fontawesome",
+        "name": "fa-solid fa-layer-group"
+      },
+      "data": "{\"fields\":[],\"content\":\"content\"}",
+      
+      "fields": {
+        "input": [
+          {
+            "name": "connectionString",
+            "label": "Connection String",
+            "type": "string",
+            "description": "String de conexão do Azure Blob Storage."
+          },
+          {
+            "name": "containerName",
+            "label": "Nome do Container",
+            "type": "string",
+            "description": "Nome do container de blobs."
+          },
+          {
+            "name": "blobName",
+            "label": "Nome do Blob",
+            "type": "string",
+            "description": "Nome do blob a ser manipulado."
+          }
+        ],
+        "output": [
+          {
+            "name": "blobData",
+            "label": "Dados do Blob",
+            "type": "textarea",
+            "description": "Dados do blob lidos ou escritos."
+          }
+        ]
+      },
+      "inputCount": 1,
+      "outputCount": 1,
+      "description": "Este nó interage com o armazenamento de blobs do Azure."
+    },
+    {
+      "id": "a2ab5b4a-f29d-4ee2-a94f-3510a353296a",
+      "name": "AzureCustomClassificationNode",
+      "frontendComponent": "BaseNode",
+      "backendComponent": "AzureCustomClassificationNodeBackend",
+      "collectionId": "Azure",
+      "icon": {
+        "source": "fontawesome",
+        "name": "fa-solid fa-layer-group"
+      },
+      "data": "{\"fields\":[],\"content\":\"content\"}",
+      
+      "fields": {
+        "input": [
+          {
+            "name": "endpoint",
+            "label": "Endpoint",
+            "type": "string",
+            "description": "Endpoint do serviço Azure Custom Classification."
+          },
+          {
+            "name": "apiKey",
+            "label": "API Key",
+            "type": "string",
+            "description": "Chave de API para autenticação."
+          },
+          {
+            "name": "inputData",
+            "label": "Dados de Entrada",
+            "type": "textarea",
+            "description": "Dados a serem classificados."
+          }
+        ],
+        "output": [
+          {
+            "name": "classificationResult",
+            "label": "Resultado da Classificação",
+            "type": "textarea",
+            "description": "Resultado da classificação."
+          }
+        ]
+      },
+      "inputCount": 1,
+      "outputCount": 1,
+      "description": "Este nó realiza classificação personalizada usando serviços do Azure."
+    },
+    {
+      "id": "b4674b18-aebd-4dbe-ab5f-aae5e62dc879",
+      "name": "AzureCustomExtractionNode",
+      "frontendComponent": "BaseNode",
+      "backendComponent": "AzureCustomExtractionNodeBackend",
+      "collectionId": "Azure",
+      "icon": {
+        "source": "fontawesome",
+        "name": "fa-solid fa-layer-group"
+      },
+      "data": "{\"fields\":[],\"content\":\"content\"}",
+      
+      "fields": {
+        "input": [
+          {
+            "name": "endpoint",
+            "label": "Endpoint",
+            "type": "string",
+            "description": "Endpoint do serviço Azure Custom Extraction."
+          },
+          {
+            "name": "apiKey",
+            "label": "API Key",
+            "type": "string",
+            "description": "Chave de API para autenticação."
+          },
+          {
+            "name": "inputData",
+            "label": "Dados de Entrada",
+            "type": "textarea",
+            "description": "Dados a serem extraídos."
+          }
+        ],
+        "output": [
+          {
+            "name": "extractionResult",
+            "label": "Resultado da Extração",
+            "type": "textarea",
+            "description": "Resultado da extração."
+          }
+        ]
+      },
+      "inputCount": 1,
+      "outputCount": 1,
+      "description": "Este nó realiza extração personalizada usando serviços do Azure."
+    },
+    {
+      "id": "87696f20-b574-47e2-b9d1-975c9f2219f8",
+      "name": "AzureCustomVisionClassificationNode",
+      "frontendComponent": "BaseNode",
+      "backendComponent": "AzureCustomVisionClassificationNodeBackend",
+      "collectionId": "Azure",
+      "icon": {
+        "source": "fontawesome",
+        "name": "fa-solid fa-layer-group"
+      },
+      "data": "{\"fields\":[],\"content\":\"content\"}",
+      
+      "fields": {
+        "input": [
+          {
+            "name": "endpoint",
+            "label": "Endpoint",
+            "type": "string",
+            "description": "Endpoint do serviço Azure Custom Vision."
+          },
+          {
+            "name": "apiKey",
+            "label": "API Key",
+            "type": "string",
+            "description": "Chave de API para autenticação."
+          },
+          {
+            "name": "imageData",
+            "label": "Imagem",
+            "type": "textarea",
+            "description": "Imagem a ser classificada (base64 ou URL)."
+          }
+        ],
+        "output": [
+          {
+            "name": "visionResult",
+            "label": "Resultado da Visão",
+            "type": "textarea",
+            "description": "Resultado da classificação de visão."
+          }
+        ]
+      },
+      "inputCount": 1,
+      "outputCount": 1,
+      "description": "Este nó realiza classificação de visão personalizada usando serviços do Azure."
+    },
+    {
+      "id": "476978d5-4829-412b-bd86-8bf7bc364aec",
+      "name": "AzureOpenAiNode",
+      "frontendComponent": "BaseNode",
+      "backendComponent": "AzureOpenAiNodeBackend",
+      "collectionId": "Azure",
+      "icon": {
+        "source": "fontawesome",
+        "name": "fa-solid fa-layer-group"
+      },
+      "data": "{\"fields\":[],\"content\":\"content\"}",
+      
+      "fields": {
+        "input": [
+          {
+            "name": "endpoint",
+            "label": "Endpoint",
+            "type": "string",
+            "description": "Endpoint do serviço Azure OpenAI."
+          },
+          {
+            "name": "apiKey",
+            "label": "API Key",
+            "type": "string",
+            "description": "Chave de API para autenticação."
+          },
+          {
+            "name": "prompt",
+            "label": "Prompt",
+            "type": "textarea",
+            "description": "Prompt para o modelo OpenAI."
+          }
+        ],
+        "output": [
+          {
+            "name": "openAiResult",
+            "label": "Resultado OpenAI",
+            "type": "textarea",
+            "description": "Resposta do modelo OpenAI."
+          }
+        ]
+      },
+      "inputCount": 1,
+      "outputCount": 1,
+      "description": "Este nó interage com o serviço OpenAI do Azure."
+    },
+    {
+      "id": "95c18776-ae2e-46a5-bfae-cdd4fd00e635",
+      "name": "AzureQueueStorageConsumeNode",
+      "frontendComponent": "BaseNode",
+      "backendComponent": "AzureQueueStorageConsumeNodeBackend",
+      "collectionId": "Azure",
+      "icon": {
+        "source": "fontawesome",
+        "name": "fa-solid fa-layer-group"
+      },
+      "data": "{\"fields\":[],\"content\":\"content\"}",
+      
+      "fields": {
+        "input": [
+          {
+            "name": "connectionString",
+            "label": "Connection String",
+            "type": "string",
+            "description": "String de conexão do Azure Queue Storage."
+          },
+          {
+            "name": "queueName",
+            "label": "Nome da Fila",
+            "type": "string",
+            "description": "Nome da fila a ser consumida."
+          }
+        ],
+        "output": [
+          {
+            "name": "message",
+            "label": "Mensagem",
+            "type": "textarea",
+            "description": "Mensagem consumida da fila."
+          }
+        ]
+      },
+      "inputCount": 1,
+      "outputCount": 1,
+      "description": "Este nó consome mensagens de uma fila de armazenamento do Azure."
+    },
+    {
+      "id": "dd521584-9bdf-47f5-8e95-f577e32eaf6d",
+      "name": "AzureQueueStoragePublishNode",
+      "frontendComponent": "BaseNode",
+      "backendComponent": "AzureQueueStoragePublishNodeBackend",
+      "collectionId": "Azure",
+      "icon": {
+        "source": "fontawesome",
+        "name": "fa-solid fa-layer-group"
+      },
+      "data": "{\"fields\":[],\"content\":\"content\"}",
+      
+      "fields": {
+        "input": [
+          {
+            "name": "connectionString",
+            "label": "Connection String",
+            "type": "string",
+            "description": "String de conexão do Azure Queue Storage."
+          },
+          {
+            "name": "queueName",
+            "label": "Nome da Fila",
+            "type": "string",
+            "description": "Nome da fila para publicação."
+          },
+          {
+            "name": "message",
+            "label": "Mensagem",
+            "type": "textarea",
+            "description": "Mensagem a ser publicada."
+          }
+        ],
+        "output": [
+          {
+            "name": "publishResult",
+            "label": "Resultado da Publicação",
+            "type": "string",
+            "description": "Confirmação da publicação."
+          }
+        ]
+      },
+      "inputCount": 1,
+      "outputCount": 1,
+      "description": "Este nó publica mensagens em uma fila de armazenamento do Azure."
+    },
+    {
+      "id": "1d0bbfaf-491d-4622-a9fd-704f43401d1a",
+      "name": "AzureQueueStorageDeleteNode",
+      "frontendComponent": "BaseNode",
+      "backendComponent": "AzureQueueStorageDeleteNodeBackend",
+      "collectionId": "Azure",
+      "icon": {
+        "source": "fontawesome",
+        "name": "fa-solid fa-layer-group"
+      },
+      "data": "{\"fields\":[],\"content\":\"content\"}",
+      
+      "fields": {
+        "input": [
+          {
+            "name": "connectionString",
+            "label": "Connection String",
+            "type": "string",
+            "description": "String de conexão do Azure Queue Storage."
+          },
+          {
+            "name": "queueName",
+            "label": "Nome da Fila",
+            "type": "string",
+            "description": "Nome da fila para exclusão."
+          },
+          {
+            "name": "messageId",
+            "label": "ID da Mensagem",
+            "type": "string",
+            "description": "ID da mensagem a ser excluída."
+          }
+        ],
+        "output": [
+          {
+            "name": "deleteResult",
+            "label": "Resultado da Exclusão",
+            "type": "string",
+            "description": "Confirmação da exclusão."
+          }
+        ]
+      },
+      "inputCount": 1,
+      "outputCount": 1,
+      "description": "Este nó exclui mensagens de uma fila de armazenamento do Azure."
+    }
+]

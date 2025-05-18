@@ -9,7 +9,7 @@ import { faMagnifyingGlassPlus, faMagnifyingGlassMinus, faMagnifyingGlass, faCir
 import Card from '../card/Card';
 import { ActionModel } from '../../models/ActionModel';
 import OffCanvas from '../offcanvas/OffCanvas';
-import { defaultActions } from '../../data/toolbox';
+import nodes from '../../data/nodes.json';
 
 const Designer = ({ children }: {children?: ReactElement<typeof ActionBox>[]}) => {
   const [editor, setEditor] = useState<Drawflow|null>(null);
@@ -17,7 +17,7 @@ const Designer = ({ children }: {children?: ReactElement<typeof ActionBox>[]}) =
   const [isActionsVisible, setIsActionsVisible] = useState(false);
   const [isPropertiesVisible, setIsPropertiesVisible] = useState(false);
   const [selectedAction, setSelectedAction] = useState<DrawflowNode|undefined>(undefined);
-  const [actions] = useState<ActionModel[]>(defaultActions);
+  const [actions] = useState<any[]>(nodes);
   
   useEffect(() => {
     if (drawflowRef) {
@@ -125,14 +125,14 @@ const Designer = ({ children }: {children?: ReactElement<typeof ActionBox>[]}) =
         <Card className="actions-card">
           <div className="accordion" id="actionsAccordion">
             {Object.entries(
-              actions.reduce((acc, action) => {
-                const category = action.category || "Uncategorized"; // Agrupa por categoria
-                if (!acc[category]) acc[category] = [];
-                acc[category].push(action);
+              actions.reduce((acc: Record<string, any[]>, node: any) => {
+                const collection = node.collectionId || 'Sem coleção';
+                if (!acc[collection]) acc[collection] = [];
+                acc[collection].push(node);
                 return acc;
-              }, {} as Record<string, ActionModel[]>)
-            ).map(([category, actionsInCategory], index) => (
-              <div className="accordion-item" key={category}>
+              }, {} as Record<string, any[]>)
+            ).map(([collection, nodesInCollection], index) => (
+              <div className="accordion-item" key={collection}>
                 <h2 className="accordion-header" id={`heading-${index}`}>
                   <button
                     className={`accordion-button ${index === 0 ? '' : 'collapsed'}`}
@@ -142,9 +142,8 @@ const Designer = ({ children }: {children?: ReactElement<typeof ActionBox>[]}) =
                     aria-expanded={index === 0 ? "true" : "false"}
                     aria-controls={`collapse-${index}`}
                   >
-                    {actionsInCategory[0].icon.library == "font-awesome" && <FontAwesomeIcon icon={getIcon(actionsInCategory[0].icon.name)} className="me-2" />}
-                    {actionsInCategory[0].icon.library == "custom" && <img src={actionsInCategory[0].icon.source} alt="icon" className="me-2" />}
-                    {category}
+                    {/* Ícone da coleção, se desejar adicionar, pode customizar aqui */}
+                    {collection}
                   </button>
                 </h2>
                 <div
@@ -154,22 +153,33 @@ const Designer = ({ children }: {children?: ReactElement<typeof ActionBox>[]}) =
                   data-bs-parent="#actionsAccordion"
                 >
                   <div className="accordion-body">
-                    {actionsInCategory.map((action) => (
-                      <button
-                        key={action.title}
-                        type="button"
-                        className="btn btn-outline-secondary btn-lg m-1"
-                        draggable="true"
-                        data-bs-container="body"
-                        data-bs-toggle="popover"
-                        data-bs-placement="top"
-                        data-bs-content="Top popover"
-                        data-content={JSON.stringify(action)}
-                        onDragStart={onDrag}
-                      >
-                        {action.title}
-                      </button>
-                    ))}
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                      {nodesInCollection.map((node: any) => (
+                        <button
+                          key={node.id}
+                          type="button"
+                          className="btn btn-outline-secondary btn-lg"
+                          style={{ margin: 0 }}
+                          draggable="true"
+                          data-bs-container="body"
+                          data-bs-toggle="popover"
+                          data-bs-placement="top"
+                          data-bs-content="Top popover"
+                          data-content={JSON.stringify(node)}
+                          onDragStart={onDrag}
+                        >
+                          {/* Ícone do node */}
+                          {node.icon?.source === "fontawesome" && (
+                            <FontAwesomeIcon icon={getIcon(node.icon.name)} className="me-2" />
+                          )}
+                          {/* Se houver ícone customizado, adicione aqui */}
+                          {node.icon?.source !== "fontawesome" && node.icon?.source && (
+                            <img src={node.icon.source} alt="icon" className="me-2" />
+                          )}
+                          {node.name}
+                        </button>
+                      ))}
+                    </div>
                   </div>
                 </div>
               </div>
