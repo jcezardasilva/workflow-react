@@ -78,6 +78,9 @@
 }
 
 .drawflow {
+    svg {
+        position: unset;
+    }
     .drawflow-node {
         left: 0px;
         display: var(--dfNodeType);
