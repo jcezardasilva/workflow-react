@@ -79,6 +79,7 @@
 
 .drawflow {
     .drawflow-node {
+        left: 0px;
         display: var(--dfNodeType);
         background: var(--dfNodeBackgroundColor);
         color: var(--dfNodeTextColor);
@@ -87,7 +88,7 @@
         padding-bottom: var(--dfNodePaddingBottom);
         -webkit-box-shadow: var(--dfNodeBoxShadowHL) var(--dfNodeBoxShadowVL) var(--dfNodeBoxShadowBR) var(--dfNodeBoxShadowS) var(--dfNodeBoxShadowColor);
         box-shadow: var(--dfNodeBoxShadowHL) var(--dfNodeBoxShadowVL) var(--dfNodeBoxShadowBR) var(--dfNodeBoxShadowS) var(--dfNodeBoxShadowColor);
-    
+        width: auto;
         .input {
             left: var(--dfInputLeft);
             background: var(--dfInputBackgroundColor);
@@ -154,7 +155,7 @@
     }
 }
 
-.action {
+.node {
     .header {
         display: flex;
         justify-content: space-between;
@@ -203,7 +204,7 @@
     }
 }
 
-.show-actions {
+.show-nodes {
     position: absolute;
     top: 20px;
     left: 20px;
@@ -217,7 +218,7 @@
         color: #505050;        
     }
 }
-.actions-card {
+.nodes-card {
     position: absolute;
     top: 80px;
     left: 20px;
@@ -290,7 +291,7 @@
   border-radius: 4px;
 }
 
-/* Ajuste para tema escuro nos botões de actions */
+/* Ajuste para tema escuro nos botões de nodes */
 .accordion-body .btn {
   background-color: #505050; /* Fundo escuro para botões */
   color: #fff; /* Texto branco */

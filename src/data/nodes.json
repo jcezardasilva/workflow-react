@@ -279,7 +279,7 @@
             "label": "Atraso (ms)",
             "type": "number",
             "min": 0,
-            "step": 100,
+            "node": 100,
             "description": "Tempo de atraso em milissegundos."
           }
         ],
@@ -686,9 +686,9 @@
     },
     {
       "id": "b4674b18-aebd-4dbe-ab5f-aae5e62dc879",
-      "name": "AzureCustomExtractionNode",
+      "name": "AzureCustomExtrnodeNode",
       "frontendComponent": "BaseNode",
-      "backendComponent": "AzureCustomExtractionNodeBackend",
+      "backendComponent": "AzureCustomExtrnodeNodeBackend",
       "collectionId": "Azure",
       "icon": {
         "source": "fontawesome",
@@ -702,7 +702,7 @@
             "name": "endpoint",
             "label": "Endpoint",
             "type": "string",
-            "description": "Endpoint do serviço Azure Custom Extraction."
+            "description": "Endpoint do serviço Azure Custom Extrnode."
           },
           {
             "name": "apiKey",
@@ -719,7 +719,7 @@
         ],
         "output": [
           {
-            "name": "extractionResult",
+            "name": "extrnodeResult",
             "label": "Resultado da Extração",
             "type": "textarea",
             "description": "Resultado da extração."

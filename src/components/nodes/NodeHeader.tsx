@@ -1,7 +1,7 @@
 import React from 'react';
 
 interface NodeHeaderProps {
-  title: string;
+  name: string;
   value: string;
   onEdit: () => void;
   onChangeCollapse: (collapsed: boolean) => void;
@@ -10,24 +10,14 @@ interface NodeHeaderProps {
 }
 
 const NodeHeader: React.FC<NodeHeaderProps> = ({
-  title,
-  value,
   onEdit,
-  onChangeCollapse,
-  onChange,
+  name,
   className = '',
 }) => {
   return (
-    <div className={`node-header ${className}`} style={{ display: 'flex', alignItems: 'center', gap: 8, background: '#222', color: 'white', padding: 8 }}>
-      <button onClick={() => onChangeCollapse(true)} style={{ background: 'none', border: 'none', color: 'white', fontSize: 18, cursor: 'pointer' }}>-</button>
-      <input
-        type="text"
-        value={value}
-        onChange={e => onChange(e.target.value)}
-        placeholder={title}
-        style={{ flex: 1, background: 'transparent', color: 'white', border: 'none', fontWeight: 'bold', fontSize: 16 }}
-      />
-      <button onClick={onEdit} style={{ background: 'none', border: 'none', color: 'white', fontSize: 18, cursor: 'pointer' }}>⚙️</button>
+    <div className={`node-header ${className} d-flex justify-content-between bg-transparent border-0 text-white-50 w-100`}>
+      <span>{name}</span>
+      <button onClick={onEdit} style={{ background: 'none', border: 'none', marginRight: -15, color: 'white', fontSize: 18, cursor: 'pointer' }}>⚙️</button>
     </div>
   );
 };

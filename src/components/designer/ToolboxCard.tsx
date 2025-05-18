@@ -4,8 +4,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCode, faDatabase, faCogs, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 
 interface ToolboxCardProps {
-  actions: any[];
-  isActionsVisible: boolean;
+  nodes: any[];
+  isNodesVisible: boolean;
   onDrag: (e: React.DragEvent<HTMLButtonElement>) => void;
 }
 
@@ -18,13 +18,13 @@ const getIcon = (iconName: string) => {
   return icons[iconName] || faCode;
 };
 
-const ToolboxCard: React.FC<ToolboxCardProps> = ({ actions, isActionsVisible, onDrag }) => {
-  if (!isActionsVisible) return null;
+const ToolboxCard: React.FC<ToolboxCardProps> = ({ nodes, isNodesVisible, onDrag }) => {
+  if (!isNodesVisible) return null;
   return (
-    <Card className="actions-card">
-      <div className="accordion" id="actionsAccordion">
+    <Card className="nodes-card">
+      <div className="accordion" id="nodesAccordion">
         {Object.entries(
-          actions.reduce((acc: Record<string, any[]>, node: any) => {
+          nodes.reduce((acc: Record<string, any[]>, node: any) => {
             const collection = node.collectionId || 'Sem coleção';
             if (!acc[collection]) acc[collection] = [];
             acc[collection].push(node);
@@ -48,7 +48,7 @@ const ToolboxCard: React.FC<ToolboxCardProps> = ({ actions, isActionsVisible, on
               id={`collapse-${index}`}
               className={`accordion-collapse collapse ${index === 0 ? 'show' : ''}`}
               aria-labelledby={`heading-${index}`}
-              data-bs-parent="#actionsAccordion"
+              data-bs-parent="#nodesAccordion"
             >
               <div className="accordion-body">
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>

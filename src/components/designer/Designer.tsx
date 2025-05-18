@@ -2,26 +2,24 @@ import { useState, useEffect, useRef, ReactElement, Children } from 'react';
 import Drawflow, { DrawflowNode } from 'drawflow';
 import "./Designer.scss";
 import ReactDOMServer from 'react-dom/server';
-import ActionBox from '../action-box/ActionBox';
+import BaseNode from '../nodes/BaseNode';
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMagnifyingGlassPlus, faMagnifyingGlassMinus, faMagnifyingGlass, faCirclePlus, faCircleMinus } from '@fortawesome/free-solid-svg-icons'
 import ToolboxCard from './ToolboxCard';
-import { ActionModel } from '../../models/ActionModel';
 import OffCanvas from '../offcanvas/OffCanvas';
 import NodeDrawer from '../nodes/NodeDrawer';
 import nodes from '../../data/nodes.json';
 
-const Designer = ({ children }: {children?: ReactElement<typeof ActionBox>[]}) => {
+const Designer = ({ children }: {children?: ReactElement<typeof BaseNode>[]}) => {
   const [editor, setEditor] = useState<Drawflow|null>(null);
   const drawflowRef = useRef<HTMLDivElement | null>(null);
-  const [isActionsVisible, setIsActionsVisible] = useState(false);
+  const [isNodesVisible, setIsNodesVisible] = useState(false);
   const [isPropertiesVisible, setIsPropertiesVisible] = useState(false);
-  const [selectedAction, setSelectedAction] = useState<DrawflowNode|undefined>(undefined);
+  const [selectedNode, setSelectedNode] = useState<DrawflowNode|undefined>(undefined);
   const [selectedNodeFields, setSelectedNodeFields] = useState<{input:any[],output:any[]}>({input:[],output:[]});
   const [selectedNodeData, setSelectedNodeData] = useState<any>({});
   const [selectedNodeTitle, setSelectedNodeTitle] = useState<string>("");
-  const [actions] = useState<any[]>(nodes);
   
   useEffect(() => {
     if (drawflowRef) {
@@ -34,7 +32,7 @@ const Designer = ({ children }: {children?: ReactElement<typeof ActionBox>[]}) =
       editor.start();
       
       Children.map(children, (child) => {
-        if(React.isValidElement(child) && child.type === ActionBox) {
+        if(React.isValidElement(child) && child.type === BaseNode) {
           const nodeHtml = ReactDOMServer.renderToString(child);
           editor.addNode(
             child.type.name,
@@ -52,31 +50,31 @@ const Designer = ({ children }: {children?: ReactElement<typeof ActionBox>[]}) =
     }
   }, [editor,children]);
   
-  const addActionToEditor = ({id,clientX,clientY,title,description}:{id:string, clientX:number, clientY: number,title:string,description:string}) => {
+  const addNodeToEditor = ({id,clientX,clientY,name,description,fields}:{id:string, clientX:number, clientY: number,title:string,description:string,fields:any}) => {
     if(!editor) return;
 
     const pos_x = clientX * ( editor.precanvas.clientWidth / (editor.precanvas.clientWidth * editor.zoom)) - (editor.precanvas.getBoundingClientRect().x * ( editor.precanvas.clientWidth / (editor.precanvas.clientWidth * editor.zoom)));
     const pos_y = clientY * ( editor.precanvas.clientHeight / (editor.precanvas.clientHeight * editor.zoom)) - (editor.precanvas.getBoundingClientRect().y * ( editor.precanvas.clientHeight / (editor.precanvas.clientHeight * editor.zoom)));
-    const actionBox = <ActionBox id={id} title={title} description={description} x={pos_x} y={pos_y}/>;
+    const baseNode = <BaseNode name={name} description={description} fields={fields} x={pos_x} y={pos_y}/>;
 
-    const nodeHtml = ReactDOMServer.renderToString(actionBox);
+    const nodeHtml = ReactDOMServer.renderToString(baseNode);
     editor.addNode(
-      actionBox.type.name,
+      baseNode.type.name,
       1,
       1,
-      pos_x,
+      pos_x-300,
       pos_y,
-      actionBox.type.name.toLowerCase(),
+      baseNode.type.name.toLowerCase(),
       { name: '', id: id },
       nodeHtml,
       false
     );
-    setActionBoxEventListeners();
+    setNodeBoxEventListeners();
   }
-  function setActionBoxEventListeners(){
-    const actionBoxes = document.querySelectorAll('.action');
-    actionBoxes.forEach((actionBox) => {
-      const editButton = actionBox.querySelector('.edit');
+  function setNodeBoxEventListeners(){
+    const nodeBoxes = document.querySelectorAll('.node');
+    nodeBoxes.forEach((nodeBox) => {
+      const editButton = nodeBox.querySelector('.edit');
       if(editButton){
         editButton.addEventListener('click', (e) => {
           const element = (e.target as HTMLElement);
@@ -88,7 +86,7 @@ const Designer = ({ children }: {children?: ReactElement<typeof ActionBox>[]}) =
           });
           if(dataId && match){
             const node = (editorNodes!)[match];
-            setSelectedAction(node);
+            setSelectedNode(node);
             // Buscar campos e dados do node em nodes.json
             const nodeDef = nodes.find((n:any) => n.id === dataId);
             setSelectedNodeFields(nodeDef?.fields || {input:[],output:[]});
@@ -105,14 +103,14 @@ const Designer = ({ children }: {children?: ReactElement<typeof ActionBox>[]}) =
   }
 
   const onDrop = (e: React.DragEvent<HTMLDivElement>) => {
-    const action:ActionModel = JSON.parse(e.dataTransfer.getData("data"));
-    setIsActionsVisible(false);
-    
+    const node:any = JSON.parse(e.dataTransfer.getData("data"));
+    setIsNodesVisible(false);
     e.preventDefault();
-    addActionToEditor({
-      ...action,
+    addNodeToEditor({
+      ...node,
       clientX:e.clientX, 
-      clientY:e.clientY
+      clientY:e.clientY,
+      fields: node.fields || {input:[],output:[]}
     });
   }
   const toggleProperties = () => setIsPropertiesVisible(!isPropertiesVisible);
@@ -122,11 +120,11 @@ const Designer = ({ children }: {children?: ReactElement<typeof ActionBox>[]}) =
   return (
     <>
       <div ref={drawflowRef} onDrop={onDrop} onDragOver={(e)=> e.preventDefault()}>
-        {!isActionsVisible && <FontAwesomeIcon className="show-actions" icon={faCirclePlus} onClick={()=>setIsActionsVisible(true)}/>}
-        {isActionsVisible && <FontAwesomeIcon className="show-actions" icon={faCircleMinus} onClick={()=>setIsActionsVisible(false)}/>}
-        <ToolboxCard actions={actions} isActionsVisible={isActionsVisible} onDrag={onDrag} />
+        {!isNodesVisible && <FontAwesomeIcon className="show-nodes" icon={faCirclePlus} onClick={()=>setIsNodesVisible(true)}/>}
+        {isNodesVisible && <FontAwesomeIcon className="show-nodes" icon={faCircleMinus} onClick={()=>setIsNodesVisible(false)}/>}
+        <ToolboxCard nodes={nodes} isNodesVisible={isNodesVisible} onDrag={onDrag} />
         {isPropertiesVisible && (
-          <OffCanvas onClose={toggleProperties} data={selectedAction}>
+          <OffCanvas onClose={toggleProperties} data={selectedNode}>
             <NodeDrawer
               open={isPropertiesVisible}
               onClose={toggleProperties}

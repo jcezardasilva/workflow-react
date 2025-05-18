@@ -13,9 +13,11 @@ interface BaseNodeProps {
   fields?: { input: any[]; output: any[] };
   description?: string;
   store?: any;
+  x?: number;
+  y?: number;
 }
 
-const BaseNode: React.FC<BaseNodeProps> = ({ title, fields = { input: [], output: [] }, description = '', store }) => {
+const BaseNode: React.FC<BaseNodeProps> = ({ name, fields = { input: [], output: [] }, description = '', store, x, y }) => {
   const elRef = useRef<HTMLDivElement>(null);
   const [drawer, setDrawer] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
@@ -59,30 +61,29 @@ const BaseNode: React.FC<BaseNodeProps> = ({ title, fields = { input: [], output
     setDataNode((prev) => ({ ...prev, nodeDescription: e.target.value }));
   };
 
-  return (
+return (
     <div ref={elRef}>
       <NodeHeader
-        title={title}
+        name={name}
         value={dataNode.nodeName}
         onEdit={() => setDrawer(true)}
         onChangeCollapse={setCollapsed}
         onChange={handleNameChange}
-        className="ps-2 pe-2"
       />
-      {!collapsed && (
-        <div className="node-body p-2">
-          <textarea
-            className="bg-transparent border-0 text-white-50 w-100"
-            value={dataNode.nodeDescription}
-            onChange={handleDescriptionChange}
-            placeholder="Set description"
-          />
-        </div>
-      )}
+      
+      <div className="node-body">
+        <textarea
+          className="bg-transparent border-0 text-white-50 w-100"
+          value={dataNode.nodeDescription}
+          onChange={handleDescriptionChange}
+          placeholder="Set description"
+        />
+      </div>
+      
       <NodeDrawer
         open={drawer}
         onClose={() => setDrawer(false)}
-        title={title}
+        title={name}
         fields={fields}
         dataNode={dataNode}
         store={effectiveStore}

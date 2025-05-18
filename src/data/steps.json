@@ -1,5 +1,5 @@
 [{
-    "name": "HttpGetStep",
+    "name": "HttpGetNode",
     "description": "Make a http request",
     "variables": {
         "url": "https://api.thecatapi.com/v1/images/search?limit=10",
@@ -9,7 +9,7 @@
     "inputsCount": 1,
     "outputsCount": 1
 },{
-    "name": "HttpResponseStep",
+    "name": "HttpResponseNode",
     "description": "Parse the http response content",
     "variables": {
         "httpResponse": "{ \"url\": \"https://api.thecatapi.com/v1/images/search?limit=10\"}",
@@ -19,7 +19,7 @@
     "inputsCount": 1,
     "outputsCount": 1
 },{
-    "name": "ConsoleStep",
+    "name": "ConsoleNode",
     "description": "Print a message to the system console",
     "variables": {
         "message": "hello world",
@@ -29,7 +29,7 @@
     "outputsCount": 1
 },
 {
-    "name": "ConditionalStep",
+    "name": "ConditionalNode",
     "description": "Validate if the input match to the condition",
     "variables": {
         "valueA": 10,
