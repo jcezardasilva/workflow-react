@@ -14,10 +14,29 @@
       "fields": {
         "input": [
           {
-            "name": "condition",
-            "label": "Condição",
+            "name": "valueA",
+            "label": "Valor A",
             "type": "string",
-            "description": "Expressão a ser avaliada para decidir o fluxo."
+            "description": "Primeiro valor para a comparação."
+          },
+          {
+            "name": "operator",
+            "label": "Operador",
+            "type": "select",
+            "values": [">", "<", ">=", "<=", "=","!=","in","contains","startsWith","endsWith","match"],
+            "description": "Operador a ser utilizado na comparação."
+          },
+          {
+            "name": "valueB",
+            "label": "Valor B",
+            "type": "string",
+            "description": "Segundo valor para a comparação."
+          },
+          {
+            "name": "negative",
+            "label": "Negação",
+            "type": "boolean",
+            "description": "Nega a condição, isto é, se o operador for igual será avaliado diferente, se o operador for contains será avaliada a ausência do valor, etc."
           }
         ],
         "output": [

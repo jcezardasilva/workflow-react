@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import NodeHeader from './NodeHeader';
 import NodeDrawer from './NodeDrawer';
-
 interface NodeData {
   nodeName: string;
   nodeDescription: string;
@@ -9,7 +8,8 @@ interface NodeData {
 }
 
 interface BaseNodeProps {
-  title: string;
+  name: string;
+  id: string;
   fields?: { input: any[]; output: any[] };
   description?: string;
   store?: any;
@@ -17,12 +17,11 @@ interface BaseNodeProps {
   y?: number;
 }
 
-const BaseNode: React.FC<BaseNodeProps> = ({ name, fields = { input: [], output: [] }, description = '', store, x, y }) => {
+const BaseNode: React.FC<BaseNodeProps> = ({ name, id, fields = { input: [], output: [] }, description = '', store, x, y }) => {
   const elRef = useRef<HTMLDivElement>(null);
   const [drawer, setDrawer] = useState(false);
-  const [collapsed, setCollapsed] = useState(false);
   const [dataNode, setDataNode] = useState<NodeData>({ nodeName: '', nodeDescription: '' });
-  const [nodeId, setNodeId] = useState<string | null>(null);
+  const [nodeId, setNodeId] = useState<string>(id);
 
   // Simulação de df (Drawflow) e store, adapte conforme necessário
   const df = (window as any).df || { getNodeFromId: () => ({}), updateNodeDataFromId: () => {} };
@@ -30,7 +29,6 @@ const BaseNode: React.FC<BaseNodeProps> = ({ name, fields = { input: [], output:
 
   useEffect(() => {
     if (elRef.current) {
-      // Supondo que o id do node está no DOM, como no Vue
       const parentId = elRef.current.parentElement?.parentElement?.id;
       if (parentId && parentId.startsWith('node-')) {
         const id = parentId.slice(5);
@@ -64,16 +62,16 @@ const BaseNode: React.FC<BaseNodeProps> = ({ name, fields = { input: [], output:
 return (
     <div ref={elRef}>
       <NodeHeader
+        id={nodeId}
         name={name}
         value={dataNode.nodeName}
         onEdit={() => setDrawer(true)}
-        onChangeCollapse={setCollapsed}
         onChange={handleNameChange}
       />
       
       <div className="node-body">
         <textarea
-          className="bg-transparent border-0 text-white-50 w-100"
+          className={`bg-transparent border-0 text-white-50 w-100`}
           value={dataNode.nodeDescription}
           onChange={handleDescriptionChange}
           placeholder="Set description"

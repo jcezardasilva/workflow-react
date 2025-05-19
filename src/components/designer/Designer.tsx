@@ -7,39 +7,79 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMagnifyingGlassPlus, faMagnifyingGlassMinus, faMagnifyingGlass, faCirclePlus, faCircleMinus } from '@fortawesome/free-solid-svg-icons'
 import ToolboxCard from './ToolboxCard';
-import OffCanvas from '../offcanvas/OffCanvas';
 import NodeDrawer from '../nodes/NodeDrawer';
 import nodes from '../../data/nodes.json';
+import { v4 as uuid } from 'uuid';
+
+type FieldData = {
+  [key: string]: string | number;
+};
+
+interface Field {
+  name: string;
+  label?: string;
+  type?: 'text' | 'number' | 'select' | 'textarea';
+  description?: string;
+  values?: string[];
+  min?: number;
+  max?: number;
+}
+
+interface Fields {
+  input: Field[];
+  output: Field[];
+}
+
+interface Icon {
+  name: string;
+  source?: string;
+  library?: 'font-awesome' | 'custom';
+  color?: string;
+}
+
+interface NodeDefinition {
+  id: string;
+  name: string;
+  description: string;
+  frontendComponent: string;
+  backendComponent: string;
+  collectionId: string;
+  icon: Icon;
+  data: string;
+  fields: Fields;
+  inputCount: number;
+  outputCount: number;
+}
 
 const Designer = ({ children }: {children?: ReactElement<typeof BaseNode>[]}) => {
   const [editor, setEditor] = useState<Drawflow|null>(null);
   const drawflowRef = useRef<HTMLDivElement | null>(null);
   const [isNodesVisible, setIsNodesVisible] = useState(false);
   const [isPropertiesVisible, setIsPropertiesVisible] = useState(false);
-  const [selectedNode, setSelectedNode] = useState<DrawflowNode|undefined>(undefined);
-  const [selectedNodeFields, setSelectedNodeFields] = useState<{input:any[],output:any[]}>({input:[],output:[]});
-  const [selectedNodeData, setSelectedNodeData] = useState<any>({});
+  const [selectedNodeFields, setSelectedNodeFields] = useState<Fields>({input:[],output:[]});
+  const [selectedNodeData, setSelectedNodeData] = useState<FieldData>({});
+  const [selectedNodeId, setSelectedNodeId] = useState<string>("");
   const [selectedNodeTitle, setSelectedNodeTitle] = useState<string>("");
   
   useEffect(() => {
-    if (drawflowRef) {
-        setEditor(new Drawflow(drawflowRef.current as HTMLDivElement));
+    if (drawflowRef.current) {
+      const newEditor = new Drawflow(drawflowRef.current);
+      newEditor.start();
+      setEditor(newEditor);
     }
-  }, [drawflowRef]);
+  }, []);
 
   useEffect(() => {
-    if (drawflowRef.current && editor) {
-      editor.start();
-      
-      Children.map(children, (child) => {
+    if (editor && children) {
+      Children.forEach(children, (child) => {
         if(React.isValidElement(child) && child.type === BaseNode) {
           const nodeHtml = ReactDOMServer.renderToString(child);
           editor.addNode(
             child.type.name,
             1,
             1,
-            child.props.x,
-            child.props.y,
+            0,  // Posição x padrão
+            0,  // Posição y padrão
             child.type.name.toLowerCase(),
             { name: '' },
             nodeHtml,
@@ -48,14 +88,47 @@ const Designer = ({ children }: {children?: ReactElement<typeof BaseNode>[]}) =>
         }
       });
     }
-  }, [editor,children]);
+  }, [editor, children]);
   
-  const addNodeToEditor = ({id,clientX,clientY,name,description,fields}:{id:string, clientX:number, clientY: number,title:string,description:string,fields:any}) => {
+  const updateNodeData = (nodeId: string, data: FieldData) => {
+    if (!editor) return;
+    
+    const modules = editor.export().drawflow;
+    const currentModule = modules.Home;
+    
+    if (!currentModule || !currentModule.data) return;
+    
+    Object.keys(currentModule.data).forEach(key => {
+      const node = currentModule.data[key];
+      if (node.data.id === nodeId) {
+        // Atualiza os dados do nó
+        editor.updateNodeDataFromId(key, { ...node.data, ...data });
+        
+        // Atualiza o estado local se este for o nó selecionado
+        if (selectedNodeId === nodeId) {
+          setSelectedNodeData(data);
+        }
+      }
+    });
+  };
+
+  const addNodeToEditor = ({id, clientX, clientY, name, description, fields}:{
+    id: string;
+    clientX: number;
+    clientY: number;
+    name: string;
+    description: string;
+    fields: Fields;
+  }) => {
     if(!editor) return;
 
-    const pos_x = clientX * ( editor.precanvas.clientWidth / (editor.precanvas.clientWidth * editor.zoom)) - (editor.precanvas.getBoundingClientRect().x * ( editor.precanvas.clientWidth / (editor.precanvas.clientWidth * editor.zoom)));
-    const pos_y = clientY * ( editor.precanvas.clientHeight / (editor.precanvas.clientHeight * editor.zoom)) - (editor.precanvas.getBoundingClientRect().y * ( editor.precanvas.clientHeight / (editor.precanvas.clientHeight * editor.zoom)));
-    const baseNode = <BaseNode name={name} description={description} fields={fields} x={pos_x} y={pos_y}/>;
+    const nodeId = id || uuid();
+    const pos_x = clientX * (editor.precanvas.clientWidth / (editor.precanvas.clientWidth * editor.zoom)) 
+                 - (editor.precanvas.getBoundingClientRect().x * (editor.precanvas.clientWidth / (editor.precanvas.clientWidth * editor.zoom)));
+    const pos_y = clientY * (editor.precanvas.clientHeight / (editor.precanvas.clientHeight * editor.zoom))
+                 - (editor.precanvas.getBoundingClientRect().y * (editor.precanvas.clientHeight / (editor.precanvas.clientHeight * editor.zoom)));
+    
+    const baseNode = <BaseNode name={name} id={nodeId} description={description} fields={fields}/>;
 
     const nodeHtml = ReactDOMServer.renderToString(baseNode);
     editor.addNode(
@@ -65,30 +138,37 @@ const Designer = ({ children }: {children?: ReactElement<typeof BaseNode>[]}) =>
       pos_x-300,
       pos_y,
       baseNode.type.name.toLowerCase(),
-      { name: '', id: id },
+      { name, id: nodeId },
       nodeHtml,
       false
     );
     setNodeBoxEventListeners();
   }
-  function setNodeBoxEventListeners(){
-    const nodeBoxes = document.querySelectorAll('.node');
+
+  const setNodeBoxEventListeners = () => {
+    const nodeBoxes = document.querySelectorAll('.basenode');
     nodeBoxes.forEach((nodeBox) => {
       const editButton = nodeBox.querySelector('.edit');
       if(editButton){
         editButton.addEventListener('click', (e) => {
           const element = (e.target as HTMLElement);
           let dataId = element.getAttribute('data-id') || "";
-          if(!dataId) dataId = element.parentElement?.getAttribute('data-id') || "";
+          
+          const buttonParent = element.closest('.edit');
+          if(!dataId) dataId = buttonParent?.getAttribute('data-id') || "";
+
+          if (!dataId) return;
+
           const editorNodes = editor?.export().drawflow.Home.data;
           const match = Object.keys(editorNodes as {[node:string]: DrawflowNode}).find((key:string) => {
             return editorNodes![key].data.id === dataId;
           });
-          if(dataId && match){
+
+          if(match){
             const node = (editorNodes!)[match];
-            setSelectedNode(node);
-            // Buscar campos e dados do node em nodes.json
-            const nodeDef = nodes.find((n:any) => n.id === dataId);
+            const nodeDef = (nodes as NodeDefinition[]).find(n => n.id === dataId);
+            
+            setSelectedNodeId(dataId);
             setSelectedNodeFields(nodeDef?.fields || {input:[],output:[]});
             setSelectedNodeData(node.data || {});
             setSelectedNodeTitle(nodeDef?.name || "Node");
@@ -97,55 +177,55 @@ const Designer = ({ children }: {children?: ReactElement<typeof BaseNode>[]}) =>
         });
       }
     });
-  }
+  };
+
   const onDrag = (e: React.DragEvent<HTMLButtonElement>) => {
     e.dataTransfer.setData("data", (e.target as HTMLButtonElement).getAttribute('data-content') ?? '');
-  }
+  };
 
   const onDrop = (e: React.DragEvent<HTMLDivElement>) => {
-    const node:any = JSON.parse(e.dataTransfer.getData("data"));
+    const node = JSON.parse(e.dataTransfer.getData("data")) as NodeDefinition;
     setIsNodesVisible(false);
     e.preventDefault();
     addNodeToEditor({
       ...node,
-      clientX:e.clientX, 
-      clientY:e.clientY,
+      clientX: e.clientX, 
+      clientY: e.clientY,
       fields: node.fields || {input:[],output:[]}
     });
-  }
-  const toggleProperties = () => setIsPropertiesVisible(!isPropertiesVisible);
+  };
 
-
+  const handleNodeDataUpdate = (newData: FieldData) => {
+    if (selectedNodeId) {
+      updateNodeData(selectedNodeId, newData);
+    }
+  };
 
   return (
     <>
       <div ref={drawflowRef} onDrop={onDrop} onDragOver={(e)=> e.preventDefault()}>
         {!isNodesVisible && <FontAwesomeIcon className="show-nodes" icon={faCirclePlus} onClick={()=>setIsNodesVisible(true)}/>}
         {isNodesVisible && <FontAwesomeIcon className="show-nodes" icon={faCircleMinus} onClick={()=>setIsNodesVisible(false)}/>}
-        <ToolboxCard nodes={nodes} isNodesVisible={isNodesVisible} onDrag={onDrag} />
+        <ToolboxCard nodes={nodes as NodeDefinition[]} isNodesVisible={isNodesVisible} onDrag={onDrag} />
         {isPropertiesVisible && (
-          <OffCanvas onClose={toggleProperties} data={selectedNode}>
-            <NodeDrawer
-              open={isPropertiesVisible}
-              onClose={toggleProperties}
-              title={selectedNodeTitle}
-              fields={selectedNodeFields}
-              dataNode={selectedNodeData}
-              store={{}}
-              direction="rtl"
-              onUpdateData={()=>{}}
-            />
-          </OffCanvas>
+          <NodeDrawer
+            open={isPropertiesVisible}
+            onClose={() => setIsPropertiesVisible(false)}
+            title={selectedNodeTitle}
+            fields={selectedNodeFields}
+            dataNode={selectedNodeData}
+            direction="rtl"
+            onUpdateData={handleNodeDataUpdate}
+          />
         )}
-
         <div className="bar-zoom d-flex justify-content-between">
-            <FontAwesomeIcon icon={faMagnifyingGlassMinus} onClick={()=>editor?.zoom_out()} className="m-2" style={{cursor:'pointer'}}/>
-            <FontAwesomeIcon icon={faMagnifyingGlass} onClick={()=>editor?.zoom_reset()}  className="m-2" style={{cursor:'pointer'}}/>
-            <FontAwesomeIcon icon={faMagnifyingGlassPlus} onClick={()=>editor?.zoom_in()}  className="m-2" style={{cursor:'pointer'}}/>
-          </div>
+          <FontAwesomeIcon icon={faMagnifyingGlassMinus} onClick={()=>editor?.zoom_out()} className="m-2" style={{cursor:'pointer'}}/>
+          <FontAwesomeIcon icon={faMagnifyingGlass} onClick={()=>editor?.zoom_reset()} className="m-2" style={{cursor:'pointer'}}/>
+          <FontAwesomeIcon icon={faMagnifyingGlassPlus} onClick={()=>editor?.zoom_in()} className="m-2" style={{cursor:'pointer'}}/>
+        </div>
       </div>
     </>
-  )
+  );
 };
 
 export default Designer;
