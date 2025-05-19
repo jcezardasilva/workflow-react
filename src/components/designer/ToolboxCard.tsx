@@ -1,7 +1,11 @@
 import React from 'react';
 import Card from '../card/Card';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCode, faDatabase, faCogs, IconDefinition } from '@fortawesome/free-solid-svg-icons';
+import { 
+  faCode, 
+  faDatabase, 
+  faCogs, 
+  IconDefinition, faMessage, faServer, faHexagonNodes, faHardDrive, faDiagramProject } from '@fortawesome/free-solid-svg-icons';
 
 interface ToolboxCardProps {
   nodes: any[];
@@ -14,6 +18,11 @@ const getIcon = (iconName: string) => {
     faCode,
     faDatabase,
     faCogs,
+    faMessage,
+    faServer,
+    faHexagonNodes,
+    faHardDrive,
+    faDiagramProject
   };
   return icons[iconName] || faCode;
 };
@@ -68,9 +77,6 @@ const ToolboxCard: React.FC<ToolboxCardProps> = ({ nodes, isNodesVisible, onDrag
                     >
                       {node.icon?.source === 'fontawesome' && (
                         <FontAwesomeIcon icon={getIcon(node.icon.name)} className="me-2" />
-                      )}
-                      {node.icon?.source !== 'fontawesome' && node.icon?.source && (
-                        <img src={node.icon.source} alt="icon" className="me-2" />
                       )}
                       {node.name}
                     </button>

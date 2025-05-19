@@ -7,7 +7,7 @@
       "collectionId": "ControlStructures",
       "icon": {
         "source": "fontawesome",
-        "name": "fa-solid fa-layer-group"
+        "name": "faCode"
       },
       "data": "{\"fields\":[],\"content\":\"content\"}",
       
@@ -182,7 +182,7 @@
       "collectionId": "Workflow",
       "icon": {
         "source": "fontawesome",
-        "name": "fa-solid fa-layer-group"
+        "name": "faDiagramProject"
       },
       "data": "{\"fields\":[],\"content\":\"content\"}",
       
@@ -214,7 +214,7 @@
       "collectionId": "Workflow",
       "icon": {
         "source": "fontawesome",
-        "name": "fa-solid fa-layer-group"
+        "name": "faDiagramProject"
       },
       "data": "{\"fields\":[],\"content\":\"content\"}",
       
@@ -619,7 +619,7 @@
       "collectionId": "Azure",
       "icon": {
         "source": "fontawesome",
-        "name": "fa-solid fa-layer-group"
+        "name": "faHardDrive"
       },
       "data": "{\"fields\":[],\"content\":\"content\"}",
       
@@ -665,7 +665,7 @@
       "collectionId": "Azure",
       "icon": {
         "source": "fontawesome",
-        "name": "fa-solid fa-layer-group"
+        "name": "faHexagonNodes"
       },
       "data": "{\"fields\":[],\"content\":\"content\"}",
       
@@ -711,7 +711,7 @@
       "collectionId": "Azure",
       "icon": {
         "source": "fontawesome",
-        "name": "fa-solid fa-layer-group"
+        "name": "faHexagonNodes"
       },
       "data": "{\"fields\":[],\"content\":\"content\"}",
       
@@ -757,7 +757,7 @@
       "collectionId": "Azure",
       "icon": {
         "source": "fontawesome",
-        "name": "fa-solid fa-layer-group"
+        "name": "faHexagonNodes"
       },
       "data": "{\"fields\":[],\"content\":\"content\"}",
       
@@ -803,7 +803,7 @@
       "collectionId": "Azure",
       "icon": {
         "source": "fontawesome",
-        "name": "fa-solid fa-layer-group"
+        "name": "faHexagonNodes"
       },
       "data": "{\"fields\":[],\"content\":\"content\"}",
       
@@ -849,7 +849,7 @@
       "collectionId": "Azure",
       "icon": {
         "source": "fontawesome",
-        "name": "fa-solid fa-layer-group"
+        "name": "faServer"
       },
       "data": "{\"fields\":[],\"content\":\"content\"}",
       
@@ -889,7 +889,7 @@
       "collectionId": "Azure",
       "icon": {
         "source": "fontawesome",
-        "name": "fa-solid fa-layer-group"
+        "name": "faServer"
       },
       "data": "{\"fields\":[],\"content\":\"content\"}",
       
@@ -935,7 +935,7 @@
       "collectionId": "Azure",
       "icon": {
         "source": "fontawesome",
-        "name": "fa-solid fa-layer-group"
+        "name": "faServer"
       },
       "data": "{\"fields\":[],\"content\":\"content\"}",
       
