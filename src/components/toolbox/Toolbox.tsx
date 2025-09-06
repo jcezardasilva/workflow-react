@@ -1,13 +1,19 @@
 import React from 'react';
-import Card from '../card/Card';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { 
-  faCode, 
-  faDatabase, 
-  faCogs, 
-  IconDefinition, faMessage, faServer, faHexagonNodes, faHardDrive, faDiagramProject } from '@fortawesome/free-solid-svg-icons';
+import {
+  faCode,
+  faDatabase,
+  faCogs,
+  IconDefinition,
+  faMessage,
+  faServer,
+  faHexagonNodes,
+  faHardDrive,
+  faDiagramProject
+} from '@fortawesome/free-solid-svg-icons';
+import './Toolbox.scss';
 
-interface ToolboxCardProps {
+interface ToolboxProps {
   nodes: any[];
   isNodesVisible: boolean;
   onDrag: (e: React.DragEvent<HTMLButtonElement>) => void;
@@ -27,11 +33,12 @@ const getIcon = (iconName: string) => {
   return icons[iconName] || faCode;
 };
 
-const ToolboxCard: React.FC<ToolboxCardProps> = ({ nodes, isNodesVisible, onDrag }) => {
+const Toolbox: React.FC<ToolboxProps> = ({ nodes, isNodesVisible, onDrag }) => {
   if (!isNodesVisible) return null;
+
   return (
-    <Card className="nodes-card">
-      <div className="accordion" id="nodesAccordion">
+    <div className="toolbox-container">
+      <div className="accordion" id="toolboxAccordion">
         {Object.entries(
           nodes.reduce((acc: Record<string, any[]>, node: any) => {
             const collection = node.collectionId || 'Sem coleção';
@@ -39,39 +46,34 @@ const ToolboxCard: React.FC<ToolboxCardProps> = ({ nodes, isNodesVisible, onDrag
             acc[collection].push(node);
             return acc;
           }, {} as Record<string, any[]>)
-        ).map(([collection, nodesInCollection], index) => (
+        ).map(([collection, nodesInCollection]) => (
           <div className="accordion-item" key={collection}>
-            <h2 className="accordion-header" id={`heading-${index}`}>
+            <h2 className="accordion-header" id={`heading-${collection.replace(/\s/g, '')}`}>
               <button
-                className={`accordion-button ${index === 0 ? '' : 'collapsed'}`}
+                className="accordion-button collapsed"
                 type="button"
                 data-bs-toggle="collapse"
-                data-bs-target={`#collapse-${index}`}
-                aria-expanded={index === 0 ? 'true' : 'false'}
-                aria-controls={`collapse-${index}`}
+                data-bs-target={`#collapse-${collection.replace(/\s/g, '')}`}
+                aria-expanded="false"
+                aria-controls={`collapse-${collection.replace(/\s/g, '')}`}
               >
                 {collection}
               </button>
             </h2>
             <div
-              id={`collapse-${index}`}
-              className={`accordion-collapse collapse ${index === 0 ? 'show' : ''}`}
-              aria-labelledby={`heading-${index}`}
-              data-bs-parent="#nodesAccordion"
+              id={`collapse-${collection.replace(/\s/g, '')}`}
+              className="accordion-collapse collapse"
+              aria-labelledby={`heading-${collection.replace(/\s/g, '')}`}
+              data-bs-parent="#toolboxAccordion"
             >
               <div className="accordion-body">
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                <div className="toolbox-nodes">
                   {nodesInCollection.map((node: any) => (
                     <button
                       key={node.id}
                       type="button"
-                      className="btn btn-outline-secondary btn-lg"
-                      style={{ margin: 0 }}
+                      className="toolbox-node-item"
                       draggable="true"
-                      data-bs-container="body"
-                      data-bs-toggle="popover"
-                      data-bs-placement="top"
-                      data-bs-content="Top popover"
                       data-content={JSON.stringify(node)}
                       onDragStart={onDrag}
                     >
@@ -87,8 +89,8 @@ const ToolboxCard: React.FC<ToolboxCardProps> = ({ nodes, isNodesVisible, onDrag
           </div>
         ))}
       </div>
-    </Card>
+    </div>
   );
 };
 
-export default ToolboxCard;
+export { Toolbox };

@@ -1,0 +1,11 @@
+.toolbar {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  z-index: 1000; /* Garante que a barra de ferramentas fique acima do canvas */
+  background-color: white;
+  padding: 5px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  transform: translateX(-50%);
+}

@@ -1,0 +1,101 @@
+
+.toolbox-container {
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+  margin-top: 1rem;
+  max-height: calc(100vh - 150px);
+  overflow-y: auto;
+
+  .accordion-item {
+    border: none;
+    margin-bottom: 0.5rem;
+    border-radius: 6px;
+    overflow: hidden;
+
+    .accordion-header {
+      border-bottom: none;
+      .accordion-button {
+        background-color: #e9ecef;
+        color: #343a40;
+        font-weight: 600;
+        padding: 0.8rem 1rem;
+        border-radius: 6px;
+        transition: all 0.2s ease-in-out;
+        &:hover {
+          background-color: #dae0e5;
+        }
+        &:focus {
+          box-shadow: none;
+        }
+        &.collapsed {
+          background-color: #f1f3f5;
+          color: #495057;
+        }
+      }
+    }
+
+    .accordion-collapse {
+      border: 1px solid #e9ecef;
+      border-top: none;
+      border-bottom-left-radius: 6px;
+      border-bottom-right-radius: 6px;
+    }
+
+    .accordion-body {
+      padding: 1rem;
+      background-color: #ffffff;
+      border-top: none;
+    }
+  }
+}
+
+.toolbox-collection {
+  margin-bottom: 1rem;
+}
+
+.toolbox-collection-header {
+  font-size: 1.1rem;
+  color: #343a40;
+  margin-bottom: 0.8rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.toolbox-nodes {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.toolbox-node-item {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; /* Align content to the left */
+  text-align: left; /* Ensure text is left-aligned */
+  padding: 0.8rem 1.2rem; /* Increased padding */
+  border: 1px solid #ced4da;
+  border-radius: 8px; /* Slightly increased border-radius */
+  background-color: #ffffff;
+  color: #495057;
+  font-size: 0.95rem;
+  cursor: grab;
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    background-color: #e2e6ea;
+    border-color: #dae0e5;
+    color: #212529;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+  }
+
+  &:active {
+    background-color: #dae0e5;
+    border-color: #d3d9df;
+  }
+
+  .me-2 {
+    margin-right: 0.5rem;
+  }
+}

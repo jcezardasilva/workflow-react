@@ -1,11 +1,11 @@
 import './App.scss';
-import Designer from './components/designer/Designer';
+import ReactFlowDesigner from './components/designer/ReactFlowDesigner';
 
 function App() {  
   
   return (
     <>
-      <Designer />
+      <ReactFlowDesigner />
     </>
   )
 }

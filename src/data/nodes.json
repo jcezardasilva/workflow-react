@@ -1,7 +1,7 @@
 [
     {
       "id": "92c73bdb-18ef-4a04-825c-be1607d1b441",
-      "name": "ConditionalNode",
+      "name": "Conditional Node",
       "frontendComponent": "BaseNode",
       "backendComponent": "ConditionalNodeBackend",
       "collectionId": "ControlStructures",
@@ -60,7 +60,7 @@
     },
     {
       "id": "0d78dace-6b7d-4226-947e-4de5508c919e",
-      "name": "ForEachNode",
+      "name": "For Each Node",
       "frontendComponent": "BaseNode",
       "backendComponent": "ForEachNodeBackend",
       "collectionId": "ControlStructures",
@@ -94,7 +94,7 @@
     },
     {
       "id": "87638ef8-47d9-449d-8459-ddd34e591f09",
-      "name": "VariableExistsNode",
+      "name": "Variable Exists Node",
       "frontendComponent": "BaseNode",
       "backendComponent": "VariableExistsNodeBackend",
       "collectionId": "ControlStructures",
@@ -134,7 +134,7 @@
     },
     {
       "id": "5b064d1e-ec29-4e18-afb1-3b64703f9a75",
-      "name": "VariableHasValue",
+      "name": "Variable Has Value",
       "frontendComponent": "BaseNode",
       "backendComponent": "VariableHasValueBackend",
       "collectionId": "ControlStructures",
@@ -176,7 +176,7 @@
     },
     {
       "id": "24b1ca02-4e3c-44ff-8c42-a38d44e61fbf",
-      "name": "GetFlowNode",
+      "name": "Get Flow Node",
       "frontendComponent": "BaseNode",
       "backendComponent": "GetFlowNodeBackend",
       "collectionId": "Workflow",
@@ -198,7 +198,8 @@
           {
             "name": "flowData",
             "label": "Dados do Fluxo",
-            "type": "textarea"
+            "type": "string",
+            "description": "Nome da variável que conterá os dados do fluxo."
           }
         ]
       },
@@ -208,7 +209,7 @@
     },
     {
       "id": "2c8798f8-17b6-4163-80a5-bf83e4b1ea96",
-      "name": "ExecuteFlowNode",
+      "name": "Execute Flow Node",
       "frontendComponent": "BaseNode",
       "backendComponent": "ExecuteFlowNodeBackend",
       "collectionId": "Workflow",
@@ -230,7 +231,8 @@
           {
             "name": "result",
             "label": "Resultado",
-            "type": "textarea"
+            "type": "string",
+            "description": "Nome da variável que conterá o resultado da execução."
           }
         ]
       },
@@ -240,7 +242,7 @@
     },
     {
       "id": "ea454a4b-dd17-4570-8a7f-242e2b4c454c",
-      "name": "Base64Node",
+      "name": "Base64 Node",
       "frontendComponent": "BaseNode",
       "backendComponent": "Base64NodeBackend",
       "collectionId": "Common",
@@ -270,8 +272,8 @@
           {
             "name": "outputData",
             "label": "Dados de Saída",
-            "type": "textarea",
-            "description": "Resultado da operação Base64."
+            "type": "string",
+            "description": "Nome da variável que conterá o resultado da operação Base64."
           }
         ]
       },
@@ -281,7 +283,7 @@
     },
     {
       "id": "3fe93e6b-507a-4ef3-a1cc-5c55da5c0a7f",
-      "name": "DelayNode",
+      "name": "Delay Node",
       "frontendComponent": "BaseNode",
       "backendComponent": "DelayNodeBackend",
       "collectionId": "Common",
@@ -317,7 +319,7 @@
     },
     {
       "id": "37f82611-1838-4d71-907f-cfc6283ea33e",
-      "name": "JsonNode",
+      "name": "JSON Node",
       "frontendComponent": "BaseNode",
       "backendComponent": "JsonNodeBackend",
       "collectionId": "Common",
@@ -340,8 +342,8 @@
           {
             "name": "jsonOutput",
             "label": "JSON de Saída",
-            "type": "textarea",
-            "description": "Resultado da manipulação JSON."
+            "type": "string",
+            "description": "Nome da variável que conterá o resultado da manipulação JSON."
           }
         ]
       },
@@ -351,7 +353,7 @@
     },
     {
       "id": "8f925bae-e6c1-4069-a7c9-d5cf951f3789",
-      "name": "RemoveVariableNode",
+      "name": "Remove Variable Node",
       "frontendComponent": "BaseNode",
       "backendComponent": "RemoveVariableNodeBackend",
       "collectionId": "Common",
@@ -385,7 +387,7 @@
     },
     {
       "id": "babfeb20-5c90-4e95-b49a-cb2ab21471b6",
-      "name": "ReplaceNode",
+      "name": "Replace Node",
       "frontendComponent": "BaseNode",
       "backendComponent": "ReplaceNodeBackend",
       "collectionId": "Common",
@@ -420,8 +422,8 @@
           {
             "name": "result",
             "label": "Resultado",
-            "type": "textarea",
-            "description": "Texto após substituição."
+            "type": "string",
+            "description": "Nome da variável que conterá o texto após substituição."
           }
         ]
       },
@@ -431,7 +433,7 @@
     },
     {
       "id": "52c9bec4-6f71-4425-ba77-c806f45031e2",
-      "name": "SetVariableNode",
+      "name": "Set Variable Node",
       "frontendComponent": "BaseNode",
       "backendComponent": "SetVariableNodeBackend",
       "collectionId": "Common",
@@ -471,7 +473,7 @@
     },
     {
       "id": "1a0c0258-4046-4d67-89e8-354014c30478",
-      "name": "StringConcatNode",
+      "name": "String Concat Node",
       "frontendComponent": "BaseNode",
       "backendComponent": "StringConcatNodeBackend",
       "collectionId": "Common",
@@ -505,7 +507,7 @@
     },
     {
       "id": "29845746-1591-4188-a220-be208a7bf0c2",
-      "name": "StringNode",
+      "name": "String Node",
       "frontendComponent": "BaseNode",
       "backendComponent": "StringNodeBackend",
       "collectionId": "Common",
@@ -539,7 +541,7 @@
     },
     {
       "id": "736d1f8c-1c48-43a9-990d-14dfc016ffa6",
-      "name": "StringSplitNode",
+      "name": "String Split Node",
       "frontendComponent": "BaseNode",
       "backendComponent": "StringSplitNodeBackend",
       "collectionId": "Common",
@@ -568,8 +570,8 @@
           {
             "name": "parts",
             "label": "Partes",
-            "type": "textarea",
-            "description": "Partes resultantes da divisão."
+            "type": "string",
+            "description": "Nome da variável que conterá as partes resultantes da divisão."
           }
         ]
       },
@@ -579,7 +581,7 @@
     },
     {
       "id": "72dd1b6c-4a75-4ba8-a279-efc3be2d6dbf",
-      "name": "TokenizerNode",
+      "name": "Tokenizer Node",
       "frontendComponent": "BaseNode",
       "backendComponent": "TokenizerNodeBackend",
       "collectionId": "Common",
@@ -602,8 +604,8 @@
           {
             "name": "tokens",
             "label": "Tokens",
-            "type": "textarea",
-            "description": "Tokens extraídos."
+            "type": "string",
+            "description": "Nome da variável que conterá os tokens extraídos."
           }
         ]
       },
@@ -613,7 +615,7 @@
     },
     {
       "id": "395225e8-cc2f-42b8-891d-370aa0b6145c",
-      "name": "AzureBlobStorageNode",
+      "name": "Azure Blob Storage Node",
       "frontendComponent": "BaseNode",
       "backendComponent": "AzureBlobStorageNodeBackend",
       "collectionId": "Azure",
@@ -648,8 +650,8 @@
           {
             "name": "blobData",
             "label": "Dados do Blob",
-            "type": "textarea",
-            "description": "Dados do blob lidos ou escritos."
+            "type": "string",
+            "description": "Nome da variável que conterá os dados do blob lidos ou escritos."
           }
         ]
       },
@@ -659,7 +661,7 @@
     },
     {
       "id": "a2ab5b4a-f29d-4ee2-a94f-3510a353296a",
-      "name": "AzureCustomClassificationNode",
+      "name": "Azure Custom Classification Node",
       "frontendComponent": "BaseNode",
       "backendComponent": "AzureCustomClassificationNodeBackend",
       "collectionId": "Azure",
@@ -694,8 +696,8 @@
           {
             "name": "classificationResult",
             "label": "Resultado da Classificação",
-            "type": "textarea",
-            "description": "Resultado da classificação."
+            "type": "string",
+            "description": "Nome da variável que conterá o resultado da classificação."
           }
         ]
       },
@@ -705,7 +707,7 @@
     },
     {
       "id": "b4674b18-aebd-4dbe-ab5f-aae5e62dc879",
-      "name": "AzureCustomExtrnodeNode",
+      "name": "Azure Custom Extract Node",
       "frontendComponent": "BaseNode",
       "backendComponent": "AzureCustomExtrnodeNodeBackend",
       "collectionId": "Azure",
@@ -740,8 +742,8 @@
           {
             "name": "extrnodeResult",
             "label": "Resultado da Extração",
-            "type": "textarea",
-            "description": "Resultado da extração."
+            "type": "string",
+            "description": "Nome da variável que conterá o resultado da extração."
           }
         ]
       },
@@ -751,7 +753,7 @@
     },
     {
       "id": "87696f20-b574-47e2-b9d1-975c9f2219f8",
-      "name": "AzureCustomVisionClassificationNode",
+      "name": "Azure Custom Vision Classification Node",
       "frontendComponent": "BaseNode",
       "backendComponent": "AzureCustomVisionClassificationNodeBackend",
       "collectionId": "Azure",
@@ -786,8 +788,8 @@
           {
             "name": "visionResult",
             "label": "Resultado da Visão",
-            "type": "textarea",
-            "description": "Resultado da classificação de visão."
+            "type": "string",
+            "description": "Nome da variável que conterá o resultado da classificação de visão."
           }
         ]
       },
@@ -797,7 +799,7 @@
     },
     {
       "id": "476978d5-4829-412b-bd86-8bf7bc364aec",
-      "name": "AzureOpenAiNode",
+      "name": "Azure OpenAI Node",
       "frontendComponent": "BaseNode",
       "backendComponent": "AzureOpenAiNodeBackend",
       "collectionId": "Azure",
@@ -832,8 +834,8 @@
           {
             "name": "openAiResult",
             "label": "Resultado OpenAI",
-            "type": "textarea",
-            "description": "Resposta do modelo OpenAI."
+            "type": "string",
+            "description": "Nome da variável que conterá a resposta do modelo OpenAI."
           }
         ]
       },
@@ -843,7 +845,7 @@
     },
     {
       "id": "95c18776-ae2e-46a5-bfae-cdd4fd00e635",
-      "name": "AzureQueueStorageConsumeNode",
+      "name": "Azure Queue Storage Consume Node",
       "frontendComponent": "BaseNode",
       "backendComponent": "AzureQueueStorageConsumeNodeBackend",
       "collectionId": "Azure",
@@ -872,8 +874,8 @@
           {
             "name": "message",
             "label": "Mensagem",
-            "type": "textarea",
-            "description": "Mensagem consumida da fila."
+            "type": "string",
+            "description": "Nome da variável que conterá a mensagem consumida da fila."
           }
         ]
       },
@@ -883,7 +885,7 @@
     },
     {
       "id": "dd521584-9bdf-47f5-8e95-f577e32eaf6d",
-      "name": "AzureQueueStoragePublishNode",
+      "name": "Azure Queue Storage Publish Node",
       "frontendComponent": "BaseNode",
       "backendComponent": "AzureQueueStoragePublishNodeBackend",
       "collectionId": "Azure",
@@ -910,8 +912,8 @@
           {
             "name": "message",
             "label": "Mensagem",
-            "type": "textarea",
-            "description": "Mensagem a ser publicada."
+            "type": "string",
+            "description": "Nome da variável que conterá a mensagem a ser publicada."
           }
         ],
         "output": [
@@ -929,7 +931,7 @@
     },
     {
       "id": "1d0bbfaf-491d-4622-a9fd-704f43401d1a",
-      "name": "AzureQueueStorageDeleteNode",
+      "name": "Azure Queue Storage Delete Node",
       "frontendComponent": "BaseNode",
       "backendComponent": "AzureQueueStorageDeleteNodeBackend",
       "collectionId": "Azure",
@@ -972,5 +974,90 @@
       "inputCount": 1,
       "outputCount": 1,
       "description": "Este nó exclui mensagens de uma fila de armazenamento do Azure."
+    },
+    {
+      "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+      "name": "HTTP Request Node",
+      "frontendComponent": "BaseNode",
+      "backendComponent": "HttpRequestNodeBackend",
+      "collectionId": "HTTP",
+      "icon": {
+        "source": "fontawesome",
+        "name": "faGlobe"
+      },
+      "data": "{\"fields\":[],\"content\":\"content\"}",
+      
+      "fields": {
+        "input": [
+          {
+            "name": "url",
+            "label": "URL",
+            "type": "string",
+            "description": "URL completa para a requisição HTTP."
+          },
+          {
+            "name": "method",
+            "label": "Método HTTP",
+            "type": "select",
+            "values": ["GET", "POST", "PUT", "DELETE", "PATCH", "HEAD", "OPTIONS"],
+            "description": "Método HTTP a ser utilizado na requisição."
+          },
+          {
+            "name": "headers",
+            "label": "Headers",
+            "type": "textarea",
+            "description": "Headers HTTP em formato JSON (ex: {\"Content-Type\": \"application/json\", \"Authorization\": \"Bearer token\"})."
+          },
+          {
+            "name": "body",
+            "label": "Body",
+            "type": "textarea",
+            "description": "Corpo da requisição (para POST, PUT, PATCH)."
+          },
+          {
+            "name": "timeout",
+            "label": "Timeout (ms)",
+            "type": "number",
+            "min": 1000,
+            "max": 300000,
+            "description": "Timeout da requisição em milissegundos (padrão: 30000)."
+          },
+          {
+            "name": "followRedirects",
+            "label": "Seguir Redirecionamentos",
+            "type": "boolean",
+            "description": "Se deve seguir redirecionamentos HTTP automaticamente."
+          }
+        ],
+        "output": [
+          {
+            "name": "responseBody",
+            "label": "Corpo da Resposta",
+            "type": "string",
+            "description": "Nome da variável que conterá o corpo da resposta HTTP."
+          },
+          {
+            "name": "statusCode",
+            "label": "Código de Status",
+            "type": "string",
+            "description": "Nome da variável que conterá o código de status HTTP da resposta."
+          },
+          {
+            "name": "responseHeaders",
+            "label": "Headers da Resposta",
+            "type": "string",
+            "description": "Nome da variável que conterá os headers da resposta HTTP."
+          },
+          {
+            "name": "success",
+            "label": "Sucesso",
+            "type": "string",
+            "description": "Nome da variável que conterá o indicador de sucesso (true/false)."
+          }
+        ]
+      },
+      "inputCount": 1,
+      "outputCount": 4,
+      "description": "Este nó realiza requisições HTTP para APIs externas com suporte completo a métodos, headers, body e tratamento de respostas."
     }
 ]

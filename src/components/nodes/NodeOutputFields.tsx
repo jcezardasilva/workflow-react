@@ -1,18 +1,5 @@
-import React, { useState, useEffect } from 'react';
-
-interface Field {
-  name: string;
-  label?: string;
-  type?: 'text' | 'number' | 'select' | 'textarea';
-  description?: string;
-  values?: string[];
-  min?: number;
-  max?: number;
-}
-
-type FieldData = {
-  [key: string]: string | number;
-};
+import React, { useState, useEffect, useCallback, useRef } from 'react';
+import { Field, FieldData } from '../../types';
 
 interface NodeOutputFieldsProps {
   fields: Field[];
@@ -22,24 +9,34 @@ interface NodeOutputFieldsProps {
 
 const NodeOutputFields: React.FC<NodeOutputFieldsProps> = ({ fields, dataNode, onUpdateData }) => {
   const [localFields, setLocalFields] = useState<FieldData>({});
+  const isInitialized = useRef(false);
 
   useEffect(() => {
-    const initialFields = fields.reduce((acc, field) => ({
-      ...acc,
-      [field.name]: dataNode[field.name] || ''
-    }), {} as FieldData);
-    setLocalFields(initialFields);
-  }, [dataNode, fields]);
+    // Sincroniza o estado local apenas na inicialização ou quando os fields mudam
+    if (!isInitialized.current || fields.length !== Object.keys(localFields).length) {
+      const initialFields = fields.reduce((acc, field) => ({
+        ...acc,
+        [field.name]: dataNode[field.name] || ''
+      }), {} as FieldData);
+      setLocalFields(initialFields);
+      isInitialized.current = true;
+    }
+  }, [fields]); // Removido dataNode da dependência para evitar re-renders desnecessários
 
-  const handleInputChange = (fieldName: string, value: string | number) => {
+  const handleInputChange = useCallback((fieldName: string, value: string | number | boolean) => {
     setLocalFields(prev => {
       const newFields = { ...prev, [fieldName]: value };
-      onUpdateData({ ...dataNode, ...newFields });
+      
+      // Notifica o componente pai das mudanças de forma assíncrona
+      setTimeout(() => {
+        onUpdateData({ ...dataNode, ...newFields });
+      }, 0);
+      
       return newFields;
     });
-  };
+  }, [dataNode, onUpdateData]);
 
-  const renderInput = (field: Field) => {
+  const renderInput = useCallback((field: Field) => {
     const value = String(localFields[field.name] || '');
     const commonStyles = {
       width: '100%',
@@ -50,7 +47,8 @@ const NodeOutputFields: React.FC<NodeOutputFieldsProps> = ({ fields, dataNode, o
       borderRadius: '4px'
     };
 
-    if (field.type === 'textarea') {      return (
+    if (field.type === 'textarea') {
+      return (
         <textarea
           value={value}
           onChange={e => handleInputChange(field.name, e.target.value)}
@@ -59,20 +57,21 @@ const NodeOutputFields: React.FC<NodeOutputFieldsProps> = ({ fields, dataNode, o
       );
     }
 
-    return (      <input
+    return (
+      <input
         type={field.type || 'text'}
         value={value}
         onChange={e => handleInputChange(field.name, e.target.value)}
         style={commonStyles}
       />
     );
-  };
+  }, [localFields, handleInputChange]);
 
   return (
     <div>
       <div style={{ fontWeight: 'bold', marginBottom: 8 }}>Outputs</div>
-      {fields.map((field, idx) => (
-        <div key={idx} style={{ marginBottom: 8 }}>
+      {fields.map((field) => (
+        <div key={field.name} style={{ marginBottom: 8 }}>
           <div style={{ 
             display: 'flex',
             flexDirection: 'column',
