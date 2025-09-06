@@ -59,7 +59,7 @@
       },
       "inputCount": 1,
       "outputCount": 2,
-      "description": "Este nó avalia uma condição com saídas diferentes para cada condição."
+      "description": "Avalia uma condição com saídas diferentes para cada condição."
     },
     {
       "id": "0d78dace-6b7d-4226-947e-4de5508c919e",
@@ -96,7 +96,7 @@
       },
       "inputCount": 1,
       "outputCount": 1,
-      "description": "Este nó itera sobre uma coleção e executa ações para cada item."
+      "description": "Itera sobre uma coleção e executa ações para cada item."
     },
     {
       "id": "87638ef8-47d9-449d-8459-ddd34e591f09",
@@ -139,7 +139,7 @@
       },
       "inputCount": 1,
       "outputCount": 2,
-      "description": "Este nó verifica se uma variável existe no contexto atual."
+      "description": "Verifica se uma variável existe no contexto atual."
     },
     {
       "id": "5b064d1e-ec29-4e18-afb1-3b64703f9a75",
@@ -184,7 +184,7 @@
       },
       "inputCount": 1,
       "outputCount": 2,
-      "description": "Este nó verifica se uma variável possui um valor específico."
+      "description": "Verifica se uma variável possui um valor específico."
     },
     {
       "id": "24b1ca02-4e3c-44ff-8c42-a38d44e61fbf",
@@ -220,7 +220,7 @@
       },
       "inputCount": 1,
       "outputCount": 1,
-      "description": "Este nó recupera informações sobre um fluxo existente."
+      "description": "Recupera informações sobre um fluxo existente."
     },
     {
       "id": "2c8798f8-17b6-4163-80a5-bf83e4b1ea96",
@@ -256,7 +256,7 @@
       },
       "inputCount": 1,
       "outputCount": 1,
-      "description": "Este nó executa um fluxo específico."
+      "description": "Executa um fluxo específico."
     },
     {
       "id": "ea454a4b-dd17-4570-8a7f-242e2b4c454c",
@@ -300,7 +300,7 @@
       },
       "inputCount": 1,
       "outputCount": 1,
-      "description": "Este nó codifica ou decodifica dados em Base64."
+      "description": "Codifica ou decodifica dados em Base64."
     },
     {
       "id": "3fe93e6b-507a-4ef3-a1cc-5c55da5c0a7f",
@@ -339,7 +339,7 @@
       },
       "inputCount": 1,
       "outputCount": 1,
-      "description": "Este nó adiciona um atraso na execução do fluxo."
+      "description": "Adiciona um atraso na execução do fluxo."
     },
     {
       "id": "37f82611-1838-4d71-907f-cfc6283ea33e",
@@ -376,7 +376,7 @@
       },
       "inputCount": 1,
       "outputCount": 1,
-      "description": "Este nó manipula dados JSON."
+      "description": "Manipula dados JSON."
     },
     {
       "id": "8f925bae-e6c1-4069-a7c9-d5cf951f3789",
@@ -413,7 +413,7 @@
       },
       "inputCount": 1,
       "outputCount": 1,
-      "description": "Este nó remove uma variável do contexto atual."
+      "description": "Remove uma variável do contexto atual."
     },
     {
       "id": "babfeb20-5c90-4e95-b49a-cb2ab21471b6",
@@ -462,7 +462,7 @@
       },
       "inputCount": 1,
       "outputCount": 1,
-      "description": "Este nó substitui valores em um texto ou variável."
+      "description": "Substitui valores em um texto ou variável."
     },
     {
       "id": "52c9bec4-6f71-4425-ba77-c806f45031e2",
@@ -505,7 +505,7 @@
       },
       "inputCount": 1,
       "outputCount": 1,
-      "description": "Este nó define o valor de uma variável no contexto atual."
+      "description": "Define o valor de uma variável no contexto atual."
     },
     {
       "id": "1a0c0258-4046-4d67-89e8-354014c30478",
@@ -542,7 +542,7 @@
       },
       "inputCount": 1,
       "outputCount": 1,
-      "description": "Este nó concatena várias strings em uma única string."
+      "description": "Concatena várias strings em uma única string."
     },
     {
       "id": "29845746-1591-4188-a220-be208a7bf0c2",
@@ -579,7 +579,7 @@
       },
       "inputCount": 1,
       "outputCount": 1,
-      "description": "Este nó cria uma string com base em entradas específicas."
+      "description": "Cria uma string com base em entradas específicas."
     },
     {
       "id": "736d1f8c-1c48-43a9-990d-14dfc016ffa6",
@@ -622,7 +622,7 @@
       },
       "inputCount": 1,
       "outputCount": 1,
-      "description": "Este nó divide uma string em partes com base em um delimitador."
+      "description": "Divide uma string em partes com base em um delimitador."
     },
     {
       "id": "72dd1b6c-4a75-4ba8-a279-efc3be2d6dbf",
@@ -659,7 +659,7 @@
       },
       "inputCount": 1,
       "outputCount": 1,
-      "description": "Este nó tokeniza uma string em partes menores."
+      "description": "Tokeniza uma string em partes menores."
     },
     {
       "id": "395225e8-cc2f-42b8-891d-370aa0b6145c",
@@ -708,7 +708,7 @@
       },
       "inputCount": 1,
       "outputCount": 1,
-      "description": "Este nó interage com o armazenamento de blobs do Azure."
+      "description": "Interage com o armazenamento de blobs do Azure."
     },
     {
       "id": "a2ab5b4a-f29d-4ee2-a94f-3510a353296a",
@@ -757,7 +757,7 @@
       },
       "inputCount": 1,
       "outputCount": 1,
-      "description": "Este nó realiza classificação personalizada usando serviços do Azure."
+      "description": "Realiza classificação personalizada usando serviços do Azure."
     },
     {
       "id": "b4674b18-aebd-4dbe-ab5f-aae5e62dc879",
@@ -806,7 +806,7 @@
       },
       "inputCount": 1,
       "outputCount": 1,
-      "description": "Este nó realiza extração personalizada usando serviços do Azure."
+      "description": "Realiza extração personalizada usando serviços do Azure."
     },
     {
       "id": "87696f20-b574-47e2-b9d1-975c9f2219f8",
@@ -855,7 +855,7 @@
       },
       "inputCount": 1,
       "outputCount": 1,
-      "description": "Este nó realiza classificação de visão personalizada usando serviços do Azure."
+      "description": "Realiza classificação de visão personalizada usando serviços do Azure."
     },
     {
       "id": "476978d5-4829-412b-bd86-8bf7bc364aec",
@@ -904,7 +904,7 @@
       },
       "inputCount": 1,
       "outputCount": 1,
-      "description": "Este nó interage com o serviço OpenAI do Azure."
+      "description": "Interage com o serviço OpenAI do Azure."
     },
     {
       "id": "95c18776-ae2e-46a5-bfae-cdd4fd00e635",
@@ -947,7 +947,7 @@
       },
       "inputCount": 1,
       "outputCount": 1,
-      "description": "Este nó consome mensagens de uma fila de armazenamento do Azure."
+      "description": "Consome mensagens de uma fila de armazenamento do Azure."
     },
     {
       "id": "dd521584-9bdf-47f5-8e95-f577e32eaf6d",
@@ -996,7 +996,7 @@
       },
       "inputCount": 1,
       "outputCount": 1,
-      "description": "Este nó publica mensagens em uma fila de armazenamento do Azure."
+      "description": "Publica mensagens em uma fila de armazenamento do Azure."
     },
     {
       "id": "1d0bbfaf-491d-4622-a9fd-704f43401d1a",
@@ -1045,7 +1045,7 @@
       },
       "inputCount": 1,
       "outputCount": 1,
-      "description": "Este nó exclui mensagens de uma fila de armazenamento do Azure."
+      "description": "Exclui mensagens de uma fila de armazenamento do Azure."
     },
     {
       "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
@@ -1133,6 +1133,511 @@
       },
       "inputCount": 1,
       "outputCount": 1,
-      "description": "Este nó realiza requisições HTTP para APIs externas com suporte completo a métodos, headers, body e tratamento de respostas."
+      "description": "Realiza requisições HTTP para APIs externas com suporte completo a métodos, headers, body e tratamento de respostas."
+    },
+    {
+      "id": "langchain-llm-001",
+      "name": "LangChain LLM Node",
+      "frontendComponent": "BaseNode",
+      "backendComponent": "LangChainLLMNodeBackend",
+      "collectionId": "AI",
+      "icon": {
+        "source": "fontawesome",
+        "name": "faBrain"
+      },
+      "data": "{\"fields\":[],\"content\":\"content\"}",
+      "title": "",
+      "tags": [],
+      "customDescription": "",
+      
+      "fields": {
+        "input": [
+          {
+            "name": "model",
+            "label": "Modelo",
+            "type": "select",
+            "enum": ["gpt-3.5-turbo", "gpt-4", "gpt-4-turbo", "claude-3-sonnet", "claude-3-opus", "gemini-pro"],
+            "description": "Modelo de linguagem a ser utilizado."
+          },
+          {
+            "name": "prompt",
+            "label": "Prompt",
+            "type": "textarea",
+            "description": "Prompt para o modelo de linguagem."
+          },
+          {
+            "name": "temperature",
+            "label": "Temperatura",
+            "type": "number",
+            "min": 0,
+            "max": 2,
+            "description": "Controla a criatividade das respostas (0 = determinístico, 2 = muito criativo)."
+          },
+          {
+            "name": "maxTokens",
+            "label": "Máximo de Tokens",
+            "type": "number",
+            "min": 1,
+            "max": 4000,
+            "description": "Número máximo de tokens na resposta."
+          }
+        ],
+        "output": [
+          {
+            "name": "response",
+            "label": "Resposta",
+            "type": "string",
+            "description": "Nome da variável que conterá a resposta do modelo de linguagem."
+          },
+          {
+            "name": "usage",
+            "label": "Uso",
+            "type": "string",
+            "description": "Nome da variável que conterá informações de uso (tokens consumidos)."
+          }
+        ]
+      },
+      "inputCount": 1,
+      "outputCount": 2,
+      "description": "Executa modelos de linguagem usando LangChain com suporte a múltiplos provedores."
+    },
+    {
+      "id": "langchain-chains-001",
+      "name": "LangChain Chain Node",
+      "frontendComponent": "BaseNode",
+      "backendComponent": "LangChainChainNodeBackend",
+      "collectionId": "AI",
+      "icon": {
+        "source": "fontawesome",
+        "name": "faLink"
+      },
+      "data": "{\"fields\":[],\"content\":\"content\"}",
+      "title": "",
+      "tags": [],
+      "customDescription": "",
+      
+      "fields": {
+        "input": [
+          {
+            "name": "chainType",
+            "label": "Tipo de Chain",
+            "type": "select",
+            "enum": ["llm", "sequential", "router", "map_reduce", "refine", "map_rerank"],
+            "description": "Tipo de chain LangChain a ser executado."
+          },
+          {
+            "name": "inputData",
+            "label": "Dados de Entrada",
+            "type": "textarea",
+            "description": "Dados de entrada para a chain."
+          },
+          {
+            "name": "chainConfig",
+            "label": "Configuração da Chain",
+            "type": "textarea",
+            "description": "Configuração JSON da chain (opcional)."
+          }
+        ],
+        "output": [
+          {
+            "name": "result",
+            "label": "Resultado",
+            "type": "string",
+            "description": "Nome da variável que conterá o resultado da execução da chain."
+          },
+          {
+            "name": "intermediateSteps",
+            "label": "Passos Intermediários",
+            "type": "string",
+            "description": "Nome da variável que conterá os passos intermediários da chain."
+          }
+        ]
+      },
+      "inputCount": 1,
+      "outputCount": 2,
+      "description": "Executa chains LangChain para processamento sequencial de dados com IA."
+    },
+    {
+      "id": "langchain-agents-001",
+      "name": "LangChain Agent Node",
+      "frontendComponent": "BaseNode",
+      "backendComponent": "LangChainAgentNodeBackend",
+      "collectionId": "AI",
+      "icon": {
+        "source": "fontawesome",
+        "name": "faRobot"
+      },
+      "data": "{\"fields\":[],\"content\":\"content\"}",
+      "title": "",
+      "tags": [],
+      "customDescription": "",
+      
+      "fields": {
+        "input": [
+          {
+            "name": "agentType",
+            "label": "Tipo de Agent",
+            "type": "select",
+            "enum": ["zero-shot-react", "react-docstore", "self-ask-with-search", "conversational-react", "chat-zero-shot-react"],
+            "description": "Tipo de agent LangChain a ser utilizado."
+          },
+          {
+            "name": "tools",
+            "label": "Ferramentas",
+            "type": "textarea",
+            "description": "Lista de ferramentas disponíveis para o agent (JSON)."
+          },
+          {
+            "name": "inputQuery",
+            "label": "Consulta",
+            "type": "textarea",
+            "description": "Consulta ou tarefa para o agent executar."
+          },
+          {
+            "name": "maxIterations",
+            "label": "Máximo de Iterações",
+            "type": "number",
+            "min": 1,
+            "max": 20,
+            "description": "Número máximo de iterações que o agent pode executar."
+          }
+        ],
+        "output": [
+          {
+            "name": "finalAnswer",
+            "label": "Resposta Final",
+            "type": "string",
+            "description": "Nome da variável que conterá a resposta final do agent."
+          },
+          {
+            "name": "intermediateSteps",
+            "label": "Passos Intermediários",
+            "type": "string",
+            "description": "Nome da variável que conterá os passos executados pelo agent."
+          }
+        ]
+      },
+      "inputCount": 1,
+      "outputCount": 2,
+      "description": "Executa agents LangChain para tarefas complexas com raciocínio e uso de ferramentas."
+    },
+    {
+      "id": "langchain-memory-001",
+      "name": "LangChain Memory Node",
+      "frontendComponent": "BaseNode",
+      "backendComponent": "LangChainMemoryNodeBackend",
+      "collectionId": "AI",
+      "icon": {
+        "source": "fontawesome",
+        "name": "faMemory"
+      },
+      "data": "{\"fields\":[],\"content\":\"content\"}",
+      "title": "",
+      "tags": [],
+      "customDescription": "",
+      
+      "fields": {
+        "input": [
+          {
+            "name": "memoryType",
+            "label": "Tipo de Memória",
+            "type": "select",
+            "enum": ["conversation_buffer", "conversation_buffer_window", "conversation_summary", "conversation_summary_buffer", "conversation_token_buffer"],
+            "description": "Tipo de memória LangChain a ser utilizada."
+          },
+          {
+            "name": "operation",
+            "label": "Operação",
+            "type": "select",
+            "enum": ["save", "load", "clear"],
+            "description": "Operação a ser realizada na memória."
+          },
+          {
+            "name": "inputData",
+            "label": "Dados de Entrada",
+            "type": "textarea",
+            "description": "Dados para salvar na memória ou consulta para carregar."
+          },
+          {
+            "name": "memoryKey",
+            "label": "Chave da Memória",
+            "type": "string",
+            "description": "Chave identificadora da memória (opcional)."
+          }
+        ],
+        "output": [
+          {
+            "name": "result",
+            "label": "Resultado",
+            "type": "string",
+            "description": "Nome da variável que conterá o resultado da operação de memória."
+          },
+          {
+            "name": "memoryState",
+            "label": "Estado da Memória",
+            "type": "string",
+            "description": "Nome da variável que conterá o estado atual da memória."
+          }
+        ]
+      },
+      "inputCount": 1,
+      "outputCount": 2,
+      "description": "Gerencia memória conversacional usando LangChain para manter contexto entre interações."
+    },
+    {
+      "id": "mcp-server-001",
+      "name": "MCP Server Node",
+      "frontendComponent": "BaseNode",
+      "backendComponent": "MCPServerNodeBackend",
+      "collectionId": "AI",
+      "icon": {
+        "source": "fontawesome",
+        "name": "faServer"
+      },
+      "data": "{\"fields\":[],\"content\":\"content\"}",
+      "title": "",
+      "tags": [],
+      "customDescription": "",
+      
+      "fields": {
+        "input": [
+          {
+            "name": "serverUrl",
+            "label": "URL do Servidor",
+            "type": "string",
+            "description": "URL do servidor MCP a ser conectado."
+          },
+          {
+            "name": "serverType",
+            "label": "Tipo de Servidor",
+            "type": "select",
+            "enum": ["filesystem", "database", "api", "custom"],
+            "description": "Tipo de servidor MCP."
+          },
+          {
+            "name": "operation",
+            "label": "Operação",
+            "type": "select",
+            "enum": ["list_tools", "call_tool", "list_resources", "read_resource"],
+            "description": "Operação a ser executada no servidor MCP."
+          },
+          {
+            "name": "parameters",
+            "label": "Parâmetros",
+            "type": "textarea",
+            "description": "Parâmetros para a operação (formato JSON)."
+          }
+        ],
+        "output": [
+          {
+            "name": "result",
+            "label": "Resultado",
+            "type": "string",
+            "description": "Nome da variável que conterá o resultado da operação MCP."
+          },
+          {
+            "name": "metadata",
+            "label": "Metadados",
+            "type": "string",
+            "description": "Nome da variável que conterá metadados da operação."
+          }
+        ]
+      },
+      "inputCount": 1,
+      "outputCount": 2,
+      "description": "Conecta e executa operações em servidores MCP (Model Context Protocol) para integração com ferramentas externas."
+    },
+    {
+      "id": "mcp-filesystem-001",
+      "name": "MCP Filesystem Node",
+      "frontendComponent": "BaseNode",
+      "backendComponent": "MCPFilesystemNodeBackend",
+      "collectionId": "AI",
+      "icon": {
+        "source": "fontawesome",
+        "name": "faFolder"
+      },
+      "data": "{\"fields\":[],\"content\":\"content\"}",
+      "title": "",
+      "tags": [],
+      "customDescription": "",
+      
+      "fields": {
+        "input": [
+          {
+            "name": "operation",
+            "label": "Operação",
+            "type": "select",
+            "enum": ["read_file", "write_file", "list_directory", "create_directory", "delete_file", "move_file"],
+            "description": "Operação de sistema de arquivos a ser executada."
+          },
+          {
+            "name": "filePath",
+            "label": "Caminho do Arquivo",
+            "type": "string",
+            "description": "Caminho do arquivo ou diretório."
+          },
+          {
+            "name": "content",
+            "label": "Conteúdo",
+            "type": "textarea",
+            "description": "Conteúdo para escrever no arquivo (para operações de escrita)."
+          },
+          {
+            "name": "destinationPath",
+            "label": "Caminho de Destino",
+            "type": "string",
+            "description": "Caminho de destino (para operações de movimentação)."
+          }
+        ],
+        "output": [
+          {
+            "name": "result",
+            "label": "Resultado",
+            "type": "string",
+            "description": "Nome da variável que conterá o resultado da operação de arquivo."
+          },
+          {
+            "name": "fileInfo",
+            "label": "Informações do Arquivo",
+            "type": "string",
+            "description": "Nome da variável que conterá informações sobre o arquivo (tamanho, data de modificação, etc.)."
+          }
+        ]
+      },
+      "inputCount": 1,
+      "outputCount": 2,
+      "description": "Executa operações de sistema de arquivos através de servidor MCP para leitura, escrita e manipulação de arquivos."
+    },
+    {
+      "id": "mcp-database-001",
+      "name": "MCP Database Node",
+      "frontendComponent": "BaseNode",
+      "backendComponent": "MCPDatabaseNodeBackend",
+      "collectionId": "AI",
+      "icon": {
+        "source": "fontawesome",
+        "name": "faDatabase"
+      },
+      "data": "{\"fields\":[],\"content\":\"content\"}",
+      "title": "",
+      "tags": [],
+      "customDescription": "",
+      
+      "fields": {
+        "input": [
+          {
+            "name": "connectionString",
+            "label": "String de Conexão",
+            "type": "string",
+            "description": "String de conexão com o banco de dados."
+          },
+          {
+            "name": "operation",
+            "label": "Operação",
+            "type": "select",
+            "enum": ["query", "execute", "list_tables", "describe_table", "list_databases"],
+            "description": "Operação de banco de dados a ser executada."
+          },
+          {
+            "name": "sqlQuery",
+            "label": "Query SQL",
+            "type": "textarea",
+            "description": "Query SQL a ser executada."
+          },
+          {
+            "name": "tableName",
+            "label": "Nome da Tabela",
+            "type": "string",
+            "description": "Nome da tabela (para operações específicas de tabela)."
+          }
+        ],
+        "output": [
+          {
+            "name": "result",
+            "label": "Resultado",
+            "type": "string",
+            "description": "Nome da variável que conterá o resultado da operação de banco."
+          },
+          {
+            "name": "rowCount",
+            "label": "Contagem de Linhas",
+            "type": "string",
+            "description": "Nome da variável que conterá o número de linhas afetadas."
+          }
+        ]
+      },
+      "inputCount": 1,
+      "outputCount": 2,
+      "description": "Executa operações de banco de dados através de servidor MCP para consultas e manipulação de dados."
+    },
+    {
+      "id": "mcp-api-001",
+      "name": "MCP API Node",
+      "frontendComponent": "BaseNode",
+      "backendComponent": "MCPAPINodeBackend",
+      "collectionId": "AI",
+      "icon": {
+        "source": "fontawesome",
+        "name": "faGlobe"
+      },
+      "data": "{\"fields\":[],\"content\":\"content\"}",
+      "title": "",
+      "tags": [],
+      "customDescription": "",
+      
+      "fields": {
+        "input": [
+          {
+            "name": "apiEndpoint",
+            "label": "Endpoint da API",
+            "type": "string",
+            "description": "Endpoint da API a ser chamada."
+          },
+          {
+            "name": "method",
+            "label": "Método HTTP",
+            "type": "select",
+            "enum": ["GET", "POST", "PUT", "DELETE", "PATCH"],
+            "description": "Método HTTP para a requisição."
+          },
+          {
+            "name": "headers",
+            "label": "Headers",
+            "type": "textarea",
+            "description": "Headers HTTP em formato JSON."
+          },
+          {
+            "name": "body",
+            "label": "Body",
+            "type": "textarea",
+            "description": "Corpo da requisição (para POST, PUT, PATCH)."
+          },
+          {
+            "name": "authentication",
+            "label": "Autenticação",
+            "type": "select",
+            "enum": ["none", "bearer", "api_key", "basic"],
+            "description": "Tipo de autenticação a ser utilizada."
+          }
+        ],
+        "output": [
+          {
+            "name": "response",
+            "label": "Resposta",
+            "type": "string",
+            "description": "Nome da variável que conterá a resposta da API."
+          },
+          {
+            "name": "statusCode",
+            "label": "Código de Status",
+            "type": "string",
+            "description": "Nome da variável que conterá o código de status HTTP."
+          }
+        ]
+      },
+      "inputCount": 1,
+      "outputCount": 2,
+      "description": "Executa chamadas para APIs externas através de servidor MCP com suporte a autenticação e diferentes métodos HTTP."
     }
 ]

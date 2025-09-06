@@ -257,24 +257,7 @@ const ReactFlowDesigner: React.FC<ReactFlowDesignerProps> = () => {
       
       {/* Toolbox - Overlay without blocking canvas interactions */}
       {isToolboxVisible && (
-        <div         style={{ 
-          width: '350px', 
-          overflowY: 'auto',
-          position: 'fixed',
-          left: 0,
-          top: 0,
-          zIndex: 1000,
-          pointerEvents: 'auto', // Allow interactions with toolbox
-          backgroundColor: 'var(--bg-toolbox)',
-          border: '1px solid var(--border-primary)',
-          borderRadius: '8px',
-          margin: '20px'
-        }}>
-          <div style={{ padding: '20px' }}>
-            <h5 style={{ color: 'var(--text-primary)', marginBottom: '20px' }}>Toolbox</h5>
-            <Toolbox nodes={toolboxNodes} isNodesVisible={isToolboxVisible} onDrag={onDrag} />
-          </div>
-        </div>
+        <Toolbox nodes={toolboxNodes} isNodesVisible={isToolboxVisible} onDrag={onDrag} />
       )}
       
       {/* ReactFlow Canvas - Full width, always accessible */}
