@@ -1,95 +1,65 @@
 import React, { useEffect, useRef, useState } from 'react';
 import NodeHeader from './NodeHeader';
-import NodeDrawer from './NodeDrawer';
-interface NodeData {
-  nodeName: string;
-  nodeDescription: string;
-  [key: string]: any;
-}
+import { Handle, Position } from 'reactflow';
+import { NodeDefinition, FieldData } from '../../types';
+import './BaseNode.scss'; // Import the new SCSS file
 
 interface BaseNodeProps {
-  name: string;
   id: string;
-  fields?: { input: any[]; output: any[] };
-  description?: string;
-  store?: any;
-  x?: number;
-  y?: number;
+  data: NodeDefinition & { dynamicData?: FieldData }; // Use NodeDefinition directly for static data, and optional dynamicData
+  onNodeDataChange: (nodeId: string, newData: Partial<FieldData>) => void; // onNodeDataChange will now update only FieldData
 }
 
-const BaseNode: React.FC<BaseNodeProps> = ({ name, id, fields = { input: [], output: [] }, description = '', store, x, y }) => {
+const BaseNode: React.FC<BaseNodeProps> = ({ id, data }) => {
   const elRef = useRef<HTMLDivElement>(null);
-  const [drawer, setDrawer] = useState(false);
-  const [dataNode, setDataNode] = useState<NodeData>({ nodeName: '', nodeDescription: '' });
-  const [nodeId, setNodeId] = useState<string>(id);
 
-  // Simulação de df (Drawflow) e store, adapte conforme necessário
-  const df = (window as any).df || { getNodeFromId: () => ({}), updateNodeDataFromId: () => {} };
-  const effectiveStore = store || (window as any).store || {};
-
-  useEffect(() => {
-    if (elRef.current) {
-      const parentId = elRef.current.parentElement?.parentElement?.id;
-      if (parentId && parentId.startsWith('node-')) {
-        const id = parentId.slice(5);
-        setNodeId(id);
-        const node = df.getNodeFromId(id) || {};
-        setDataNode((prev) => ({ ...prev, ...node.data }));
-      }
-    }
-  }, []);
+  // nodeData will now hold a combination of NodeDefinition and its dynamicData
+  const [nodeState, setNodeState] = useState<NodeDefinition & { dynamicData: FieldData }>({
+    ...data,
+    dynamicData: data.dynamicData || {}, // Ensure dynamicData is always an object
+  });
 
   useEffect(() => {
-    if (description && dataNode.nodeDescription !== description) {
-      setDataNode((prev) => ({ ...prev, nodeDescription: description }));
-    }
-  }, [description]);
-
-  useEffect(() => {
-    if (nodeId) {
-      df.updateNodeDataFromId(nodeId, dataNode);
-    }
-  }, [dataNode, nodeId]);
+    // Update local nodeData when React Flow's data prop changes
+    setNodeState((prev) => ({
+      ...prev,
+      ...data,
+      dynamicData: data.dynamicData || {}, // Ensure dynamicData is always an object
+    }));
+  }, [data]);
 
   const handleNameChange = (value: string) => {
-    setDataNode((prev) => ({ ...prev, nodeName: value }));
+    // For static properties like name, we might not want to update via onNodeDataChange (which is for dynamic data)
+    setNodeState((prev) => ({ ...prev, name: value }));
+    // If name is considered dynamic, then use: onNodeDataChange(id, { name: value });
   };
 
-  const handleDescriptionChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setDataNode((prev) => ({ ...prev, nodeDescription: e.target.value }));
-  };
 
-return (
-    <div ref={elRef}>
+
+
+  return (
+    <div 
+      ref={elRef} 
+      className="react-flow__node-default basenode"
+      style={{ cursor: 'pointer' }}
+    >
+      <Handle type="target" position={Position.Left} />
       <NodeHeader
-        id={nodeId}
-        name={name}
-        value={dataNode.nodeName}
-        onEdit={() => setDrawer(true)}
+        id={id}
+        name={nodeState.name}
+        value={nodeState.name}
         onChange={handleNameChange}
       />
       
       <div className="node-body">
-        <textarea
-          className={`bg-transparent border-0 text-white-50 w-100`}
-          value={dataNode.nodeDescription}
-          onChange={handleDescriptionChange}
-          placeholder="Set description"
-        />
+        <span className="text-white-50 w-100">
+          {nodeState.description || "Set description"}
+        </span>
       </div>
       
-      <NodeDrawer
-        open={drawer}
-        onClose={() => setDrawer(false)}
-        title={name}
-        fields={fields}
-        dataNode={dataNode}
-        store={effectiveStore}
-        direction="rtl"
-        onUpdateData={() => nodeId && df.updateNodeDataFromId(nodeId, dataNode)}
-      />
+      <Handle type="source" position={Position.Right} />
     </div>
   );
 };
 
-export default BaseNode;
+export { BaseNode };

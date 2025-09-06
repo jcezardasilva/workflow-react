@@ -5,6 +5,7 @@ import { Fields, FieldData } from '../../types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faChevronDown, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 
+
 interface NodeDrawerProps {
   open: boolean;
   onClose: () => void;
@@ -28,41 +29,26 @@ const NodeDrawer: React.FC<NodeDrawerProps> = ({
 }) => {
   const [localData, setLocalData] = useState<FieldData>(dataNode);
   const [openSections, setOpenSections] = useState({
-    informations: true,
     input: true,
     output: true
   });
 
-  // Sincronizar o estado local com as mudanças externas apenas quando o painel abre
+
+
+  // Sincronizar o estado local quando o painel abre
   useEffect(() => {
     if (open) {
       setLocalData(dataNode);
     }
   }, [open, dataNode]);
 
+
+  // Update local state only
   const handleUpdateData = useCallback((newData: FieldData) => {
     setLocalData(newData);
-    onUpdateData(newData);
-  }, [onUpdateData]);
+  }, []);
 
-  // Handlers específicos para evitar re-renders
-  const handleDescriptionChange = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const newData = { ...localData, description: e.target.value };
-    setLocalData(newData);
-    onUpdateData(newData);
-  }, [localData, onUpdateData]);
 
-  const handleLabelChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    const newData = { ...localData, label: e.target.value };
-    setLocalData(newData);
-    onUpdateData(newData);
-  }, [localData, onUpdateData]);
-
-  const handleTagsChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    const newData = { ...localData, tags: e.target.value };
-    setLocalData(newData);
-    onUpdateData(newData);
-  }, [localData, onUpdateData]);
 
   const toggleSection = (section: keyof typeof openSections) => {
     setOpenSections(prev => ({
@@ -71,13 +57,19 @@ const NodeDrawer: React.FC<NodeDrawerProps> = ({
     }));
   };
 
+  // Handle drawer close with batch update
+  const handleClose = useCallback(() => {
+    onUpdateData(localData);
+    onClose();
+  }, [localData, onUpdateData, onClose]);
+
   const AccordionSection: React.FC<{
     title: string;
     icon: string;
     isOpen: boolean;
     onToggle: () => void;
     children: React.ReactNode;
-  }> = ({ title, icon, isOpen, onToggle, children }) => (
+  }> = React.memo(({ title, icon, isOpen, onToggle, children }) => (
     <div style={{ marginBottom: 16 }}>
       <div
         onClick={onToggle}
@@ -120,7 +112,7 @@ const NodeDrawer: React.FC<NodeDrawerProps> = ({
         </div>
       )}
     </div>
-  );
+  ));
 
   return (
     <div
@@ -141,109 +133,41 @@ const NodeDrawer: React.FC<NodeDrawerProps> = ({
     >
       <div style={{ padding: 16, borderBottom: '1px solid #444', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <strong>{title} - Properties</strong>
-        <button 
-          onClick={onClose} 
-          style={{ 
-            background: 'none', 
-            color: 'white', 
-            border: 'none', 
-            fontSize: 20,
-            padding: '4px 8px',
-            cursor: 'pointer',
-            borderRadius: '4px'
-          }}
-          title="Fechar"
-        >
-          &times;
-        </button>
+        <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+          <button 
+            onClick={() => onUpdateData(localData)}
+            style={{ 
+              background: '#4CAF50', 
+              color: 'white', 
+              border: 'none', 
+              fontSize: 12,
+              padding: '4px 8px',
+              cursor: 'pointer',
+              borderRadius: '4px'
+            }}
+            title="Salvar Alterações"
+          >
+            💾 Salvar
+          </button>
+          <button 
+            onClick={handleClose} 
+            style={{ 
+              background: 'none', 
+              color: 'white', 
+              border: 'none', 
+              fontSize: 20,
+              padding: '4px 8px',
+              cursor: 'pointer',
+              borderRadius: '4px'
+            }}
+            title="Fechar e Salvar"
+          >
+            &times;
+          </button>
+        </div>
       </div>
       <div style={{ padding: 16 }}>
-        {/* Accordion 1: Informações */}
-        <AccordionSection
-          title="Informações"
-          icon="📋"
-          isOpen={openSections.informations}
-          onToggle={() => toggleSection('informations')}
-        >
-          <div style={{ marginBottom: 12 }}>
-            <label style={{ 
-              color: '#ccc', 
-              fontSize: '12px', 
-              display: 'block', 
-              marginBottom: 4 
-            }}>
-              Descrição
-            </label>
-            <textarea
-              value={String(localData.description || '')}
-              onChange={handleDescriptionChange}
-              placeholder="Descrição do nó..."
-              style={{
-                width: '100%',
-                minHeight: '60px',
-                padding: '8px',
-                backgroundColor: '#333',
-                border: '1px solid #555',
-                borderRadius: '4px',
-                color: '#fff',
-                fontSize: '12px',
-                resize: 'vertical'
-              }}
-            />
-          </div>
-          <div style={{ marginBottom: 12 }}>
-            <label style={{ 
-              color: '#ccc', 
-              fontSize: '12px', 
-              display: 'block', 
-              marginBottom: 4 
-            }}>
-              Label
-            </label>
-            <input
-              type="text"
-              value={String(localData.label || '')}
-              onChange={handleLabelChange}
-              placeholder="Label do nó..."
-              style={{
-                width: '100%',
-                padding: '8px',
-                backgroundColor: '#333',
-                border: '1px solid #555',
-                borderRadius: '4px',
-                color: '#fff',
-                fontSize: '12px'
-              }}
-            />
-          </div>
-          <div>
-            <label style={{ 
-              color: '#ccc', 
-              fontSize: '12px', 
-              display: 'block', 
-              marginBottom: 4 
-            }}>
-              Tags
-            </label>
-            <input
-              type="text"
-              value={String(localData.tags || '')}
-              onChange={handleTagsChange}
-              placeholder="Tags separadas por vírgula..."
-              style={{
-                width: '100%',
-                padding: '8px',
-                backgroundColor: '#333',
-                border: '1px solid #555',
-                borderRadius: '4px',
-                color: '#fff',
-                fontSize: '12px'
-              }}
-            />
-          </div>
-        </AccordionSection>
-
-        {/* Accordion 2: Input */}
+        {/* Accordion 1: Input */}
         <AccordionSection
           title="Input"
           icon="📥"
@@ -257,7 +181,7 @@ const NodeDrawer: React.FC<NodeDrawerProps> = ({
           />
         </AccordionSection>
 
-        {/* Accordion 3: Output */}
+        {/* Accordion 2: Output */}
         <AccordionSection
           title="Output"
           icon="📤"
@@ -302,9 +226,11 @@ const NodeDrawer: React.FC<NodeDrawerProps> = ({
             </button>
           </div>
         )}
+
       </div>
     </div>
   );
 };
 
-export default NodeDrawer;
+// Simple memoization - let React handle most of the optimization
+export default React.memo(NodeDrawer);

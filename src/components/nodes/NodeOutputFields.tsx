@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useState, useEffect, useCallback, useRef, memo } from 'react';
 import { Field, FieldData } from '../../types';
 
 interface NodeOutputFieldsProps {
@@ -7,13 +7,13 @@ interface NodeOutputFieldsProps {
   onUpdateData: (newData: FieldData) => void;
 }
 
-const NodeOutputFields: React.FC<NodeOutputFieldsProps> = ({ fields, dataNode, onUpdateData }) => {
+const NodeOutputFields: React.FC<NodeOutputFieldsProps> = ({ fields, dataNode, onUpdateData: _onUpdateData }) => {
   const [localFields, setLocalFields] = useState<FieldData>({});
   const isInitialized = useRef(false);
 
   useEffect(() => {
     // Sincroniza o estado local apenas na inicialização ou quando os fields mudam
-    if (!isInitialized.current || fields.length !== Object.keys(localFields).length) {
+    if (!isInitialized.current) {
       const initialFields = fields.reduce((acc, field) => ({
         ...acc,
         [field.name]: dataNode[field.name] || ''
@@ -21,20 +21,15 @@ const NodeOutputFields: React.FC<NodeOutputFieldsProps> = ({ fields, dataNode, o
       setLocalFields(initialFields);
       isInitialized.current = true;
     }
-  }, [fields]); // Removido dataNode da dependência para evitar re-renders desnecessários
+  }, [fields, dataNode]); // Adicionado dataNode de volta para sincronização inicial
 
   const handleInputChange = useCallback((fieldName: string, value: string | number | boolean) => {
-    setLocalFields(prev => {
-      const newFields = { ...prev, [fieldName]: value };
-      
-      // Notifica o componente pai das mudanças de forma assíncrona
-      setTimeout(() => {
-        onUpdateData({ ...dataNode, ...newFields });
-      }, 0);
-      
-      return newFields;
-    });
-  }, [dataNode, onUpdateData]);
+    // Only update local state - no propagation
+    setLocalFields(prev => ({
+      ...prev,
+      [fieldName]: value
+    }));
+  }, []); // No dependencies needed
 
   const renderInput = useCallback((field: Field) => {
     const value = String(localFields[field.name] || '');
@@ -105,4 +100,4 @@ const NodeOutputFields: React.FC<NodeOutputFieldsProps> = ({ fields, dataNode, o
   );
 };
 
-export default NodeOutputFields;
+export default memo(NodeOutputFields);

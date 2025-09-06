@@ -1,19 +1,19 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useState, useEffect, useCallback, useRef, memo } from 'react';
 import { Field, FieldData } from '../../types';
 
 interface NodeInputFieldsProps {
   fields: Field[];
   dataNode: FieldData;
-  onUpdateData: (newData: FieldData) => void;
+  onUpdateData: (newData: FieldData) => void; // Keep for interface compatibility
 }
 
-const NodeInputFields: React.FC<NodeInputFieldsProps> = ({ fields, dataNode, onUpdateData }) => {
+const NodeInputFields: React.FC<NodeInputFieldsProps> = ({ fields, dataNode, onUpdateData: _onUpdateData }) => {
   const [localFields, setLocalFields] = useState<FieldData>({});
   const isInitialized = useRef(false);
 
   useEffect(() => {
     // Sincroniza o estado local apenas na inicialização ou quando os fields mudam
-    if (!isInitialized.current || fields.length !== Object.keys(localFields).length) {
+    if (!isInitialized.current) {
       const initialFields = fields.reduce((acc, field) => ({
         ...acc,
         [field.name]: dataNode[field.name] || ''
@@ -21,21 +21,15 @@ const NodeInputFields: React.FC<NodeInputFieldsProps> = ({ fields, dataNode, onU
       setLocalFields(initialFields);
       isInitialized.current = true;
     }
-  }, [fields]); // Removido dataNode da dependência para evitar re-renders desnecessários
+  }, [fields, dataNode]); // Adicionado dataNode de volta para sincronização inicial
 
   const handleInputChange = useCallback((fieldName: string, value: string | number | boolean) => {
-    // Atualiza o estado local
-    setLocalFields(prev => {
-      const newFields = { ...prev, [fieldName]: value };
-      
-      // Notifica o componente pai das mudanças de forma assíncrona
-      setTimeout(() => {
-        onUpdateData({ ...dataNode, ...newFields });
-      }, 0);
-      
-      return newFields;
-    });
-  }, [dataNode, onUpdateData]);
+    // Only update local state - no propagation
+    setLocalFields(prev => ({
+      ...prev,
+      [fieldName]: value
+    }));
+  }, []); // No dependencies needed
 
   const renderInput = useCallback((field: Field) => {
     const value = String(localFields[field.name] || '');
@@ -148,4 +142,22 @@ const NodeInputFields: React.FC<NodeInputFieldsProps> = ({ fields, dataNode, onU
   );
 };
 
-export default NodeInputFields;
+export default memo(NodeInputFields, (prevProps, nextProps) => {
+  // Comparação customizada para evitar re-renders desnecessários
+  if (prevProps.fields !== nextProps.fields) return false;
+  if (prevProps.onUpdateData !== nextProps.onUpdateData) return false;
+  
+  // Comparação mais eficiente dos dados do nó
+  const prevKeys = Object.keys(prevProps.dataNode);
+  const nextKeys = Object.keys(nextProps.dataNode);
+  
+  if (prevKeys.length !== nextKeys.length) return false;
+  
+  for (const key of prevKeys) {
+    if (prevProps.dataNode[key] !== nextProps.dataNode[key]) {
+      return false;
+    }
+  }
+  
+  return true;
+});

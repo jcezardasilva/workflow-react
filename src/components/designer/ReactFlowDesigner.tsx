@@ -28,7 +28,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { NodeDefinition, FieldData } from '../../types';
 import { v4 as uuid } from 'uuid';
-import { WrappedBaseNode } from '../reactflow-nodes/WrappedBaseNode';
+import { WrappedBaseNode } from '../nodes/WrappedBaseNode';
 
 const initialNodes: Node[] = [];
 const initialEdges: Edge[] = [];
@@ -75,6 +75,7 @@ const ReactFlowDesigner: React.FC<ReactFlowDesignerProps> = () => {
 
   const onNodeDataChange = useCallback(
     (nodeId: string, newData: Partial<FieldData>) => {
+      // Update nodes array
       setNodes((nds) =>
         nds.map((node) =>
           node.id === nodeId
@@ -82,11 +83,19 @@ const ReactFlowDesigner: React.FC<ReactFlowDesignerProps> = () => {
             : node
         )
       );
-      setSelectedNode((prev) =>
-        prev && prev.id === nodeId
-          ? { ...prev, data: { ...prev.data, dynamicData: { ...(prev.data.dynamicData || {}), ...newData } } }
-          : prev
-      );
+      
+      // Only update selectedNode if it's the same node being edited
+      // This prevents unnecessary re-renders when selectedNode hasn't actually changed
+      setSelectedNode((prev) => {
+        if (prev && prev.id === nodeId) {
+          const updatedDynamicData = { ...(prev.data.dynamicData || {}), ...newData };
+          // Only update if the data actually changed
+          if (JSON.stringify(prev.data.dynamicData) !== JSON.stringify(updatedDynamicData)) {
+            return { ...prev, data: { ...prev.data, dynamicData: updatedDynamicData } };
+          }
+        }
+        return prev;
+      });
     },
     [setNodes, setSelectedNode],
   );
