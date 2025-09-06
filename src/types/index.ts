@@ -1,5 +1,11 @@
 export type FieldData = {
-  [key: string]: string | number | boolean;
+  [key: string]: string | number | boolean | string[];
+};
+
+export type NodeFormData = FieldData & {
+  title?: string;
+  customDescription?: string;
+  tags?: string[];
 };
 
 export interface Field {
@@ -7,7 +13,7 @@ export interface Field {
   label?: string;
   type?: string;
   description?: string;
-  value?: string | number | boolean;
+  value?: string | number | boolean | string[];
   values?: string[];
   enum?: string[];
   min?: number;
@@ -38,4 +44,8 @@ export interface NodeDefinition {
   fields: Fields;
   inputCount: number;
   outputCount: number;
+  // Campos editáveis pelo usuário
+  title?: string;
+  tags?: string[];
+  customDescription?: string;
 }

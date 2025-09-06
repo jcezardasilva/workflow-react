@@ -12,7 +12,6 @@ interface NodeOutputFieldsProps {
 const NodeOutputFields: React.FC<NodeOutputFieldsProps> = ({ fields, control, errors }) => {
   return (
     <div>
-      <div style={{ fontWeight: 'bold', marginBottom: 8 }}>Outputs</div>
       {fields.map((field) => (
         <Controller
           key={field.name}

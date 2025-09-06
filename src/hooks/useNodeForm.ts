@@ -1,13 +1,13 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { useCallback, useMemo } from 'react';
-import { Fields, FieldData, NodeDefinition } from '../types';
+import { useCallback, useMemo, useState } from 'react';
+import { Fields, FieldData, NodeDefinition, NodeFormData } from '../types';
 
 /**
  * Cria um schema Zod dinâmico baseado nos campos do nó
  */
-const createNodeSchema = (fields: Fields): z.ZodSchema<FieldData> => {
+const createNodeSchema = (fields: Fields): z.ZodSchema<NodeFormData> => {
   const schemaFields: Record<string, z.ZodTypeAny> = {};
   
   // Processa campos de input e output
@@ -79,14 +79,19 @@ const createNodeSchema = (fields: Fields): z.ZodSchema<FieldData> => {
     schemaFields[field.name] = fieldSchema;
   });
   
-  return z.object(schemaFields) as z.ZodSchema<FieldData>;
+  // Adiciona campos de informações do nó
+  schemaFields.title = z.string().optional();
+  schemaFields.customDescription = z.string().optional();
+  schemaFields.tags = z.array(z.string()).optional();
+  
+  return z.object(schemaFields) as z.ZodSchema<NodeFormData>;
 };
 
 /**
  * Extrai dados do formulário dos campos do nó
  */
-const extractFormDataFromFields = (nodeData: NodeDefinition): FieldData => {
-  const formData: FieldData = {};
+const extractFormDataFromFields = (nodeData: NodeDefinition): NodeFormData => {
+  const formData: NodeFormData = {};
   
   // Extrai de campos de input
   if (nodeData.fields?.input) {
@@ -126,6 +131,11 @@ const extractFormDataFromFields = (nodeData: NodeDefinition): FieldData => {
     });
   }
   
+  // Extrai campos de informações do nó
+  formData.title = nodeData.title || '';
+  formData.customDescription = nodeData.customDescription || '';
+  formData.tags = nodeData.tags || [];
+  
   return formData;
 };
 
@@ -146,6 +156,21 @@ const updateFieldsWithData = (fields: Fields, formData: FieldData) => {
 };
 
 /**
+ * Atualiza os dados do nó com os dados do formulário
+ */
+const updateNodeDataWithFormData = (nodeData: NodeDefinition, formData: NodeFormData) => {
+  const updatedFields = updateFieldsWithData(nodeData.fields, formData);
+  
+  return {
+    ...nodeData,
+    fields: updatedFields,
+    title: formData.title || '',
+    customDescription: formData.customDescription || '',
+    tags: formData.tags || []
+  };
+};
+
+/**
  * Hook customizado para gerenciar formulários de nós
  */
 export const useNodeForm = (fields: Fields, initialData: NodeDefinition) => {
@@ -156,21 +181,20 @@ export const useNodeForm = (fields: Fields, initialData: NodeDefinition) => {
   const defaultValues = useMemo(() => extractFormDataFromFields(initialData), [initialData]);
   
   // Configura o formulário
-  const form = useForm<FieldData>({
+  const form = useForm<NodeFormData>({
     resolver: zodResolver(schema as any),
     defaultValues,
     mode: 'onChange', // Validação em tempo real
     reValidateMode: 'onChange'
   });
+
+  // Estado para controlar se o botão de salvar deve estar ativo (sempre true para evitar perda de foco)
+  const [isFormDirty] = useState(true);
   
   // Função para salvar os dados
-  const saveFormData = useCallback((formData: FieldData) => {
-    const updatedFields = updateFieldsWithData(fields, formData);
-    return {
-      ...initialData,
-      fields: updatedFields
-    };
-  }, [fields, initialData]);
+  const saveFormData = useCallback((formData: NodeFormData) => {
+    return updateNodeDataWithFormData(initialData, formData);
+  }, [initialData]);
   
   // Função para resetar o formulário
   const resetForm = useCallback(() => {
@@ -187,7 +211,7 @@ export const useNodeForm = (fields: Fields, initialData: NodeDefinition) => {
     watch: form.watch,
     errors: form.formState.errors,
     isValid: form.formState.isValid,
-    isDirty: form.formState.isDirty,
+    isDirty: isFormDirty, // Usa o estado local em vez do form.formState.isDirty
     isSubmitting: form.formState.isSubmitting
   };
 };

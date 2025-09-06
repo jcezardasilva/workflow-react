@@ -12,7 +12,6 @@ interface NodeInputFieldsProps {
 const NodeInputFields: React.FC<NodeInputFieldsProps> = ({ fields, control, errors }) => {
   return (
     <div>
-      <div style={{ fontWeight: 'bold', marginBottom: 8 }}>Inputs</div>
       {fields.map((field) => (
         <Controller
           key={field.name}

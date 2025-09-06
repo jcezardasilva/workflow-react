@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import NodeInputFields from './NodeInputFields';
 import NodeOutputFields from './NodeOutputFields';
+import NodeInfoEditor from './NodeInfoEditor';
 import { Fields, FieldData, NodeDefinition } from '../../types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faChevronDown, faChevronRight } from '@fortawesome/free-solid-svg-icons';
@@ -32,6 +33,7 @@ const NodeDrawer: React.FC<NodeDrawerProps> = ({
   const { form, saveFormData, resetForm, handleSubmit, errors, isDirty } = useNodeForm(fields, dataNode);
   
   const [openSections, setOpenSections] = useState({
+    info: true,
     input: true,
     output: true
   });
@@ -81,6 +83,28 @@ const NodeDrawer: React.FC<NodeDrawerProps> = ({
     const updatedData = saveFormData(currentValues);
     onUpdateData(updatedData);
   }, [form, saveFormData, onUpdateData]);
+
+
+  // Componente separado para o botão de salvar para evitar re-renderizações
+  const SaveButton: React.FC<{ isDirty: boolean; onSave: () => void }> = React.memo(({ isDirty, onSave }) => (
+    <button 
+      onClick={onSave}
+      disabled={!isDirty}
+      style={{ 
+        background: isDirty ? '#4CAF50' : 'var(--bg-button)', 
+        color: 'var(--text-primary)', 
+        border: '1px solid var(--border-primary)', 
+        fontSize: 12,
+        padding: '4px 8px',
+        cursor: isDirty ? 'pointer' : 'not-allowed',
+        borderRadius: '4px',
+        opacity: isDirty ? 1 : 0.6
+      }}
+      title={isDirty ? "Salvar Alterações" : "Nenhuma alteração para salvar"}
+    >
+      💾 Salvar
+    </button>
+  ));
 
   const AccordionSection: React.FC<{
     title: string;
@@ -154,23 +178,7 @@ const NodeDrawer: React.FC<NodeDrawerProps> = ({
       <div style={{ padding: 16, borderBottom: '1px solid var(--border-primary)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <strong>{title} - Properties</strong>
         <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-          <button 
-            onClick={handleSave}
-            disabled={!isDirty}
-            style={{ 
-              background: isDirty ? '#4CAF50' : 'var(--bg-button)', 
-              color: 'var(--text-primary)', 
-              border: '1px solid var(--border-primary)', 
-              fontSize: 12,
-              padding: '4px 8px',
-              cursor: isDirty ? 'pointer' : 'not-allowed',
-              borderRadius: '4px',
-              opacity: isDirty ? 1 : 0.6
-            }}
-            title={isDirty ? "Salvar Alterações" : "Nenhuma alteração para salvar"}
-          >
-            💾 Salvar
-          </button>
+          <SaveButton isDirty={isDirty} onSave={handleSave} />
           <button 
             onClick={handleClose} 
             style={{ 
@@ -190,9 +198,23 @@ const NodeDrawer: React.FC<NodeDrawerProps> = ({
       </div>
       <div style={{ padding: 16 }}>
         <form onSubmit={handleSubmit(onFormSubmit as any)}>
-          {/* Accordion 1: Input */}
+          {/* Accordion 1: Node Info */}
           <AccordionSection
-            title="Input"
+            title="Informações"
+            icon="ℹ️"
+            isOpen={openSections.info}
+            onToggle={() => toggleSection('info')}
+          >
+            <NodeInfoEditor 
+              nodeData={dataNode}
+              control={form.control as any}
+              errors={errors}
+            />
+          </AccordionSection>
+
+          {/* Accordion 2: Input */}
+          <AccordionSection
+            title="Entradas"
             icon="📥"
             isOpen={openSections.input}
             onToggle={() => toggleSection('input')}
@@ -204,9 +226,9 @@ const NodeDrawer: React.FC<NodeDrawerProps> = ({
             />
           </AccordionSection>
 
-          {/* Accordion 2: Output */}
+          {/* Accordion 3: Output */}
           <AccordionSection
-            title="Output"
+            title="Saídas"
             icon="📤"
             isOpen={openSections.output}
             onToggle={() => toggleSection('output')}

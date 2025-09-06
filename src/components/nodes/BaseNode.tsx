@@ -96,14 +96,27 @@ const BaseNode: React.FC<BaseNodeProps> = ({ id, data }) => {
       {renderInputHandles()}
       <NodeHeader
         id={id}
-        name={nodeState.name}
-        value={nodeState.name}
+        name={nodeState.title || nodeState.name}
+        value={nodeState.title || nodeState.name}
         onChange={handleNameChange}
       />
       
+      {/* Nome original abaixo do título quando há título personalizado */}
+      {nodeState.title && (
+        <div style={{ 
+          fontSize: '11px', 
+          color: 'var(--text-muted)', 
+          textAlign: 'center',
+          marginTop: '2px',
+          fontStyle: 'italic'
+        }}>
+          {nodeState.name}
+        </div>
+      )}
+      
       <div className="node-body">
         <span style={{ color: 'var(--text-secondary)', width: '100%' }}>
-          {nodeState.description || "Set description"}
+          {nodeState.customDescription || nodeState.description || "Set description"}
         </span>
       </div>
       

@@ -30,6 +30,8 @@ import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { NodeDefinition } from '../../types';
 import { v4 as uuid } from 'uuid';
 import { WrappedBaseNode } from '../nodes/WrappedBaseNode';
+import EdgeContextMenu from './EdgeContextMenu';
+import NodeContextMenu from './NodeContextMenu';
 
 const initialNodes: Node[] = [];
 const initialEdges: Edge[] = [];
@@ -43,6 +45,8 @@ const ReactFlowDesigner: React.FC<ReactFlowDesignerProps> = () => {
   const [isToolboxVisible, setIsToolboxVisible] = useState(false);
   const [selectedNode, setSelectedNode] = useState<Node | null>(null);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [edgeContextMenu, setEdgeContextMenu] = useState<{ edge: Edge; position: { x: number; y: number } } | null>(null);
+  const [nodeContextMenu, setNodeContextMenu] = useState<{ node: Node; position: { x: number; y: number } } | null>(null);
   const reactFlowWrapper = useRef<HTMLDivElement>(null);
   const reactFlowInstance = useRef<ReactFlowInstance | null>(null);
 
@@ -97,6 +101,54 @@ const ReactFlowDesigner: React.FC<ReactFlowDesignerProps> = () => {
   const onNodeClick = useCallback((_event: React.MouseEvent, node: Node) => {
     setSelectedNode(node);
     setIsDrawerOpen(true);
+    setEdgeContextMenu(null); // Close edge context menu when clicking on node
+    setNodeContextMenu(null); // Close node context menu when clicking on node
+  }, []);
+
+  const onNodeContextMenu = useCallback((event: React.MouseEvent, node: Node) => {
+    event.preventDefault();
+    setNodeContextMenu({
+      node,
+      position: { x: event.clientX, y: event.clientY }
+    });
+    setEdgeContextMenu(null); // Close edge context menu when opening node context menu
+  }, []);
+
+  const onEdgeContextMenu = useCallback((event: React.MouseEvent, edge: Edge) => {
+    event.preventDefault();
+    setEdgeContextMenu({
+      edge,
+      position: { x: event.clientX, y: event.clientY }
+    });
+    setNodeContextMenu(null); // Close node context menu when opening edge context menu
+  }, []);
+
+  const onDeleteEdge = useCallback((edgeId: string) => {
+    setEdges((eds) => eds.filter((e) => e.id !== edgeId));
+  }, []);
+
+  const onDeleteNode = useCallback((nodeId: string) => {
+    setNodes((nds) => nds.filter((node) => node.id !== nodeId));
+    setEdges((eds) => eds.filter((edge) => edge.source !== nodeId && edge.target !== nodeId));
+    
+    // Close drawer if the deleted node was selected
+    if (selectedNode && selectedNode.id === nodeId) {
+      setSelectedNode(null);
+      setIsDrawerOpen(false);
+    }
+  }, [selectedNode]);
+
+  const onEditNode = useCallback((node: Node) => {
+    setSelectedNode(node);
+    setIsDrawerOpen(true);
+  }, []);
+
+  const onCloseEdgeContextMenu = useCallback(() => {
+    setEdgeContextMenu(null);
+  }, []);
+
+  const onCloseNodeContextMenu = useCallback(() => {
+    setNodeContextMenu(null);
   }, []);
 
   const onNodeDataChange = useCallback(
@@ -124,21 +176,6 @@ const ReactFlowDesigner: React.FC<ReactFlowDesignerProps> = () => {
     [setNodes, setSelectedNode],
   );
 
-  const onDeleteNode = useCallback(
-    (nodeId: string) => {
-      if (window.confirm('Are you sure you want to delete this node?')) {
-        setNodes((nds) => nds.filter((node) => node.id !== nodeId));
-        setEdges((eds) => eds.filter((edge) => edge.source !== nodeId && edge.target !== nodeId));
-        
-        // Close drawer if the deleted node was selected
-        if (selectedNode && selectedNode.id === nodeId) {
-          setSelectedNode(null);
-          setIsDrawerOpen(false);
-        }
-      }
-    },
-    [selectedNode],
-  );
 
   const onDragOver = useCallback((event: React.DragEvent) => {
     event.preventDefault();
@@ -195,7 +232,10 @@ const ReactFlowDesigner: React.FC<ReactFlowDesignerProps> = () => {
 
   return (
     <div className="reactflow-wrapper" ref={reactFlowWrapper} style={{ width: '100vw', height: '100vh', position: 'relative' }}>
-      <Toolbar onExport={handleExport} onImport={onImportFlow} />
+      <Toolbar 
+        onExport={handleExport} 
+        onImport={onImportFlow} 
+      />
       
       {/* Toggle Toolbox Button */}
       <button
@@ -245,10 +285,13 @@ const ReactFlowDesigner: React.FC<ReactFlowDesignerProps> = () => {
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
         onNodeClick={onNodeClick}
+        onNodeContextMenu={onNodeContextMenu}
+        onEdgeContextMenu={onEdgeContextMenu}
         onDrop={onDrop}
         onDragOver={onDragOver}
         nodeTypes={nodeTypes}
         onInit={(instance) => (reactFlowInstance.current = instance)}
+        deleteKeyCode={null} // Desabilita remoção com Backspace
         fitView
         fitViewOptions={{ 
           padding: 0.1,
@@ -278,6 +321,23 @@ const ReactFlowDesigner: React.FC<ReactFlowDesignerProps> = () => {
           onDelete={() => onDeleteNode(selectedNode.id)} // Pass delete callback
         />
       )}
+
+      {/* Edge Context Menu */}
+      <EdgeContextMenu
+        edge={edgeContextMenu?.edge || null}
+        position={edgeContextMenu?.position || null}
+        onClose={onCloseEdgeContextMenu}
+        onDelete={onDeleteEdge}
+      />
+
+      {/* Node Context Menu */}
+      <NodeContextMenu
+        node={nodeContextMenu?.node || null}
+        position={nodeContextMenu?.position || null}
+        onClose={onCloseNodeContextMenu}
+        onDelete={onDeleteNode}
+        onEdit={onEditNode}
+      />
     </div>
   );
 };
