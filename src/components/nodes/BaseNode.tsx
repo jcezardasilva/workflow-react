@@ -1,41 +1,91 @@
 import React, { useEffect, useRef, useState } from 'react';
 import NodeHeader from './NodeHeader';
 import { Handle, Position } from 'reactflow';
-import { NodeDefinition, FieldData } from '../../types';
+import { NodeDefinition } from '../../types';
 import './BaseNode.scss'; // Import the new SCSS file
 
 interface BaseNodeProps {
   id: string;
-  data: NodeDefinition & { dynamicData?: FieldData }; // Use NodeDefinition directly for static data, and optional dynamicData
-  onNodeDataChange: (nodeId: string, newData: Partial<FieldData>) => void; // onNodeDataChange will now update only FieldData
+  data: NodeDefinition;
+  onNodeDataChange: (nodeId: string, newData: NodeDefinition) => void;
 }
 
 const BaseNode: React.FC<BaseNodeProps> = ({ id, data }) => {
   const elRef = useRef<HTMLDivElement>(null);
 
-  // nodeData will now hold a combination of NodeDefinition and its dynamicData
-  const [nodeState, setNodeState] = useState<NodeDefinition & { dynamicData: FieldData }>({
-    ...data,
-    dynamicData: data.dynamicData || {}, // Ensure dynamicData is always an object
-  });
+  const [nodeState, setNodeState] = useState<NodeDefinition>(data);
 
   useEffect(() => {
-    // Update local nodeData when React Flow's data prop changes
-    setNodeState((prev) => ({
-      ...prev,
-      ...data,
-      dynamicData: data.dynamicData || {}, // Ensure dynamicData is always an object
-    }));
+    setNodeState(data);
   }, [data]);
 
   const handleNameChange = (value: string) => {
-    // For static properties like name, we might not want to update via onNodeDataChange (which is for dynamic data)
     setNodeState((prev) => ({ ...prev, name: value }));
-    // If name is considered dynamic, then use: onNodeDataChange(id, { name: value });
   };
 
+  // Função para gerar handles de entrada dinamicamente
+  const renderInputHandles = () => {
+    const handles = [];
+    const inputCount = nodeState.inputCount || 1;
+    
+    for (let i = 0; i < inputCount; i++) {
+      let topOffset: string;
+      
+      if (inputCount === 1) {
+        topOffset = '50%';
+      } else {
+        // Distribui os handles uniformemente ao longo da altura do nó
+        const spacing = 100 / (inputCount + 1);
+        topOffset = `${(i + 1) * spacing}%`;
+      }
+      
+      handles.push(
+        <Handle
+          key={`input-${i}`}
+          type="target"
+          position={Position.Left}
+          id={`input-${i}`}
+          style={{
+            top: topOffset,
+            transform: 'translateY(-50%)',
+          }}
+        />
+      );
+    }
+    return handles;
+  };
 
-
+  // Função para gerar handles de saída dinamicamente
+  const renderOutputHandles = () => {
+    const handles = [];
+    const outputCount = nodeState.outputCount || 1;
+    
+    for (let i = 0; i < outputCount; i++) {
+      let topOffset: string;
+      
+      if (outputCount === 1) {
+        topOffset = '50%';
+      } else {
+        // Distribui os handles uniformemente ao longo da altura do nó
+        const spacing = 100 / (outputCount + 1);
+        topOffset = `${(i + 1) * spacing}%`;
+      }
+      
+      handles.push(
+        <Handle
+          key={`output-${i}`}
+          type="source"
+          position={Position.Right}
+          id={`output-${i}`}
+          style={{
+            top: topOffset,
+            transform: 'translateY(-50%)',
+          }}
+        />
+      );
+    }
+    return handles;
+  };
 
   return (
     <div 
@@ -43,7 +93,7 @@ const BaseNode: React.FC<BaseNodeProps> = ({ id, data }) => {
       className="react-flow__node-default basenode"
       style={{ cursor: 'pointer' }}
     >
-      <Handle type="target" position={Position.Left} />
+      {renderInputHandles()}
       <NodeHeader
         id={id}
         name={nodeState.name}
@@ -52,12 +102,12 @@ const BaseNode: React.FC<BaseNodeProps> = ({ id, data }) => {
       />
       
       <div className="node-body">
-        <span className="text-white-50 w-100">
+        <span style={{ color: 'var(--text-secondary)', width: '100%' }}>
           {nodeState.description || "Set description"}
         </span>
       </div>
       
-      <Handle type="source" position={Position.Right} />
+      {renderOutputHandles()}
     </div>
   );
 };

@@ -5,9 +5,11 @@ export type FieldData = {
 export interface Field {
   name: string;
   label?: string;
-  type?: string; // Changed to string to accommodate various values from nodes.json
+  type?: string;
   description?: string;
+  value?: string | number | boolean;
   values?: string[];
+  enum?: string[];
   min?: number;
   max?: number;
 }
@@ -24,7 +26,7 @@ export interface Icon {
   color?: string;
 }
 
-// Redefine NodeDefinition to explicitly separate static properties from dynamic data
+// Simplified NodeDefinition - all data at root level
 export interface NodeDefinition {
   id: string;
   name: string;
@@ -33,11 +35,7 @@ export interface NodeDefinition {
   backendComponent: string;
   collectionId: string;
   icon: Icon;
-  // The 'data' property from nodes.json will now be parsed into FieldData for dynamic use
-  data: string; // This will still be the original string from JSON, parsed at runtime
   fields: Fields;
   inputCount: number;
   outputCount: number;
-  // Add a property to hold the parsed dynamic data for React Flow nodes
-  dynamicData?: FieldData;
 }

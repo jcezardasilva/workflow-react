@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import NodeInputFields from './NodeInputFields';
 import NodeOutputFields from './NodeOutputFields';
-import { Fields, FieldData } from '../../types';
+import { Fields, FieldData, NodeDefinition } from '../../types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faChevronDown, faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import { useNodeForm } from '../../hooks/useNodeForm';
 
 
 interface NodeDrawerProps {
@@ -11,9 +12,9 @@ interface NodeDrawerProps {
   onClose: () => void;
   title: string;
   fields: Fields;
-  dataNode: FieldData;
+  dataNode: NodeDefinition;
   direction?: 'rtl' | 'ltr';
-  onUpdateData: (newData: FieldData) => void;
+  onUpdateData: (newData: NodeDefinition) => void;
   onDelete?: () => void;
 }
 
@@ -27,26 +28,20 @@ const NodeDrawer: React.FC<NodeDrawerProps> = ({
   onUpdateData,
   onDelete,
 }) => {
-  const [localData, setLocalData] = useState<FieldData>(dataNode);
+  // Usa o hook customizado para gerenciar o formulário
+  const { form, saveFormData, resetForm, handleSubmit, errors, isDirty } = useNodeForm(fields, dataNode);
+  
   const [openSections, setOpenSections] = useState({
     input: true,
     output: true
   });
 
-
-
-  // Sincronizar o estado local quando o painel abre
+  // Reset do formulário quando o painel abre ou o nó muda
   useEffect(() => {
     if (open) {
-      setLocalData(dataNode);
+      resetForm();
     }
-  }, [open, dataNode]);
-
-
-  // Update local state only
-  const handleUpdateData = useCallback((newData: FieldData) => {
-    setLocalData(newData);
-  }, []);
+  }, [open, dataNode, resetForm]);
 
 
 
@@ -57,11 +52,35 @@ const NodeDrawer: React.FC<NodeDrawerProps> = ({
     }));
   };
 
-  // Handle drawer close with batch update
-  const handleClose = useCallback(() => {
-    onUpdateData(localData);
+  // Função para salvar os dados do formulário
+  const onFormSubmit = useCallback((formData: FieldData) => {
+    const updatedData = saveFormData(formData);
+    
+    // Debug: Log dos dados salvos
+    console.log('📊 Dados salvos no nó:', {
+      nodeId: dataNode.id,
+      nodeName: dataNode.name,
+      savedData: formData,
+      updatedFields: updatedData.fields
+    });
+
+    onUpdateData(updatedData);
     onClose();
-  }, [localData, onUpdateData, onClose]);
+  }, [saveFormData, dataNode, onUpdateData, onClose]);
+
+  // Handle drawer close - salva os dados atuais do formulário
+  const handleClose = useCallback(() => {
+    // Pega os valores atuais do formulário
+    const currentValues = form.getValues();
+    onFormSubmit(currentValues);
+  }, [form, onFormSubmit]);
+
+  // Função para salvar sem fechar
+  const handleSave = useCallback(() => {
+    const currentValues = form.getValues();
+    const updatedData = saveFormData(currentValues);
+    onUpdateData(updatedData);
+  }, [form, saveFormData, onUpdateData]);
 
   const AccordionSection: React.FC<{
     title: string;
@@ -78,8 +97,8 @@ const NodeDrawer: React.FC<NodeDrawerProps> = ({
           alignItems: 'center',
           justifyContent: 'space-between',
           padding: '12px 16px',
-          backgroundColor: '#2a2a2a',
-          border: '1px solid #444',
+          backgroundColor: 'var(--bg-tertiary)',
+          border: '1px solid var(--border-primary)',
           borderRadius: '6px',
           cursor: 'pointer',
           userSelect: 'none'
@@ -88,7 +107,7 @@ const NodeDrawer: React.FC<NodeDrawerProps> = ({
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
           <span style={{ fontSize: '16px' }}>{icon}</span>
           <span style={{ 
-            color: '#fff', 
+            color: 'var(--text-primary)', 
             fontSize: '14px',
             fontWeight: 'bold'
           }}>
@@ -97,14 +116,14 @@ const NodeDrawer: React.FC<NodeDrawerProps> = ({
         </div>
         <FontAwesomeIcon 
           icon={isOpen ? faChevronDown : faChevronRight} 
-          style={{ color: '#ccc', fontSize: '12px' }}
+          style={{ color: 'var(--text-secondary)', fontSize: '12px' }}
         />
       </div>
       {isOpen && (
         <div style={{
           padding: '16px',
-          backgroundColor: '#1e1e1e',
-          border: '1px solid #444',
+          backgroundColor: 'var(--bg-secondary)',
+          border: '1px solid var(--border-primary)',
           borderTop: 'none',
           borderRadius: '0 0 6px 6px'
         }}>
@@ -123,29 +142,32 @@ const NodeDrawer: React.FC<NodeDrawerProps> = ({
         [direction === 'rtl' ? 'right' : 'left']: 0,
         width: 400,
         height: '100%',
-        background: '#222',
-        color: 'white',
+        background: 'var(--bg-drawer)',
+        color: 'var(--text-primary)',
         zIndex: 1000,
         transform: open ? 'translateX(0)' : `translateX(${direction === 'rtl' ? '100%' : '-100%'})`,
         transition: 'transform 0.3s',
         overflowY: 'auto',
+        border: '1px solid var(--border-primary)',
       }}
     >
-      <div style={{ padding: 16, borderBottom: '1px solid #444', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+      <div style={{ padding: 16, borderBottom: '1px solid var(--border-primary)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <strong>{title} - Properties</strong>
         <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
           <button 
-            onClick={() => onUpdateData(localData)}
+            onClick={handleSave}
+            disabled={!isDirty}
             style={{ 
-              background: '#4CAF50', 
-              color: 'white', 
-              border: 'none', 
+              background: isDirty ? '#4CAF50' : 'var(--bg-button)', 
+              color: 'var(--text-primary)', 
+              border: '1px solid var(--border-primary)', 
               fontSize: 12,
               padding: '4px 8px',
-              cursor: 'pointer',
-              borderRadius: '4px'
+              cursor: isDirty ? 'pointer' : 'not-allowed',
+              borderRadius: '4px',
+              opacity: isDirty ? 1 : 0.6
             }}
-            title="Salvar Alterações"
+            title={isDirty ? "Salvar Alterações" : "Nenhuma alteração para salvar"}
           >
             💾 Salvar
           </button>
@@ -153,7 +175,7 @@ const NodeDrawer: React.FC<NodeDrawerProps> = ({
             onClick={handleClose} 
             style={{ 
               background: 'none', 
-              color: 'white', 
+              color: 'var(--text-primary)', 
               border: 'none', 
               fontSize: 20,
               padding: '4px 8px',
@@ -167,40 +189,42 @@ const NodeDrawer: React.FC<NodeDrawerProps> = ({
         </div>
       </div>
       <div style={{ padding: 16 }}>
-        {/* Accordion 1: Input */}
-        <AccordionSection
-          title="Input"
-          icon="📥"
-          isOpen={openSections.input}
-          onToggle={() => toggleSection('input')}
-        >
-          <NodeInputFields 
-            fields={fields.input} 
-            dataNode={localData} 
-            onUpdateData={handleUpdateData} 
-          />
-        </AccordionSection>
+        <form onSubmit={handleSubmit(onFormSubmit as any)}>
+          {/* Accordion 1: Input */}
+          <AccordionSection
+            title="Input"
+            icon="📥"
+            isOpen={openSections.input}
+            onToggle={() => toggleSection('input')}
+          >
+            <NodeInputFields 
+              fields={fields.input} 
+              control={form.control as any}
+              errors={errors}
+            />
+          </AccordionSection>
 
-        {/* Accordion 2: Output */}
-        <AccordionSection
-          title="Output"
-          icon="📤"
-          isOpen={openSections.output}
-          onToggle={() => toggleSection('output')}
-        >
-          <NodeOutputFields 
-            fields={fields.output} 
-            dataNode={localData} 
-            onUpdateData={handleUpdateData} 
-          />
-        </AccordionSection>
+          {/* Accordion 2: Output */}
+          <AccordionSection
+            title="Output"
+            icon="📤"
+            isOpen={openSections.output}
+            onToggle={() => toggleSection('output')}
+          >
+            <NodeOutputFields 
+              fields={fields.output} 
+              control={form.control as any}
+              errors={errors}
+            />
+          </AccordionSection>
+        </form>
         
         {/* Delete button at the bottom */}
         {onDelete && (
           <div style={{ 
             marginTop: 30, 
             paddingTop: 20, 
-            borderTop: '1px solid #444',
+            borderTop: '1px solid var(--border-primary)',
             display: 'flex',
             justifyContent: 'center'
           }}>

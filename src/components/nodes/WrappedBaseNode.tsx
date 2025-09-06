@@ -1,11 +1,11 @@
 import React from 'react';
 import { NodeProps } from 'reactflow';
 import { BaseNode } from './BaseNode';
-import { NodeDefinition, FieldData } from '../../types';
+import { NodeDefinition } from '../../types';
 
 interface WrappedBaseNodeProps extends NodeProps {
-  data: NodeDefinition & { dynamicData?: FieldData };
-  onNodeDataChange: (nodeId: string, newData: Partial<FieldData>) => void;
+  data: NodeDefinition;
+  onNodeDataChange: (nodeId: string, newData: NodeDefinition) => void;
 }
 
 const WrappedBaseNode: React.FC<WrappedBaseNodeProps> = ({ id, data, onNodeDataChange }) => {

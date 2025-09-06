@@ -23,7 +23,7 @@
             "name": "operator",
             "label": "Operador",
             "type": "select",
-            "values": [">", "<", ">=", "<=", "=","!=","in","contains","startsWith","endsWith","match"],
+            "enum": [">", "<", ">=", "<=", "=","!=","in","contains","startsWith","endsWith","match"],
             "description": "Operador a ser utilizado na comparação."
           },
           {
@@ -44,13 +44,13 @@
             "name": "trueOutput",
             "label": "Saída Verdadeira",
             "type": "string",
-            "description": "Saída se a condição for verdadeira."
+            "description": "Nome da variável que conterá a saída se a condição for verdadeira."
           },
           {
             "name": "falseOutput",
             "label": "Saída Falsa",
             "type": "string",
-            "description": "Saída se a condição for falsa."
+            "description": "Nome da variável que conterá a saída se a condição for falsa."
           }
         ]
       },
@@ -84,7 +84,7 @@
             "name": "item",
             "label": "Item Atual",
             "type": "string",
-            "description": "Item atual da iteração."
+            "description": "Nome da variável que conterá o item atual da iteração."
           }
         ]
       },
@@ -118,13 +118,13 @@
             "name": "exists",
             "label": "Existe",
             "type": "string",
-            "description": "Saída se a variável existir."
+            "description": "Nome da variável que conterá a saída se a variável existir."
           },
           {
             "name": "notExists",
             "label": "Não Existe",
             "type": "string",
-            "description": "Saída se a variável não existir."
+            "description": "Nome da variável que conterá a saída se a variável não existir."
           }
         ]
       },
@@ -258,7 +258,7 @@
             "name": "operation",
             "label": "Operação",
             "type": "select",
-            "values": ["encode", "decode"],
+            "enum": ["encode", "decode"],
             "description": "Escolha entre codificar ou decodificar."
           },
           {
@@ -309,7 +309,7 @@
             "name": "delayedData",
             "label": "Dados Após Atraso",
             "type": "string",
-            "description": "Dados após o atraso."
+            "description": "Nome da variável que conterá os dados após o atraso."
           }
         ]
       },
@@ -377,7 +377,7 @@
             "name": "removed",
             "label": "Removido",
             "type": "string",
-            "description": "Confirmação de remoção."
+            "description": "Nome da variável que conterá a confirmação de remoção."
           }
         ]
       },
@@ -463,7 +463,7 @@
             "name": "set",
             "label": "Definido",
             "type": "string",
-            "description": "Confirmação de definição."
+            "description": "Nome da variável que conterá a confirmação de definição."
           }
         ]
       },
@@ -497,7 +497,7 @@
             "name": "result",
             "label": "Resultado",
             "type": "string",
-            "description": "String concatenada."
+            "description": "Nome da variável que conterá a string concatenada."
           }
         ]
       },
@@ -531,7 +531,7 @@
             "name": "string",
             "label": "String",
             "type": "string",
-            "description": "String criada."
+            "description": "Nome da variável que conterá a string criada."
           }
         ]
       },
@@ -921,7 +921,7 @@
             "name": "publishResult",
             "label": "Resultado da Publicação",
             "type": "string",
-            "description": "Confirmação da publicação."
+            "description": "Nome da variável que conterá a confirmação da publicação."
           }
         ]
       },
@@ -967,7 +967,7 @@
             "name": "deleteResult",
             "label": "Resultado da Exclusão",
             "type": "string",
-            "description": "Confirmação da exclusão."
+            "description": "Nome da variável que conterá a confirmação da exclusão."
           }
         ]
       },
@@ -999,7 +999,7 @@
             "name": "method",
             "label": "Método HTTP",
             "type": "select",
-            "values": ["GET", "POST", "PUT", "DELETE", "PATCH", "HEAD", "OPTIONS"],
+            "enum": ["GET", "POST", "PUT", "DELETE", "PATCH", "HEAD", "OPTIONS"],
             "description": "Método HTTP a ser utilizado na requisição."
           },
           {
@@ -1057,7 +1057,7 @@
         ]
       },
       "inputCount": 1,
-      "outputCount": 4,
+      "outputCount": 1,
       "description": "Este nó realiza requisições HTTP para APIs externas com suporte completo a métodos, headers, body e tratamento de respostas."
     }
 ]

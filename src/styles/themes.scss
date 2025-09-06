@@ -1,0 +1,195 @@
+// Theme Variables
+:root {
+  // Light theme (default)
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8f9fa;
+  --bg-tertiary: #e9ecef;
+  --bg-toolbar: #ffffff;
+  --bg-toolbox: #f8f9fa;
+  --bg-node: #ffffff;
+  --bg-node-header: #e9ecef;
+  --bg-drawer: #ffffff;
+  --bg-input: #ffffff;
+  --bg-button: #ffffff;
+  --bg-button-hover: #e9ecef;
+  --bg-button-active: #dee2e6;
+  
+  --text-primary: #212529;
+  --text-secondary: #6c757d;
+  --text-muted: #adb5bd;
+  --text-inverse: #ffffff;
+  
+  --border-primary: #dee2e6;
+  --border-secondary: #e9ecef;
+  --border-focus: #0d6efd;
+  
+  --shadow-sm: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  --shadow-md: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  --shadow-lg: 0 1rem 3rem rgba(0, 0, 0, 0.175);
+  
+  --reactflow-bg: #f8f9fa;
+  --reactflow-grid: #e9ecef;
+  --reactflow-edge: #22c55e;
+  --reactflow-handle: #4a5568;
+  --reactflow-handle-hover: #63b3ed;
+  --reactflow-handle-connecting: #68d391;
+}
+
+// Dark theme
+[data-theme="dark"] {
+  --bg-primary: #1a1a1a;
+  --bg-secondary: #2d2d2d;
+  --bg-tertiary: #404040;
+  --bg-toolbar: #2d2d2d;
+  --bg-toolbox: #2d2d2d;
+  --bg-node: #2d2d2d;
+  --bg-node-header: #404040;
+  --bg-drawer: #2d2d2d;
+  --bg-input: #404040;
+  --bg-button: #404040;
+  --bg-button-hover: #505050;
+  --bg-button-active: #606060;
+  
+  --text-primary: #ffffff;
+  --text-secondary: #b3b3b3;
+  --text-muted: #808080;
+  --text-inverse: #1a1a1a;
+  
+  --border-primary: #404040;
+  --border-secondary: #2d2d2d;
+  --border-focus: #3b82f6;
+  
+  --shadow-sm: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 0.5rem 1rem rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 1rem 3rem rgba(0, 0, 0, 0.5);
+  
+  --reactflow-bg: #1a1a1a;
+  --reactflow-grid: #2d2d2d;
+  --reactflow-edge: #22c55e;
+  --reactflow-handle: #4a5568;
+  --reactflow-handle-hover: #63b3ed;
+  --reactflow-handle-connecting: #68d391;
+}
+
+// Global theme-aware styles
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+// ReactFlow theme styles
+.react-flow {
+  background-color: var(--reactflow-bg);
+  
+  .react-flow__background {
+    background-color: var(--reactflow-bg);
+  }
+  
+  .react-flow__controls {
+    background-color: var(--bg-toolbar);
+    border: 1px solid var(--border-primary);
+    box-shadow: var(--shadow-md);
+    
+    button {
+      background-color: var(--bg-button);
+      color: var(--text-primary);
+      border: 1px solid var(--border-primary);
+      
+      &:hover {
+        background-color: var(--bg-button-hover);
+      }
+    }
+  }
+  
+  .react-flow__minimap {
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-primary);
+  }
+  
+  .react-flow__edge {
+    stroke: var(--reactflow-edge);
+    
+    &:hover {
+      stroke: var(--reactflow-edge);
+      stroke-width: 3px;
+    }
+  }
+  
+  .react-flow__handle {
+    background-color: var(--reactflow-handle);
+    border: 2px solid var(--bg-primary);
+    
+    &:hover {
+      background-color: var(--reactflow-handle-hover);
+    }
+    
+    &.react-flow__handle-connecting {
+      background-color: var(--reactflow-handle-connecting);
+    }
+  }
+}
+
+// Bootstrap overrides for dark theme
+[data-theme="dark"] {
+  .btn {
+    &.btn-outline-secondary {
+      color: var(--text-primary);
+      border-color: var(--border-primary);
+      
+      &:hover {
+        background-color: var(--bg-button-hover);
+        border-color: var(--border-primary);
+        color: var(--text-primary);
+      }
+    }
+    
+    &.btn-outline-danger {
+      color: #ff6b6b;
+      border-color: #ff6b6b;
+      
+      &:hover {
+        background-color: #ff6b6b;
+        border-color: #ff6b6b;
+        color: var(--text-inverse);
+      }
+    }
+    
+    &.btn-secondary {
+      background-color: var(--bg-button);
+      border-color: var(--border-primary);
+      color: var(--text-primary);
+      
+      &:hover {
+        background-color: var(--bg-button-hover);
+        border-color: var(--border-primary);
+      }
+    }
+  }
+  
+  .form-control {
+    background-color: var(--bg-input);
+    border-color: var(--border-primary);
+    color: var(--text-primary);
+    
+    &:focus {
+      background-color: var(--bg-input);
+      border-color: var(--border-focus);
+      color: var(--text-primary);
+      box-shadow: 0 0 0 0.2rem rgba(59, 130, 246, 0.25);
+    }
+  }
+  
+  .form-label {
+    color: var(--text-primary);
+  }
+  
+  .offcanvas {
+    background-color: var(--bg-drawer);
+    color: var(--text-primary);
+  }
+  
+  .offcanvas-header {
+    border-bottom: 1px solid var(--border-primary);
+  }
+}

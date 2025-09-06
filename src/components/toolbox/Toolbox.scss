@@ -1,12 +1,15 @@
 
 .toolbox-container {
-  background-color: #f8f9fa;
+  background-color: var(--bg-toolbox);
+  color: var(--text-primary);
   border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--border-primary);
   padding: 1rem;
   margin-top: 1rem;
   max-height: calc(100vh - 150px);
   overflow-y: auto;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 
   .accordion-item {
     border: none;
@@ -17,27 +20,28 @@
     .accordion-header {
       border-bottom: none;
       .accordion-button {
-        background-color: #e9ecef;
-        color: #343a40;
+        background-color: var(--bg-tertiary);
+        color: var(--text-primary);
         font-weight: 600;
         padding: 0.8rem 1rem;
         border-radius: 6px;
+        border: 1px solid var(--border-primary);
         transition: all 0.2s ease-in-out;
         &:hover {
-          background-color: #dae0e5;
+          background-color: var(--bg-button-hover);
         }
         &:focus {
           box-shadow: none;
         }
         &.collapsed {
-          background-color: #f1f3f5;
-          color: #495057;
+          background-color: var(--bg-tertiary);
+          color: var(--text-primary);
         }
       }
     }
 
     .accordion-collapse {
-      border: 1px solid #e9ecef;
+      border: 1px solid var(--border-primary);
       border-top: none;
       border-bottom-left-radius: 6px;
       border-bottom-right-radius: 6px;
@@ -45,7 +49,7 @@
 
     .accordion-body {
       padding: 1rem;
-      background-color: #ffffff;
+      background-color: var(--bg-secondary);
       border-top: none;
     }
   }
@@ -57,10 +61,10 @@
 
 .toolbox-collection-header {
   font-size: 1.1rem;
-  color: #343a40;
+  color: var(--text-primary);
   margin-bottom: 0.8rem;
   padding-bottom: 0.4rem;
-  border-bottom: 1px solid #e9ecef;
+  border-bottom: 1px solid var(--border-primary);
 }
 
 .toolbox-nodes {
@@ -75,24 +79,24 @@
   justify-content: flex-start; /* Align content to the left */
   text-align: left; /* Ensure text is left-aligned */
   padding: 0.8rem 1.2rem; /* Increased padding */
-  border: 1px solid #ced4da;
+  border: 1px solid var(--border-primary);
   border-radius: 8px; /* Slightly increased border-radius */
-  background-color: #ffffff;
-  color: #495057;
+  background-color: var(--bg-node);
+  color: var(--text-primary);
   font-size: 0.95rem;
   cursor: grab;
   transition: all 0.2s ease-in-out;
 
   &:hover {
-    background-color: #e2e6ea;
-    border-color: #dae0e5;
-    color: #212529;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+    background-color: var(--bg-button-hover);
+    border-color: var(--border-primary);
+    color: var(--text-primary);
+    box-shadow: var(--shadow-sm);
   }
 
   &:active {
-    background-color: #dae0e5;
-    border-color: #d3d9df;
+    background-color: var(--bg-button-active);
+    border-color: var(--border-primary);
   }
 
   .me-2 {

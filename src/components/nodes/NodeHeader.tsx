@@ -9,12 +9,14 @@ interface NodeHeaderProps {
 }
 
 const NodeHeader: React.FC<NodeHeaderProps> = ({
-  id,
   name,
   className = '',
 }) => {
   return (
-    <div className={`node-header ${className} d-flex justify-content-center bg-transparent border-0 text-white-50 w-100`}>
+    <div 
+      className={`node-header ${className} d-flex justify-content-center bg-transparent border-0 w-100`}
+      style={{ color: 'var(--text-primary)' }}
+    >
       <span>{name}</span>
     </div>
   );
