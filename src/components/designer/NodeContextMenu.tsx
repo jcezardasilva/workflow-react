@@ -1,12 +1,12 @@
 import React, { useEffect, useRef } from 'react';
-import { Node } from 'reactflow';
+import { Node as ReactFlowNode } from 'reactflow';
 
 interface NodeContextMenuProps {
-  node: Node | null;
+  node: ReactFlowNode | null;
   position: { x: number; y: number } | null;
   onClose: () => void;
   onDelete: (nodeId: string) => void;
-  onEdit: (node: Node) => void;
+  onEdit: (node: ReactFlowNode) => void;
 }
 
 const NodeContextMenu: React.FC<NodeContextMenuProps> = ({ 
@@ -20,7 +20,7 @@ const NodeContextMenu: React.FC<NodeContextMenuProps> = ({
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+      if (menuRef.current && !menuRef.current.contains(event.target as HTMLElement)) {
         onClose();
       }
     };
@@ -96,7 +96,7 @@ const NodeContextMenu: React.FC<NodeContextMenuProps> = ({
           e.currentTarget.style.backgroundColor = 'transparent';
         }}
       >
-        ✏️ Editar Nó
+        ✏️ Editar
       </button>
       
       <div style={{
