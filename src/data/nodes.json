@@ -1639,5 +1639,67 @@
       "inputCount": 1,
       "outputCount": 2,
       "description": "Executa chamadas para APIs externas através de servidor MCP com suporte a autenticação e diferentes métodos HTTP."
+    },
+    {
+      "id": "logger-001",
+      "name": "Logger Node",
+      "frontendComponent": "BaseNode",
+      "backendComponent": "LoggerNodeBackend",
+      "collectionId": "Common",
+      "icon": {
+        "source": "fontawesome",
+        "name": "faFileText"
+      },
+      "data": "{\"fields\":[],\"content\":\"content\"}",
+      "title": "",
+      "tags": [],
+      "customDescription": "",
+      
+      "fields": {
+        "input": [
+          {
+            "name": "message",
+            "label": "Mensagem",
+            "type": "textarea",
+            "description": "Mensagem a ser registrada no log."
+          },
+          {
+            "name": "level",
+            "label": "Nível do Log",
+            "type": "select",
+            "enum": ["debug", "info", "warn", "error", "fatal"],
+            "description": "Nível de severidade do log."
+          },
+          {
+            "name": "context",
+            "label": "Contexto",
+            "type": "string",
+            "description": "Contexto adicional para o log (opcional)."
+          },
+          {
+            "name": "metadata",
+            "label": "Metadados",
+            "type": "textarea",
+            "description": "Metadados adicionais em formato JSON (opcional)."
+          }
+        ],
+        "output": [
+          {
+            "name": "logged",
+            "label": "Registrado",
+            "type": "string",
+            "description": "Nome da variável que conterá a confirmação de que o log foi registrado."
+          },
+          {
+            "name": "logId",
+            "label": "ID do Log",
+            "type": "string",
+            "description": "Nome da variável que conterá o ID único do log registrado."
+          }
+        ]
+      },
+      "inputCount": 1,
+      "outputCount": 2,
+      "description": "Registra mensagens de log com diferentes níveis de severidade e contexto adicional."
     }
 ]
