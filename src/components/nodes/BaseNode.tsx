@@ -91,7 +91,7 @@ const BaseNode: React.FC<BaseNodeProps> = ({ id, data }) => {
     <div 
       ref={elRef} 
       className="react-flow__node-default basenode"
-      style={{ cursor: 'pointer' }}
+      style={{ cursor: 'grab' }}
     >
       {renderInputHandles()}
       <NodeHeader

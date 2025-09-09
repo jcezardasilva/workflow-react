@@ -36,9 +36,7 @@ import NodeContextMenu from './NodeContextMenu';
 const initialNodes: Node[] = [];
 const initialEdges: Edge[] = [];
 
-interface ReactFlowDesignerProps { }
-
-const ReactFlowDesigner: React.FC<ReactFlowDesignerProps> = () => {
+const ReactFlowDesigner: React.FC = () => {
   const [nodes, setNodes] = useState<Node[]>(initialNodes);
   const [edges, setEdges] = useState<Edge[]>(initialEdges);
   const [toolboxNodes, setToolboxNodes] = useState<NodeDefinition[]>([]);
@@ -98,9 +96,9 @@ const ReactFlowDesigner: React.FC<ReactFlowDesignerProps> = () => {
     event.dataTransfer.effectAllowed = 'move';
   };
 
-  const onNodeClick = useCallback((_event: React.MouseEvent, node: Node) => {
-    setSelectedNode(node);
-    setIsDrawerOpen(true);
+  const onNodeClick = useCallback(() => {
+    // Remove o comportamento de abrir o drawer no clique simples
+    // Os nós agora são arrastáveis no clique simples
     setEdgeContextMenu(null); // Close edge context menu when clicking on node
     setNodeContextMenu(null); // Close node context menu when clicking on node
   }, []);
@@ -161,19 +159,9 @@ const ReactFlowDesigner: React.FC<ReactFlowDesignerProps> = () => {
         )
       );
       
-      // Only update selectedNode if it's the same node being edited
-      // This prevents unnecessary re-renders when selectedNode hasn't actually changed
-      setSelectedNode((prev) => {
-        if (prev && prev.id === nodeId) {
-          // Only update if the data actually changed
-          if (JSON.stringify(prev.data) !== JSON.stringify(newData)) {
-            return { ...prev, data: newData };
-          }
-        }
-        return prev;
-      });
+      // Função simplificada - apenas atualiza os dados do nó
     },
-    [setNodes, setSelectedNode],
+    [setNodes],
   );
 
 
@@ -299,9 +287,9 @@ const ReactFlowDesigner: React.FC<ReactFlowDesignerProps> = () => {
           onClose={() => setIsDrawerOpen(false)}
           title={selectedNode.data.name}
           fields={selectedNode.data.fields || { input: [], output: [] }}
-          dataNode={selectedNode.data} // Pass the entire node data to NodeDrawer
-          onUpdateData={(newData) => onNodeDataChange(selectedNode.id, newData)} // Correctly pass updates to parent
-          onDelete={() => onDeleteNode(selectedNode.id)} // Pass delete callback
+          dataNode={selectedNode.data}
+          onUpdateData={(newData) => onNodeDataChange(selectedNode.id, newData)}
+          onDelete={() => onDeleteNode(selectedNode.id)}
         />
       )}
 
